@@ -1,0 +1,21 @@
+{
+  "name": "BuildDiaspora Zimbabwe",
+  "short_name": "BuildDiaspora",
+  "description": "Connect with trusted professionals, access resources, and build your dreams in Zimbabwe",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1B4B3A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en",
+  "scope": "/"
+} 

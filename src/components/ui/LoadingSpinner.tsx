@@ -3,7 +3,7 @@ interface LoadingSpinnerProps {
   className?: string;
 }
 
-export default function LoadingSpinner({ 
+export function LoadingSpinner({ 
   size = 'md', 
   className = '' 
 }: LoadingSpinnerProps) {
@@ -22,4 +22,6 @@ export default function LoadingSpinner({
       <span className="sr-only">Loading...</span>
     </div>
   );
-} 
+}
+
+export default LoadingSpinner; 

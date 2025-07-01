@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Database Schema Setup
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Create Supabase database tables and security policies for user management
+# Details:
+Create profiles table with fields for user data, professional info, and verification status. Set up Row Level Security policies for data protection
+
+# Test Strategy:
+

@@ -1,6 +1,7 @@
+
 import Link from 'next/link';
 import Button from "@/components/ui/Button";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/Card";
+import { Card, CardHeader, CardContent } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import ProgressBar from "@/components/ui/ProgressBar";
 

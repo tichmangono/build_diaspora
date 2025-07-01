@@ -1,9 +1,10 @@
+import { Metadata } from 'next'
+import Image from 'next/image'
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Card, CardHeader, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import ProgressBar from '@/components/ui/ProgressBar';
 import Badge from '@/components/ui/Badge';
-import ProfessionalCard from '@/components/ui/ProfessionalCard';
 
 // Mock data for demonstration
 const mockProfessionals = [
@@ -46,6 +47,11 @@ const mockProfessionals = [
     premium: true,
   },
 ];
+
+export const metadata: Metadata = {
+  title: 'Dashboard - BuildDiaspora Zimbabwe',
+  description: 'Your personal dashboard for building projects in Zimbabwe',
+}
 
 export default function DashboardPage() {
   const breadcrumbs = [
@@ -202,23 +208,17 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="px-6 pb-6 space-y-3">
-                <Button variant="primary" className="w-full justify-start">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <Button variant="secondary" className="w-full justify-start">
+                  Schedule Inspection
+                </Button>
+                <Button variant="secondary" className="w-full justify-start">
                   Update Progress
                 </Button>
                 <Button variant="secondary" className="w-full justify-start">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8z" />
-                  </svg>
-                  Calculate Costs
+                  Find Professionals
                 </Button>
                 <Button variant="secondary" className="w-full justify-start">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                  </svg>
-                  Find Professionals
+                  Cost Calculator
                 </Button>
               </div>
             </CardContent>
@@ -229,52 +229,84 @@ export default function DashboardPage() {
             <CardHeader>
               <div className="p-6 pb-4">
                 <h3 className="text-heading-3 text-neutral-900">Recommended for You</h3>
-                <p className="text-body-small text-neutral-600">Top-rated professionals in your area</p>
+                <p className="text-body-small text-neutral-600">Professionals for your current stage</p>
               </div>
             </CardHeader>
             <CardContent>
               <div className="px-6 pb-6 space-y-4">
                 {mockProfessionals.slice(0, 2).map((professional) => (
-                  <div key={professional.id} className="border border-neutral-100 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <img 
-                        className="w-8 h-8 rounded-full" 
-                        src={professional.avatar} 
-                        alt={professional.name}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-neutral-900 truncate">
+                  <div key={professional.id} className="flex items-start gap-3 p-3 border border-neutral-200 rounded-lg">
+                    <Image
+                      src={professional.avatar}
+                      alt={`${professional.name} profile`}
+                      width={48}
+                      height={48}
+                      className="rounded-full object-cover"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-body font-medium text-neutral-900 truncate">
                           {professional.name}
-                        </p>
-                        <p className="text-xs text-neutral-600">
-                          {professional.title}
-                        </p>
+                        </h4>
+                        {professional.verified && (
+                          <Badge variant="verified">Verified</Badge>
+                        )}
                       </div>
-                      {professional.verified && (
-                        <Badge variant="verified" className="text-xs">
-                          ✓
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <span className="text-accent-400 text-sm">★★★★★</span>
-                        <span className="text-xs text-neutral-600">{professional.rating}</span>
-                      </div>
-                      <Button variant="ghost" size="sm">
-                        View
-                      </Button>
+                      <p className="text-body-small text-neutral-600 mb-1">{professional.title}</p>
+                      <p className="text-caption text-neutral-500">{professional.location}</p>
                     </div>
                   </div>
                 ))}
-                <Button variant="secondary" className="w-full" size="sm">
+                <Button variant="secondary" className="w-full">
                   View All Professionals
                 </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Next Steps */}
+          <Card>
+            <CardHeader>
+              <div className="p-6 pb-4">
+                <h3 className="text-heading-3 text-neutral-900">Next Steps</h3>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="px-6 pb-6 space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span className="text-primary-600 text-caption font-medium">1</span>
+                  </div>
+                  <div>
+                    <p className="text-body text-neutral-900">Complete foundation curing</p>
+                    <p className="text-body-small text-neutral-600">Wait 7-14 days for proper setting</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 bg-neutral-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span className="text-neutral-600 text-caption font-medium">2</span>
+                  </div>
+                  <div>
+                    <p className="text-body text-neutral-900">Begin framing stage</p>
+                    <p className="text-body-small text-neutral-600">Start structural framework</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 bg-neutral-100 rounded-full flex items-center justify-center mt-0.5">
+                    <span className="text-neutral-600 text-caption font-medium">3</span>
+                  </div>
+                  <div>
+                    <p className="text-body text-neutral-900">Electrical rough-in</p>
+                    <p className="text-body-small text-neutral-600">Install wiring and outlets</p>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
     </DashboardLayout>
-  );
+  )
 } 

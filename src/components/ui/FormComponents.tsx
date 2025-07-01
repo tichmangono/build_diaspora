@@ -71,6 +71,21 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
 FormInput.displayName = 'FormInput';
 
+// Form Error Component
+interface FormErrorProps {
+  error?: { message?: string };
+}
+
+export function FormError({ error }: FormErrorProps) {
+  if (!error?.message) return null;
+  
+  return (
+    <p className="mt-1 text-sm text-red-600" role="alert">
+      {error.message}
+    </p>
+  );
+}
+
 // Form Select Component
 interface FormSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: string;
@@ -234,7 +249,6 @@ export function RadioGroup({
               checked={value === option.value}
               onChange={(e) => onChange?.(e.target.value)}
               className="mt-1 w-4 h-4 text-primary-500 border-neutral-300 focus-ring"
-              aria-invalid={error ? 'true' : 'false'}
             />
             <div className="flex-1 min-w-0">
               <div className="text-sm font-medium text-neutral-700">

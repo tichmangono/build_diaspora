@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Button from './Button';
 import Badge from './Badge';
 
@@ -62,21 +63,14 @@ export default function ProfessionalCard({
         {/* Header with avatar and basic info */}
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
-            <img 
+            <Image 
               className="w-12 h-12 rounded-full object-cover" 
               src={avatar} 
               alt={`${name}'s profile`}
-              onError={(e) => {
-                // Fallback to initials if image fails to load
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                target.nextElementSibling?.classList.remove('hidden');
-              }}
+              width={48}
+              height={48}
             />
-            {/* Fallback avatar with initials */}
-            <div className="hidden w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center text-white font-semibold">
-              {name.split(' ').map(n => n[0]).join('')}
-            </div>
+            {/* Fallback avatar with initials - would need custom error handling for Next.js Image */}
             
             {/* Verification badge */}
             {verified && (

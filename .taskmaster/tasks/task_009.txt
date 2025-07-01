@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: Email & Notification System
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Implement email verification, password reset, and notification system for authentication flows
+# Details:
+Set up email templates, SMTP configuration, and notification triggers for auth events
+
+# Test Strategy:
+

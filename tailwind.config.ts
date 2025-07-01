@@ -322,22 +322,6 @@ const config: Config = {
   
   // Dark mode configuration (future-ready)
   darkMode: 'class',
-  
-  // Safelist for dynamic classes
-  safelist: [
-    'badge-success',
-    'badge-warning',
-    'badge-error',
-    'badge-premium',
-    'badge-verified',
-    'grid-cols-1',
-    'grid-cols-2',
-    'grid-cols-3',
-    'grid-cols-4',
-    'grid-cols-directory',
-    'grid-cols-calculator',
-    'grid-cols-dashboard',
-  ],
-};
+} satisfies Config;
 
 export default config; 
