@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth, useUser } from '@/lib/hooks'
 import Button from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import CSPTest from '@/components/security/CSPTest'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -516,6 +517,9 @@ export default function DashboardLayout({
           ))}
         </div>
       </div>
+
+      {/* Security Testing Component (Development Only) */}
+      <CSPTest />
     </div>
   )
 } 

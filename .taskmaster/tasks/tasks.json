@@ -121,10 +121,56 @@
         "description": "Implement comprehensive security measures and data protection protocols",
         "details": "Set up encryption, secure storage, data validation, and privacy compliance measures",
         "testStrategy": "",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Content Security Policy (CSP) Implementation",
+            "description": "Implement comprehensive Content Security Policy headers to prevent XSS attacks and control resource loading",
+            "details": "- Configure CSP headers in middleware\n- Set up nonce-based script execution\n- Define allowed sources for images, styles, scripts\n- Implement report-uri for CSP violations\n- Test CSP with browser developer tools",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 2,
+            "title": "Input Validation & Sanitization",
+            "description": "Implement comprehensive input validation and sanitization for all user inputs",
+            "details": "- Extend Zod schemas with security-focused validation\n- Implement HTML sanitization for rich text inputs\n- Add file upload validation (type, size, content)\n- Create input sanitization utilities\n- Add SQL injection prevention measures",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 3,
+            "title": "Data Encryption & Secure Storage",
+            "description": "Implement encryption for sensitive data and secure storage practices",
+            "details": "- Set up encryption for PII data at rest\n- Implement secure session storage\n- Add encryption utilities for sensitive fields\n- Configure secure cookie settings\n- Set up encrypted backup strategies",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 4,
+            "title": "Privacy Compliance (GDPR/CCPA)",
+            "description": "Implement privacy compliance features for international data protection regulations",
+            "details": "- Add cookie consent management\n- Implement data export functionality\n- Create data deletion workflows\n- Add privacy policy integration\n- Set up audit logging for data access",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 5,
+            "title": "Security Monitoring & Logging",
+            "description": "Implement comprehensive security monitoring and audit logging",
+            "details": "- Set up security event logging\n- Implement failed login attempt monitoring\n- Add suspicious activity detection\n- Create security dashboard\n- Set up automated security alerts",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
       },
       {
         "id": 9,
@@ -151,7 +197,7 @@
     ],
     "metadata": {
       "created": "2025-07-01T07:55:28.102Z",
-      "updated": "2025-07-01T13:58:36.552Z",
+      "updated": "2025-07-01T17:41:12.271Z",
       "description": "Tasks for master context"
     }
   }

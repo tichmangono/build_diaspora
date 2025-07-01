@@ -1,7 +1,75 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import crypto from 'crypto'
+
+// Generate a random nonce for CSP
+function generateNonce(): string {
+  return crypto.randomBytes(16).toString('base64')
+}
+
+// Build Content Security Policy
+function buildCSP(nonce: string): string {
+  const isDev = process.env.NODE_ENV === 'development'
+  
+  // Base CSP directives
+  const cspDirectives = {
+    'default-src': ["'self'"],
+    'script-src': [
+      "'self'",
+      `'nonce-${nonce}'`,
+      isDev ? "'unsafe-eval'" : '', // Allow eval in development for hot reload
+      'https://cdn.jsdelivr.net', // For potential CDN scripts
+    ].filter(Boolean),
+    'style-src': [
+      "'self'",
+      "'unsafe-inline'", // Required for Tailwind CSS
+      'https://fonts.googleapis.com',
+    ],
+    'img-src': [
+      "'self'",
+      'data:', // For base64 images
+      'blob:', // For uploaded images
+      'https:', // Allow HTTPS images
+      process.env.NEXT_PUBLIC_SUPABASE_URL?.replace('//', '//').split('/')[2] || '', // Supabase storage
+    ].filter(Boolean),
+    'font-src': [
+      "'self'",
+      'https://fonts.gstatic.com',
+      'data:', // For inline fonts
+    ],
+    'connect-src': [
+      "'self'",
+      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+      'https://api.supabase.co', // Supabase API
+      'wss:', // WebSocket connections
+      isDev ? 'ws://localhost:*' : '', // Dev server WebSocket
+      isDev ? 'http://localhost:*' : '', // Dev server
+    ].filter(Boolean),
+    'media-src': [
+      "'self'",
+      'blob:',
+      'data:',
+    ],
+    'object-src': ["'none'"], // Prevent Flash, Java, etc.
+    'base-uri': ["'self'"],
+    'form-action': ["'self'"],
+    'frame-ancestors': ["'none'"], // Prevent embedding in frames
+    'upgrade-insecure-requests': [], // Upgrade HTTP to HTTPS
+  }
+
+  // Convert to CSP string
+  return Object.entries(cspDirectives)
+    .map(([directive, sources]) => {
+      if (sources.length === 0) return directive
+      return `${directive} ${sources.join(' ')}`
+    })
+    .join('; ')
+}
 
 export async function middleware(request: NextRequest) {
+  // Generate nonce for this request
+  const nonce = generateNonce()
+  
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -105,14 +173,58 @@ export async function middleware(request: NextRequest) {
     supabaseResponse.headers.set('X-RateLimit-Reset', rateLimitHeaders['X-RateLimit-Reset'])
   }
 
-  // Security headers
+  // Comprehensive Security Headers
+  
+  // Content Security Policy - Primary XSS protection
+  const csp = buildCSP(nonce)
+  supabaseResponse.headers.set('Content-Security-Policy', csp)
+  
+  // Frame protection
   supabaseResponse.headers.set('X-Frame-Options', 'DENY')
+  
+  // MIME type sniffing protection
   supabaseResponse.headers.set('X-Content-Type-Options', 'nosniff')
-  supabaseResponse.headers.set('Referrer-Policy', 'origin-when-cross-origin')
+  
+  // XSS protection (legacy browsers)
+  supabaseResponse.headers.set('X-XSS-Protection', '1; mode=block')
+  
+  // Referrer policy
+  supabaseResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  
+  // Permissions policy (feature policy)
   supabaseResponse.headers.set(
     'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=()'
+    'accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()'
   )
+  
+  // Strict Transport Security (HTTPS enforcement)
+  if (request.nextUrl.protocol === 'https:') {
+    supabaseResponse.headers.set(
+      'Strict-Transport-Security',
+      'max-age=31536000; includeSubDomains; preload'
+    )
+  }
+  
+  // Cross-Origin policies
+  supabaseResponse.headers.set('Cross-Origin-Embedder-Policy', 'require-corp')
+  supabaseResponse.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
+  supabaseResponse.headers.set('Cross-Origin-Resource-Policy', 'same-origin')
+  
+  // Server information hiding
+  supabaseResponse.headers.set('Server', 'BuildDiaspora')
+  
+  // Cache control for sensitive pages
+  if (isProtectedRoute) {
+    supabaseResponse.headers.set(
+      'Cache-Control',
+      'no-cache, no-store, must-revalidate, private'
+    )
+    supabaseResponse.headers.set('Pragma', 'no-cache')
+    supabaseResponse.headers.set('Expires', '0')
+  }
+
+  // Add nonce to request headers for use in components
+  supabaseResponse.headers.set('X-Nonce', nonce)
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
