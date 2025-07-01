@@ -1,0 +1,150 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Build and Dependency Management
+
+## **Dependency Installation and Management**
+
+- **Always install missing dependencies immediately when build errors occur**
+  - Use `npm install <package>` for frontend dependencies
+  - Use `pip install <package>` for backend dependencies
+  - Check package.json and requirements.txt for version consistency
+
+- **Common Missing Dependencies**
+  ```bash
+  # Frontend - frequently missing UI libraries
+  npm install @heroicons/react
+  npm install @radix-ui/react-*
+  npm install lucide-react
+  
+  # Backend - frequently missing Python packages
+  pip install pydantic[email]
+  pip install python-multipart
+  pip install python-jose[cryptography]
+  ```
+
+## **Build Error Resolution Process**
+
+1. **Run build first to identify all errors**
+   ```bash
+   cd frontend && npm run build
+   cd backend && python -m pytest --collect-only
+   ```
+
+2. **Fix import errors systematically**
+   - Check exact import paths and module names
+   - Verify export types (named vs default exports)
+   - Update import statements to match actual exports
+
+3. **Address TypeScript errors**
+   - Use `React.JSX.Element` instead of `JSX.Element`
+   - Ensure proper type annotations for all props
+   - Fix namespace issues with React imports
+
+## **Development Server Management**
+
+- **Port Management**
+  ```bash
+  # Kill processes on specific ports
+  lsof -ti:3000 | xargs kill -9
+  lsof -ti:8000 | xargs kill -9
+  
+  # Start with specific ports
+  PORT=3000 npm run dev
+  uvicorn main:app --port 8000
+  ```
+
+- **Process Cleanup**
+  ```bash
+  # Kill by process name
+  pkill -f "next dev"
+  pkill -f "uvicorn"
+  ```
+
+## **Import Path Resolution**
+
+- **Backend Import Patterns**
+  ```python
+  # ✅ DO: Use full module paths
+  from backend.src.api.v1.dependencies import get_current_user
+  from backend.exceptions import InvalidInputException
+  
+  # ❌ DON'T: Use non-existent modules
+  from backend.auth import get_current_user  # Module doesn't exist
+  from backend.exceptions import ValidationException  # Class doesn't exist
+  ```
+
+- **Frontend Import Patterns**
+  ```typescript
+  // ✅ DO: Check component exports before importing
+  import Button from '@/components/ui/Button';  // Default export
+  import { Card, CardHeader } from '@/components/ui/Card';  // Named exports
+  
+  // ❌ DON'T: Assume export types
+  import { Button } from '@/components/ui/Button';  // Wrong if it's default export
+  ```
+
+## **Pydantic Version Compatibility**
+
+- **Parameter Updates for Pydantic v2**
+  ```python
+  # ✅ DO: Use 'pattern' instead of 'regex'
+  operation: str = Field("add", pattern=r'^(add|remove|replace)$')
+  
+  # ❌ DON'T: Use deprecated 'regex' parameter
+  operation: str = Field("add", regex=r'^(add|remove|replace)$')
+  ```
+
+## **Cache Management**
+
+- **Clear build caches when encountering persistent errors**
+  ```bash
+  # Next.js cache cleanup
+  rm -rf .next
+  npm run build
+  
+  # Python cache cleanup
+  find . -name "__pycache__" -type d -exec rm -rf {} +
+  find . -name "*.pyc" -delete
+  ```
+
+## **Firestore Index Management**
+
+- **Proactively create required indexes**
+  - Monitor backend logs for index requirement errors
+  - Create composite indexes via Firebase Console
+  - Update firestore.indexes.json for deployment
+
+- **Common Index Patterns**
+  ```json
+  {
+    "collectionGroup": "assets",
+    "queryScope": "COLLECTION",
+    "fields": [
+      {"fieldPath": "organization_id", "order": "ASCENDING"},
+      {"fieldPath": "status", "order": "ASCENDING"},
+      {"fieldPath": "created_at", "order": "DESCENDING"}
+    ]
+  }
+  ```
+
+## **Testing Integration**
+
+- **Run tests after dependency changes**
+  ```bash
+  # Frontend tests
+  npm test
+  npm run test:e2e
+  
+  # Backend tests
+  python -m pytest
+  python -m pytest --cov=backend
+  ```
+
+- **Verify build success before committing**
+  ```bash
+  npm run build && npm test
+  python -m pytest && python -m uvicorn backend.main:app --reload --timeout-keep-alive 5
+  ```

@@ -1,0 +1,49 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UX Design Patterns and Information Architecture
+
+## Single Responsibility Principle for UI Components
+
+### Tab Design
+- Each tab should have **one clear, focused purpose**
+- Avoid showing the same information across multiple tabs
+- Apply contextual relevance - show information where it's most useful
+
+### Information Architecture Strategy
+- **Configure Tab**: Form inputs + contextual reference data
+- **Progress Tab**: Real-time monitoring of active operations only
+- **Results Tab**: Completed operations with action workflows
+- **Details Pages**: Comprehensive view for individual items
+
+## Redundancy Elimination
+
+### Problem Identification
+- Look for duplicate tables, lists, or data displays across tabs
+- Identify information that appears in multiple contexts without clear purpose
+- User feedback: "same information showing everywhere"
+
+### Solution Approach
+1. **Audit existing structure** - map what appears where
+2. **Define clear purposes** - what is each tab/section for?
+3. **Apply contextual placement** - where is this information most useful?
+4. **Eliminate true redundancies** - remove unnecessary duplicates
+5. **Maintain workflows** - ensure user tasks still flow naturally
+
+## Progressive Disclosure
+- Show information when and where users need it
+- Use reference data contextually (e.g., recent items for comparison when configuring)
+- Avoid overwhelming users with repeated information
+
+## Cognitive Load Reduction
+- Remove visual clutter from redundant components
+- Focus user attention on the primary task of each interface section
+- Use consistent patterns but avoid unnecessary repetition
+
+## Implementation Guidelines
+- Start with user observation and feedback
+- Apply systematic analysis before making changes
+- Verify that workflows remain intact after optimization
+- Test that the interface feels cleaner and more focused

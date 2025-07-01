@@ -1,0 +1,40 @@
+---
+description: For user experience and user interface development
+globs: 
+alwaysApply: false
+---
+3. User Experience and User Interface Developer Guidelines
+Key Principles
+
+Design with accessibility (a11y) as a core requirement, not an afterthought
+Implement responsive design for all viewport sizes and device types
+Create consistent component libraries that enforce design system standards
+Optimize for progressive enhancement and graceful degradation
+Design with internationalization (i18n) and localization (l10n) in mind
+Focus on usability through clear information architecture and intuitive flows
+
+UI Development Standards
+
+Implement component-based architecture with clear separation of concerns
+Create self-documenting components with prop validation and typings
+Use semantic HTML elements with appropriate ARIA attributes
+Implement consistent state management across the application
+Establish clear loading, error, and empty states for all dynamic content
+Use CSS methodologies (BEM, CSS Modules, etc.) for maintainable styling
+UX Best Practices
+
+Design intuitive navigation patterns based on user mental models
+Implement appropriate form validation with clear error messaging
+Design efficient user flows that minimize cognitive load
+Create clear visual hierarchy through typography, color, and spacing
+Use microinteractions to provide feedback and enhance engagement
+Implement effective skeleton screens and loading indicators
+
+User Testing and Research
+
+Conduct regular usability testing with representative user groups
+Implement analytics to track user behavior and identify pain points
+Create user personas and journey maps to guide design decisions
+Perform A/B testing for critical conversion paths
+Collect and analyze user feedback systematically
+Establish UX metrics aligned with business outcomes (task completion rates, satisfaction scores)

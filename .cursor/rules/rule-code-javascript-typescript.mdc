@@ -1,0 +1,22 @@
+---
+description: 
+globs: *.tsx, *.js, *.jsx
+alwaysApply: false
+---
+JavaScript/TypeScript 
+- Use "function" keyword for pure functions. Omit semicolons. 
+- Use TypeScript for all code. Prefer interfaces over types where applicable. 
+- File structure: Exported component, subcomponents, helpers, static content, and types in the same file when small, or separated if the file becomes large. 
+- Avoid unnecessary curly braces in conditional statements. 
+- For single-line statements in conditionals, omit curly braces (e.g., if (condition) doSomething()). 
+ 
+Error Handling and Validation 
+- Prioritize error handling and edge cases: 
+  - Handle errors and edge cases at the start of functions using guard clauses. 
+  - Use early returns to avoid deeply nested if statements. 
+  - Place the “happy path” logic last for readability. 
+  - Avoid unnecessary else statements; use the if-return pattern instead. 
+  - Log errors responsibly and provide user-friendly (or system-friendly) messages. 
+  - Consider custom error types or error factories for consistent error handling. 
+- Ensure serverless functions (Cloud Functions) and Cloud Run services handle errors gracefully, returning proper HTTP status codes. 
+

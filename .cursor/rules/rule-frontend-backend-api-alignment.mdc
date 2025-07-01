@@ -1,0 +1,138 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Frontend-Backend API Alignment
+
+## **Endpoint URL Consistency**
+- **Frontend and backend must use identical endpoint URLs**
+  - ✅ DO: `/v1/asset-relationships` in both frontend and backend
+  - ❌ DON'T: Frontend calls `/v1/relationships` while backend has `/v1/asset-relationships`
+
+## **Query Parameter Alignment**
+- **Parameter names must match exactly between frontend and backend**
+  ```typescript
+  // ✅ DO: Match backend parameter names
+  const params = new URLSearchParams({
+    relationshipType: 'depends_on',  // Backend expects 'relationshipType'
+    limit: '20',
+    offset: '0'
+  });
+  
+  // ❌ DON'T: Use different parameter names
+  const params = new URLSearchParams({
+    type: 'depends_on',  // Backend expects 'relationshipType', not 'type'
+    limit: '20'
+  });
+  ```
+
+## **Response Structure Consistency**
+- **Field names must be consistent between frontend interfaces and backend responses**
+  ```typescript
+  // ✅ DO: Match backend response structure
+  interface PaginatedResponse {
+    data: any[];
+    total_count: number;  // Backend returns 'total_count'
+    limit: number;
+    offset: number;
+  }
+  
+  // ❌ DON'T: Use different field names
+  interface PaginatedResponse {
+    data: any[];
+    total: number;  // Backend returns 'total_count', not 'total'
+  }
+  ```
+
+## **Data Format Standardization**
+- **Enum/constant values must use same format across all components**
+  ```typescript
+  // ✅ DO: Use consistent format (lowercase with underscores)
+  const relationshipTypes = ['depends_on', 'connects_to', 'powers'];
+  
+  // ❌ DON'T: Mix formats
+  const relationshipTypes = ['DEPENDS_ON', 'connects_to', 'Powers'];
+  ```
+
+## **Error Handling & Null Safety**
+- **Always include null safety for API responses**
+  ```typescript
+  // ✅ DO: Add null safety checks
+  const formatRelationshipType = (type?: string) => {
+    if (!type) return 'Unknown';
+    return type.split('_').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  };
+  
+  // ❌ DON'T: Call methods on potentially undefined values
+  const formatRelationshipType = (type: string) => {
+    return type.split('_').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  };
+  ```
+
+## **API Testing Verification**
+- **Test API endpoints directly before frontend integration**
+  - Use browser dev tools or Postman to verify endpoint URLs
+  - Check response structure matches frontend interfaces
+  - Verify query parameters are accepted by backend
+  - Test with actual data to ensure field names align
+
+## **Import Statement Verification**
+- **Ensure all backend functions are properly imported in main.py**
+  ```python
+  # ✅ DO: Import all endpoint functions
+  from backend.db import (
+      get_all_assets_for_organization,
+      get_all_relationships_for_organization,  # Don't forget this!
+      create_asset,
+      update_asset
+  )
+  
+  # ❌ DON'T: Miss function imports (causes 500 errors)
+  from backend.db import (
+      get_all_assets_for_organization,
+      # Missing get_all_relationships_for_organization
+      create_asset
+  )
+  ```
+
+## **Development Server Management**
+- **Clean up processes to avoid conflicts**
+  ```bash
+  # Kill existing processes before starting new ones
+  pkill -f "next dev"
+  pkill -f uvicorn
+  
+  # Clear Next.js cache if experiencing build issues
+  rm -rf .next
+  
+  # Start backend with proper Python path
+  cd backend && PYTHONPATH=.. python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  ```
+
+## **Real-time Data Integration**
+- **Use efficient API patterns for live updates**
+  ```typescript
+  // ✅ DO: Use targeted queries for count-only operations
+  const fetchAssetCounts = async () => {
+    const [total, active, maintenance, offline, decommissioned] = await Promise.all([
+      fetch('/v1/assets?limit=1').then(r => r.json()),
+      fetch('/v1/assets?status=active&limit=1').then(r => r.json()),
+      fetch('/v1/assets?status=maintenance&limit=1').then(r => r.json()),
+      fetch('/v1/assets?status=offline&limit=1').then(r => r.json()),
+      fetch('/v1/assets?status=decommissioned&limit=1').then(r => r.json())
+    ]);
+    
+    return {
+      total: total.total_count,
+      active: active.total_count,
+      maintenance: maintenance.total_count,
+      offline: offline.total_count,
+      decommissioned: decommissioned.total_count
+    };
+  };
+  ```

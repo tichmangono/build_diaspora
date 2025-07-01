@@ -1,0 +1,286 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Next.js Build Error Prevention
+
+**Common build errors and their solutions for TypeScript/React/Next.js projects.**
+
+## **Systematic Build Error Resolution Methodology**
+
+**Proven Pattern**: Build → Identify → Fix → Generalize → Test → Iterate
+
+### **Error Classification Matrix**
+| Error Type | Generalization Potential | Action |
+|------------|-------------------------|---------|
+| Interface Mismatch | HIGH | Fix + Create Test |
+| Import Errors | HIGH | Fix + Create Test |
+| API Usage | HIGH | Fix + Create Test |
+| Type Coercion | HIGH | Fix + Create Test |
+| Component Props | HIGH | Fix + Create Test |
+| Authentication | HIGH | Fix + Create Test |
+| Random/One-off | LOW | Fix Directly |
+
+### **6 Proven Resolution Patterns**
+
+#### **1. Interface Compatibility Transformation**
+```typescript
+// ✅ DO: Transform coordinates at interface boundaries
+// Pattern: Enhanced data with {x,y} → Standard interface with {latitude,longitude}
+const transformedLocation = node.location ? {
+  area: node.location.area,
+  coordinates: node.location.coordinates ? {
+    latitude: node.location.coordinates.y, // y → latitude
+    longitude: node.location.coordinates.x  // x → longitude
+  } : undefined
+} : undefined;
+
+// ✅ DO: Encapsulate incompatible properties in metadata
+const compatibleNode = {
+  ...standardProperties,
+  metadata: {
+    colors: enhancedNode.colors,
+    securityContext: enhancedNode.security
+  }
+};
+```
+
+#### **2. Component Import Validation**
+```typescript
+// ✅ DO: Comment out imports for non-existent components with explanation
+// import { Calendar, DatePicker } from '@/components/ui/Calendar'; // Components not available, removing unused imports
+
+// ✅ DO: Verify component exists before importing
+// Check: frontend/src/components/ui/Calendar.tsx exists?
+// If not: Remove import or create component
+```
+
+#### **3. API Client Usage Patterns**
+```typescript
+// ✅ DO: Use apiClient as function, not object with methods
+const data = await apiClient('/v1/security/vulnerabilities?status=open');
+const response = await apiClient('/v1/events', {
+  method: 'POST',
+  body: JSON.stringify({ data })
+});
+
+// ❌ DON'T: Treat apiClient as object with .get()/.post() methods
+// const data = await apiClient.get('/endpoint'); // .get() doesn't exist
+// const response = await apiClient.post('/endpoint', { params }); // Wrong pattern
+```
+
+#### **4. Boolean Type Coercion**
+```typescript
+// ✅ DO: Explicit boolean conversion for interfaces expecting boolean
+const shouldConnect = !!(orgId && user); // Explicit boolean
+
+// ❌ DON'T: Let truthy values be passed as non-boolean types
+// const shouldConnect = orgId && user; // Could be string or object
+```
+
+#### **5. Component Variant Mapping**
+```typescript
+// ✅ DO: Map variants to component-supported values
+const getSeverityColor = (severity: string) => {
+  switch (severity?.toLowerCase()) {
+    case 'critical': return 'danger';  // Not 'destructive'
+    case 'high': return 'danger';
+    case 'medium': return 'warning';
+    case 'low': return 'success';
+    default: return 'secondary';
+  }
+};
+
+// Badge component supports: 'default' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'outline'
+// Map unsupported variants like 'destructive' → 'danger'
+```
+
+#### **6. Authentication Token Access Patterns**
+```typescript
+// ✅ DO: Use localStorage for token access (GridGuard pattern)
+const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+
+// ❌ DON'T: Expect session.accessToken (next-auth Session doesn't have this)
+// const token = session.accessToken; // Undefined in this app's auth pattern
+```
+
+### **Systematic Error Prevention**
+```typescript
+// ✅ DO: Create tests for recurring patterns (see build-error-prevention.test.ts)
+describe('Build Error Prevention', () => {
+  it('should validate location coordinate transformations', () => {
+    // Test coordinate transformation patterns
+  });
+  
+  it('should validate component variant compatibility', () => {
+    // Test variant mapping patterns
+  });
+  
+  it('should validate API client usage patterns', () => {
+    // Test function vs object usage
+  });
+});
+```
+
+## **Import/Export Issues**
+
+- **Component Imports:**
+  ```typescript
+  // ✅ DO: Use named imports for UI components
+  import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
+  
+  // ❌ DON'T: Use default imports for named exports
+  import Card, { CardHeader, ... } from '@/components/ui/Card';
+  ```
+
+- **Verify Imports Exist:**
+  ```typescript
+  // ✅ DO: Check that imported modules exist
+  // Remove non-existent imports like AuthContext
+  
+  // ❌ DON'T: Import from non-existent files
+  import { AuthContext } from '@/lib/contexts/AuthContext'; // File doesn't exist
+  ```
+
+## **Framer Motion TypeScript Conflicts**
+
+- **Prop Separation Pattern:**
+  ```typescript
+  // ✅ DO: Separate conflicting HTML and Motion props
+  const { 
+    onDrag, 
+    onDragStart, 
+    onDragEnd,
+    onAnimationStart,
+    onAnimationEnd,
+    onTransitionStart,
+    onTransitionEnd,
+    ...domProps 
+  } = props;
+  
+  // Use separated props
+  <motion.button {...domProps}>
+  ```
+
+- **Interface Conflicts:**
+  ```typescript
+  // ✅ DO: Omit conflicting HTML attributes
+  interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+    size?: 'sm' | 'md' | 'lg'; // Custom size prop
+  }
+  
+  // ❌ DON'T: Extend directly when props conflict
+  interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    size?: 'sm' | 'md' | 'lg'; // Conflicts with HTML size (number)
+  }
+  ```
+
+## **CSS Property Validation**
+
+- **Valid Framer Motion Properties:**
+  ```typescript
+  // ✅ DO: Use standard CSS properties
+  <motion.div
+    animate={{ opacity: 0 }}
+    whileFocus={{ opacity: 0.5 }}
+  />
+  
+  // ❌ DON'T: Use invalid CSS properties
+  <motion.div
+    animate={{ ringOpacity: 0 }} // Invalid CSS property
+  />
+  ```
+
+## **Component Prop Validation**
+
+- **Remove Unsupported Props:**
+  ```typescript
+  // ✅ DO: Check component interfaces for supported props
+  <StatCard
+    title="Health"
+    value={85}
+    variant="success"
+    showProgress={true}
+  />
+  
+  // ❌ DON'T: Use props that don't exist in component interface
+  <StatCard
+    pulse={true} // StatCard doesn't support pulse prop
+  />
+  ```
+
+- **Select Component Type Safety:**
+  ```typescript
+  // ✅ DO: Type cast for union type setters
+  type SecurityMode = 'risk' | 'threats' | 'vulnerabilities' | 'compliance';
+  
+  const handleValueChange = (value: string) => {
+    setActiveSecurityMode(value as SecurityMode);
+  };
+  
+  <Select onValueChange={handleValueChange}>
+  ```
+
+- **Comprehensive Null Safety:**
+  ```typescript
+  // ✅ DO: Check both object and nested property existence
+  const isLowRisk = node.security?.riskScore !== undefined && node.security.riskScore < 4;
+  
+  // ❌ DON'T: Only check if parent object exists
+  // const isLowRisk = node.security && node.security.riskScore < 4; // Unsafe if riskScore is undefined
+  ```
+
+## **File Syntax Issues**
+
+- **Avoid Escaped Characters:**
+  ```typescript
+  // ✅ DO: Use proper newlines and formatting
+  const content = `
+    Line 1
+    Line 2
+  `;
+  
+  // ❌ DON'T: Use escaped newlines in content
+  const content = 'Line 1\nLine 2'; // Can cause compilation errors
+  ```
+
+## **Build Troubleshooting Process**
+
+### **Systematic Approach**
+1. **Run Build**: `npm run build` to identify next error
+2. **Classify Error**: Recurring pattern vs one-off issue
+3. **Apply Pattern**: Use established resolution if pattern exists
+4. **Create Test**: If recurring, add to `build-error-prevention.test.ts`
+5. **Document**: Update this rule with new patterns
+6. **Iterate**: Continue until production build succeeds
+
+### **Error-Specific Steps**
+1. **Check Import Statements:**
+   - Verify all imported files exist
+   - Use correct import syntax (named vs default)
+
+2. **Validate Component Props:**
+   - Check component interfaces for supported props
+   - Remove or map unsupported variants/props
+
+3. **Fix Type Conflicts:**
+   - Use `Omit` for conflicting HTML attributes
+   - Separate Motion props from DOM props
+
+4. **Verify CSS Properties:**
+   - Use only valid CSS properties in motion components
+   - Replace custom properties with standard ones
+
+5. **Test API Usage:**
+   - Ensure correct function/object usage patterns
+   - Verify endpoint patterns match expected format
+
+### **Prevention Checklist**
+- [ ] Interface compatibility validated
+- [ ] Component imports verified to exist  
+- [ ] API client usage follows function pattern
+- [ ] Boolean values explicitly coerced
+- [ ] Component variants match interface
+- [ ] Authentication uses localStorage pattern
+- [ ] Tests created for recurring patterns

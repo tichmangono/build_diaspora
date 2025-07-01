@@ -1,0 +1,273 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Component Reusability and Composition
+
+## **Reusable Component Design Principles**
+
+- **Create small, focused components with single responsibilities**
+  - ClassificationSelector for hierarchical selection
+  - ClassificationTree for tree display
+  - ClassificationForm for CRUD operations
+  - ClassificationDeleteDialog for confirmation
+
+- **Use composition over inheritance**
+  ```typescript
+  // ✅ DO: Compose larger components from smaller ones
+  function AssetManagementPage() {
+    return (
+      <div>
+        <AssetList />
+        <ClassificationSelector />
+        <BulkActionBar />
+      </div>
+    );
+  }
+  ```
+
+## **Props Interface Design**
+
+- **Use consistent prop patterns across similar components**
+  ```typescript
+  // ✅ DO: Consistent callback patterns
+  interface SelectorProps {
+    selectedIds: string[];
+    onSelectionChange: (ids: string[]) => void;
+    onError?: (error: string) => void;
+    isLoading?: boolean;
+    disabled?: boolean;
+  }
+  
+  // ✅ DO: Consistent data prop patterns
+  interface TreeProps {
+    nodes: TreeNode[];
+    expandedNodes: Set<string>;
+    onToggleExpand: (nodeId: string) => void;
+    selectedNode?: string;
+    onSelectNode?: (nodeId: string) => void;
+  }
+  ```
+
+- **Support flexible configuration through props**
+  ```typescript
+  interface ClassificationSelectorProps {
+    maxSelections?: number;  // Flexible limits
+    showSearch?: boolean;    // Optional features
+    placeholder?: string;    // Customizable text
+    variant?: 'compact' | 'full';  // Display variants
+  }
+  ```
+
+## **State Management Patterns**
+
+- **Lift state up to common parent components**
+  ```typescript
+  // ✅ DO: Manage selection state in parent
+  function AssetPage() {
+    const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>([]);
+    const [selectedClassificationIds, setSelectedClassificationIds] = useState<string[]>([]);
+    
+    return (
+      <>
+        <AssetList 
+          selectedIds={selectedAssetIds}
+          onSelectionChange={setSelectedAssetIds}
+        />
+        <ClassificationSelector
+          selectedIds={selectedClassificationIds}
+          onSelectionChange={setSelectedClassificationIds}
+        />
+        <BulkActionBar
+          assetIds={selectedAssetIds}
+          classificationIds={selectedClassificationIds}
+        />
+      </>
+    );
+  }
+  ```
+
+- **Use controlled components for form inputs**
+  ```typescript
+  // ✅ DO: Controlled input pattern
+  interface FormInputProps {
+    value: string;
+    onChange: (value: string) => void;
+    error?: string;
+    disabled?: boolean;
+  }
+  ```
+
+## **API Integration Patterns**
+
+- **Separate API logic from UI components**
+  ```typescript
+  // ✅ DO: Create dedicated API client functions
+  // lib/classificationApi.ts
+  export async function fetchClassificationHierarchy(): Promise<TreeNode[]> {
+    return await apiClient('/v1/asset-classifications/hierarchy');
+  }
+  
+  // ✅ DO: Use API functions in components
+  function ClassificationSelector() {
+    const [classifications, setClassifications] = useState<TreeNode[]>([]);
+    
+    useEffect(() => {
+      fetchClassificationHierarchy()
+        .then(setClassifications)
+        .catch(handleError);
+    }, []);
+  }
+  ```
+
+- **Consistent error handling across components**
+  ```typescript
+  // ✅ DO: Standardized error handling
+  interface ComponentProps {
+    onError?: (error: string) => void;
+  }
+  
+  function handleApiError(error: unknown, onError?: (error: string) => void) {
+    const message = error instanceof Error ? error.message : 'An error occurred';
+    onError?.(message);
+  }
+  ```
+
+## **Loading and Empty States**
+
+- **Provide consistent loading and empty state patterns**
+  ```typescript
+  // ✅ DO: Standard loading state
+  if (isLoading) {
+    return <div className="flex justify-center p-4">Loading...</div>;
+  }
+  
+  // ✅ DO: Helpful empty states
+  if (items.length === 0) {
+    return (
+      <div className="text-center p-8 text-gray-500">
+        <p>No items found</p>
+        <Button onClick={onAddNew}>Add New Item</Button>
+      </div>
+    );
+  }
+  ```
+
+## **Form Component Patterns**
+
+- **Use consistent form validation and submission patterns**
+  ```typescript
+  // ✅ DO: Standardized form interface
+  interface FormProps<T> {
+    initialData?: T;
+    onSubmit: (data: T) => Promise<void>;
+    onCancel: () => void;
+    isLoading?: boolean;
+  }
+  
+  // ✅ DO: Consistent validation pattern
+  function validateForm(data: FormData): string[] {
+    const errors: string[] = [];
+    if (!data.name.trim()) errors.push('Name is required');
+    if (!data.description.trim()) errors.push('Description is required');
+    return errors;
+  }
+  ```
+
+## **Dialog and Modal Patterns**
+
+- **Use consistent dialog/modal interfaces**
+  ```typescript
+  // ✅ DO: Standard dialog props
+  interface DialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    children: React.ReactNode;
+  }
+  
+  // ✅ DO: Confirmation dialog pattern
+  interface ConfirmationDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => Promise<void>;
+    title: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    isLoading?: boolean;
+  }
+  ```
+
+## **Tree and Hierarchical Component Patterns**
+
+- **Use recursive rendering for tree structures**
+  ```typescript
+  // ✅ DO: Recursive tree rendering
+  function TreeNode({ node, level = 0 }: TreeNodeProps) {
+    return (
+      <div style={{ paddingLeft: `${level * 20}px` }}>
+        <div className="node-content">
+          {node.children && (
+            <button onClick={() => toggleExpand(node.id)}>
+              {expanded ? <ChevronDown /> : <ChevronRight />}
+            </button>
+          )}
+          {node.name}
+        </div>
+        {expanded && node.children?.map(child => (
+          <TreeNode key={child.id} node={child} level={level + 1} />
+        ))}
+      </div>
+    );
+  }
+  ```
+
+## **Bulk Operations Interface**
+
+- **Provide consistent bulk operation patterns**
+  ```typescript
+  // ✅ DO: Bulk action interface
+  interface BulkActionBarProps {
+    selectedCount: number;
+    onClearSelection: () => void;
+    actions: BulkAction[];
+  }
+  
+  interface BulkAction {
+    label: string;
+    icon?: React.ReactNode;
+    onClick: () => void;
+    disabled?: boolean;
+    variant?: 'primary' | 'secondary' | 'danger';
+  }
+  ```
+
+## **Performance Optimization**
+
+- **Use React.memo for expensive components**
+  ```typescript
+  // ✅ DO: Memoize expensive tree components
+  const TreeNode = React.memo(({ node, ...props }: TreeNodeProps) => {
+    // Component implementation
+  });
+  
+  // ✅ DO: Memoize callback functions
+  const handleSelectionChange = useCallback((ids: string[]) => {
+    setSelectedIds(ids);
+  }, []);
+  ```
+
+- **Debounce search inputs**
+  ```typescript
+  // ✅ DO: Debounce search for performance
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 300);
+  
+  useEffect(() => {
+    if (debouncedSearch) {
+      performSearch(debouncedSearch);
+    }
+  }, [debouncedSearch]);
+  ```

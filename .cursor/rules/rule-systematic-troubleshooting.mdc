@@ -1,0 +1,132 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Systematic Troubleshooting & Development Patterns
+
+## **Error Classification for Rapid Debugging**
+
+### **Port Conflicts (macOS/Linux)**
+```bash
+# ✅ IMMEDIATE RESOLUTION
+lsof -ti:8001 | xargs kill -9  # Backend FastAPI
+lsof -ti:3000 | xargs kill -9  # Frontend Next.js
+lsof -ti:<PORT> | xargs kill -9  # Any specific port
+
+# ✅ PREVENTION
+# Always clear known ports before starting development session
+```
+
+### **404 Error Debugging - Layer-Specific Approach**
+
+**1. Static Assets (Next.js)**
+- **Error Pattern**: `GET /screenshots/image.png 404`
+- **Root Cause**: Missing files in `frontend/public/` directory
+- **Resolution**: Verify file exists at correct path in `frontend/public/`
+- **Prevention**: Audit static asset references during development
+
+**2. API Endpoints (FastAPI)**
+- **Error Pattern**: `POST /api/auth/logout 404`
+- **Root Cause**: Missing route definitions in FastAPI routers
+- **Resolution**: Check `backend/src/api/v1/routers/` for route definitions
+- **Prevention**: Verify HTTP method and path match exactly before frontend implementation
+
+### **Authentication Flow Completeness**
+
+```typescript
+// ✅ COMPLETE logout implementation pattern
+const handleLogout = async () => {
+  try {
+    await signOut();                      // 1. Firebase/Auth provider signout
+    localStorage.removeItem('accessToken'); // 2. Clear client-side tokens
+    router.push('/login');                // 3. Redirect to public page
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+}
+
+// ❌ INCOMPLETE patterns that cause broken states:
+// - Missing localStorage cleanup → tokens persist
+// - Missing redirection → user stays on protected page  
+// - Calling non-existent logout API → unnecessary errors
+```
+
+**Authentication Testing Checklist:**
+- [ ] signOut() function called successfully
+- [ ] localStorage/sessionStorage cleared
+- [ ] User redirected to public page
+- [ ] Protected routes inaccessible after logout
+- [ ] No authentication errors in console
+
+## **Development Session Startup Protocol**
+
+### **Backend (FastAPI) Startup Verification**
+```bash
+# ✅ CRITICAL PATH
+cd gridguard-asset-manager/backend    # 1. Directory verification
+source venv/bin/activate              # 2. Virtual environment
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8001  # 3. Service startup
+
+# ✅ PRE-STARTUP VERIFICATION
+pwd                    # Should end with '/backend'
+ls main.py            # Should show file exists  
+which python          # Should point to venv/bin/python
+
+# ❌ COMMON FAILURES
+cd gridguard-asset-manager  # Running from project root → "Could not import module main"
+```
+
+### **Frontend (Next.js) Startup**
+```bash
+cd gridguard-asset-manager/frontend   # Directory verification
+npm run dev                           # Service startup (typically port 3000)
+```
+
+### **Success Indicators**
+- Backend: "Uvicorn running", "Application startup complete" messages
+- Frontend: "Ready" message, accessible at http://localhost:3000
+- No port conflict errors during startup
+
+## **Data & Warning Interpretation**
+
+### **Firestore Positional Arguments Warning**
+- **Warning**: `"Detected filter using positional arguments"`
+- **Classification**: Style suggestion, NOT functional error
+- **Impact**: Code clarity improvement opportunity
+- **Action**: Consider keyword arguments during refactoring, not urgent
+
+### **Legacy Data Handling**
+- **Log**: `"DS: Skipping scan ... - missing config field (legacy data)"`
+- **Classification**: Graceful degradation, system resilience
+- **Impact**: Some older records skipped, operation continues
+- **Action**: Assess if legacy data migration needed for business requirements
+
+## **Prevention & Quality Assurance**
+
+### **Systematic Verification Approach**
+1. **Multi-step workflows**: Always implement complete patterns (especially auth flows)
+2. **Layer isolation**: Debug frontend vs backend issues separately  
+3. **Port management**: Proactive conflict resolution before development sessions
+4. **Error classification**: Distinguish functional errors from style suggestions
+
+### **Rule Creation Triggers**
+- **Authentication implementations** → Document complete flow patterns
+- **Repeated debugging sessions** → Create systematic troubleshooting guides
+- **Port/startup issues** → Update development protocol documentation
+- **404 error patterns** → Add layer-specific debugging approaches
+
+## **Documentation Integration Strategy**
+
+### **Multi-System Documentation**
+- **Immediate**: Fix code with proper patterns during implementation
+- **Rules**: Add patterns to technology-specific rule files  
+- **Workflow**: Update dev_workflow.mdc for daily developer use
+- **README**: Add troubleshooting sections for new developer onboarding
+- **Memory**: Store successful patterns for AI-assisted development
+
+### **Quality Metrics**
+- ✅ Complete implementations on first attempt
+- ✅ Systematic error resolution (not trial-and-error)
+- ✅ Preventive development session startup
+- ✅ Layer-appropriate debugging approaches

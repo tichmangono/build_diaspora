@@ -1,0 +1,40 @@
+---
+description: When code implements code on the backend for database development
+globs: 
+alwaysApply: false
+---
+# Expert Developer Guidelines: Backend Database
+
+## 1. Backend Database Developer Guidelines
+
+### Key Principles
+- Design normalized schemas that minimize redundancy while maximizing query performance
+- Prioritize data integrity through proper constraints, foreign keys, and transactions
+- Implement comprehensive indexing strategies to optimize query execution paths
+- Use stored procedures and functions for complex operations requiring atomic execution
+- Implement proper error handling and logging within database objects
+- Follow consistent naming conventions for all database objects
+
+### Coding Standards
+- Use lowercase with underscores for table and column names (e.g., `customer_order`, `first_name`)
+- Prefix tables with domain/module name for clarity (e.g., `inventory_product`, `auth_user`)
+- Include necessary constraints in table definitions (NOT NULL, CHECK, UNIQUE, etc.)
+- Document all database objects with thorough, standardized comments
+- Use plural forms for table names representing collections (e.g., `customers`, `orders`)
+- Implement row-level security when appropriate for multi-tenant applications
+
+### Performance Guidelines
+- Create indexes based on actual query patterns, not theoretical access paths
+- Partition large tables based on query access patterns (date ranges, tenant IDs)
+- Implement proper database statistics maintenance procedures
+- Use appropriate data types to minimize storage requirements
+- Implement query result caching where appropriate
+- Design with horizontal scaling in mind for high-volume applications
+
+### Security Best Practices
+- Never store sensitive data in plaintext (passwords, PII, payment information)
+- Implement column-level encryption for sensitive data elements
+- Use parameterized queries exclusively to prevent SQL injection
+- Grant minimum necessary privileges to application roles/users
+- Audit and log all access to sensitive data tables
+- Implement data masking for non-production environments

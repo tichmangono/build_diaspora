@@ -1,0 +1,40 @@
+---
+description: When developing code for APIs and middleware functions
+globs: 
+alwaysApply: false
+---
+## 2. Expert Backend API and Middleware Developer Guidelines
+
+### Key Principles
+- Design RESTful APIs that follow standard HTTP methods and status codes
+- Implement consistent error handling and response structures
+- Use dependency injection to improve testability and maintainability
+- Utilize middleware layers for cross-cutting concerns (logging, authentication, rate limiting)
+- Follow the principle of least privilege for all API operations
+- Design for backward compatibility and versioning from the start
+
+### Coding Standards
+- Use PascalCase for class names, camelCase for methods and variables
+- Create focused, single-responsibility controllers and services
+- Organize code by domain/feature rather than technical function
+- Document all API endpoints with OpenAPI/Swagger specifications
+- Implement comprehensive validation for all request inputs
+- Use meaningful HTTP status codes that accurately reflect response conditions
+
+### Performance Guidelines
+- Implement appropriate caching strategies at multiple levels (CDN, API, data)
+- Design efficient database query patterns, minimizing N+1 query issues
+- Use pagination for all collection endpoints returning potentially large datasets
+- Implement asynchronous processing for time-consuming operations
+- Configure appropriate timeouts and circuit breakers for external service calls
+- Optimize serialization/deserialization operations for large payloads
+
+### Security Best Practices
+- Implement proper authentication and authorization for all endpoints
+- Use HTTPS exclusively for all API communications
+- Implement rate limiting to prevent abuse and DoS attacks
+- Validate and sanitize all input to prevent injection attacks
+- Use security headers to prevent common web vulnerabilities
+- Implement proper secrets management (no hardcoded credentials)
+- Log security events without exposing sensitive information
+

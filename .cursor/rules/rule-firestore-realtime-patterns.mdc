@@ -1,0 +1,312 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Firestore and Real-time Data Patterns
+
+## **Multi-tenant Data Architecture**
+
+- **Use top-level collections with organization filtering**
+  ```python
+  # ✅ DO: Top-level collection with organization_id field
+  assets_ref = db.collection('assets')
+  query = assets_ref.where('organization_id', '==', org_id)
+  
+  # ❌ DON'T: Nested collections that complicate queries
+  assets_ref = db.collection('organizations').document(org_id).collection('assets')
+  ```
+
+- **Consistent organization_id field across all documents**
+  ```python
+  # ✅ DO: Include organization_id in all documents
+  asset_data = {
+      'id': asset_id,
+      'name': 'Asset Name',
+      'organization_id': organization_id,  # Always include
+      'created_at': firestore.SERVER_TIMESTAMP,
+      # ... other fields
+  }
+  ```
+
+## **Index Management**
+
+- **Proactively create composite indexes for common queries**
+  ```json
+  // firestore.indexes.json
+  {
+    "indexes": [
+      {
+        "collectionGroup": "assets",
+        "queryScope": "COLLECTION",
+        "fields": [
+          {"fieldPath": "organization_id", "order": "ASCENDING"},
+          {"fieldPath": "status", "order": "ASCENDING"},
+          {"fieldPath": "created_at", "order": "DESCENDING"}
+        ]
+      },
+      {
+        "collectionGroup": "asset_classifications",
+        "queryScope": "COLLECTION", 
+        "fields": [
+          {"fieldPath": "organization_id", "order": "ASCENDING"},
+          {"fieldPath": "name", "order": "ASCENDING"}
+        ]
+      }
+    ]
+  }
+  ```
+
+- **Monitor logs for index requirement errors**
+  ```python
+  # Common error pattern to watch for:
+  # "The query requires an index. You can create it here: https://console.firebase.google.com/..."
+  
+  try:
+      results = query.get()
+  except Exception as e:
+      if "requires an index" in str(e):
+          logger.error(f"Missing Firestore index: {e}")
+          # Extract index creation URL from error message
+  ```
+
+## **Real-time Data Monitoring**
+
+- **Use Firestore listeners for real-time updates**
+  ```python
+  # ✅ DO: Organization-scoped real-time monitoring
+  def start_asset_monitoring(organization_id: str):
+      assets_ref = db.collection('assets')
+      query = assets_ref.where('organization_id', '==', organization_id)
+      
+      def on_snapshot(docs, changes, read_time):
+          for change in changes:
+              if change.type.name == 'ADDED':
+                  handle_asset_added(change.document)
+              elif change.type.name == 'MODIFIED':
+                  handle_asset_modified(change.document)
+              elif change.type.name == 'REMOVED':
+                  handle_asset_removed(change.document)
+      
+      return query.on_snapshot(on_snapshot)
+  ```
+
+- **WebSocket integration with organization scoping**
+  ```python
+  # ✅ DO: Organization-specific WebSocket channels
+  @app.websocket("/v1/ws/status/{organization_id}")
+  async def websocket_status_endpoint(
+      websocket: WebSocket, 
+      organization_id: str,
+      token: str = Query(...)
+  ):
+      # Authenticate and verify organization access
+      user = await authenticate_websocket_token(token)
+      if user.organization_id != organization_id:
+          await websocket.close(code=1008)
+          return
+      
+      await websocket.accept()
+      # Start monitoring for this organization
+      start_monitoring(organization_id, websocket)
+  ```
+
+## **Query Optimization Patterns**
+
+- **Use array-contains-any for classification filtering**
+  ```python
+  # ✅ DO: Efficient classification filtering
+  def get_assets_by_classifications(org_id: str, classification_ids: List[str]):
+      query = db.collection('assets').where('organization_id', '==', org_id)
+      
+      if classification_ids:
+          query = query.where('classification_ids', 'array-contains-any', classification_ids)
+      
+      return query.get()
+  ```
+
+- **Implement pagination for large datasets**
+  ```python
+  # ✅ DO: Cursor-based pagination
+  def get_assets_paginated(org_id: str, limit: int = 10, start_after=None):
+      query = (db.collection('assets')
+               .where('organization_id', '==', org_id)
+               .order_by('created_at', direction=firestore.Query.DESCENDING)
+               .limit(limit))
+      
+      if start_after:
+          query = query.start_after(start_after)
+      
+      return query.get()
+  ```
+
+## **Data Consistency Patterns**
+
+- **Use transactions for related document updates**
+  ```python
+  # ✅ DO: Transactional updates for consistency
+  @firestore.transactional
+  def update_asset_and_relationships(transaction, asset_id: str, updates: dict):
+      # Update asset
+      asset_ref = db.collection('assets').document(asset_id)
+      transaction.update(asset_ref, updates)
+      
+      # Update related relationships
+      relationships_query = db.collection('asset_relationships').where('source_asset_id', '==', asset_id)
+      for rel_doc in relationships_query.get():
+          transaction.update(rel_doc.reference, {'updated_at': firestore.SERVER_TIMESTAMP})
+  ```
+
+- **Implement cascading deletes**
+  ```python
+  # ✅ DO: Clean up related documents on deletion
+  def delete_asset_cascade(asset_id: str, organization_id: str):
+      batch = db.batch()
+      
+      # Delete the asset
+      asset_ref = db.collection('assets').document(asset_id)
+      batch.delete(asset_ref)
+      
+      # Delete related relationships
+      relationships = db.collection('asset_relationships').where('source_asset_id', '==', asset_id).get()
+      for rel in relationships:
+          batch.delete(rel.reference)
+      
+      # Delete relationships where this asset is the target
+      target_relationships = db.collection('asset_relationships').where('target_asset_id', '==', asset_id).get()
+      for rel in target_relationships:
+          batch.delete(rel.reference)
+      
+      batch.commit()
+  ```
+
+## **Error Handling and Resilience**
+
+- **Handle Firestore exceptions gracefully**
+  ```python
+  # ✅ DO: Comprehensive error handling
+  from google.cloud.exceptions import NotFound, PermissionDenied, DeadlineExceeded
+  
+  def safe_firestore_operation(operation_func, *args, **kwargs):
+      try:
+          return operation_func(*args, **kwargs)
+      except NotFound:
+          raise ResourceNotFoundException("Document not found")
+      except PermissionDenied:
+          raise AuthorizationException("Insufficient permissions")
+      except DeadlineExceeded:
+          raise DatabaseException("Operation timed out")
+      except Exception as e:
+          logger.error(f"Firestore operation failed: {e}")
+          raise DatabaseException(f"Database operation failed: {str(e)}")
+  ```
+
+- **Implement retry logic for transient failures**
+  ```python
+  # ✅ DO: Retry logic for resilience
+  import time
+  from functools import wraps
+  
+  def retry_firestore_operation(max_retries=3, delay=1):
+      def decorator(func):
+          @wraps(func)
+          def wrapper(*args, **kwargs):
+              for attempt in range(max_retries):
+                  try:
+                      return func(*args, **kwargs)
+                  except Exception as e:
+                      if attempt == max_retries - 1:
+                          raise
+                      time.sleep(delay * (2 ** attempt))  # Exponential backoff
+              return wrapper
+          return decorator
+  ```
+
+## **Performance Optimization**
+
+- **Use field masks for partial updates**
+  ```python
+  # ✅ DO: Update only changed fields
+  def update_asset_partial(asset_id: str, updates: dict):
+      asset_ref = db.collection('assets').document(asset_id)
+      asset_ref.update(updates)  # Only updates specified fields
+  ```
+
+- **Batch operations for bulk updates**
+  ```python
+  # ✅ DO: Batch operations for efficiency
+  def bulk_update_asset_classifications(asset_ids: List[str], classification_ids: List[str]):
+      batch = db.batch()
+      
+      for asset_id in asset_ids:
+          asset_ref = db.collection('assets').document(asset_id)
+          batch.update(asset_ref, {
+              'classification_ids': classification_ids,
+              'updated_at': firestore.SERVER_TIMESTAMP
+          })
+      
+      batch.commit()
+  ```
+
+## **Security Rules Patterns**
+
+- **Implement organization-based security rules**
+  ```javascript
+  // firestore.rules
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      // Assets collection - organization scoped
+      match /assets/{assetId} {
+        allow read, write: if request.auth != null 
+          && request.auth.token.organization_id == resource.data.organization_id;
+      }
+      
+      // Asset classifications - organization scoped
+      match /asset_classifications/{classificationId} {
+        allow read: if request.auth != null 
+          && request.auth.token.organization_id == resource.data.organization_id;
+        allow write: if request.auth != null 
+          && request.auth.token.organization_id == resource.data.organization_id
+          && request.auth.token.role == 'admin';
+      }
+    }
+  }
+  ```
+
+## **Frontend Real-time Integration**
+
+- **Use WebSocket connections for real-time updates**
+  ```typescript
+  // ✅ DO: Organization-scoped WebSocket connection
+  function useAssetStatusUpdates(organizationId: string, token: string) {
+    const [assets, setAssets] = useState<Asset[]>([]);
+    
+    useEffect(() => {
+      const ws = new WebSocket(`ws://localhost:8000/v1/ws/status/${organizationId}?token=${token}`);
+      
+      ws.onmessage = (event) => {
+        const update = JSON.parse(event.data);
+        
+        setAssets(prevAssets => {
+          switch (update.type) {
+            case 'ASSET_ADDED':
+              return [...prevAssets, update.asset];
+            case 'ASSET_UPDATED':
+              return prevAssets.map(asset => 
+                asset.id === update.asset.id ? update.asset : asset
+              );
+            case 'ASSET_REMOVED':
+              return prevAssets.filter(asset => asset.id !== update.asset.id);
+            default:
+              return prevAssets;
+          }
+        });
+      };
+      
+      return () => ws.close();
+    }, [organizationId, token]);
+    
+    return assets;
+  }
+  ```

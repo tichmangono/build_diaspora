@@ -1,0 +1,40 @@
+---
+description: To optimize the performance of the application for speed, latancy, and efficiency
+globs: 
+alwaysApply: false
+---
+2. Performance Optimization Developer Guidelines
+Key Principles
+
+Optimize for user-perceived performance first, then technical metrics
+Establish measurable performance baselines and targets (SLOs/SLAs)
+Profile before optimizing to identify actual bottlenecks, not assumed ones
+Consider observability from the beginning of development
+Design for scalability in both vertical and horizontal dimensions
+Implement performance testing as part of the continuous integration pipeline
+
+Frontend Performance
+
+Minimize main thread blocking with efficient JavaScript execution
+Implement code splitting and lazy loading for large applications
+Optimize critical rendering path and core web vitals (LCP, FID, CLS)
+Implement effective asset caching strategies
+Optimize image and media delivery (format, size, lazy loading)
+Minimize bundle sizes through tree shaking and dependency management
+Backend Performance
+
+Optimize database query patterns and indexing strategies
+Implement appropriate caching at multiple levels (memory, distributed, CDN)
+Use connection pooling for database and service connections
+Implement asynchronous processing for non-critical operations
+Design efficient data serialization/deserialization processes
+Optimize network calls through batching and compression
+
+Monitoring and Analysis
+
+Implement comprehensive APM (Application Performance Monitoring)
+Create custom dashboards for key performance indicators
+Set up alerting for performance degradation
+Perform regular load testing to verify scaling capabilities
+Analyze performance trends over time to identify gradual degradation
+Conduct regular performance reviews of critical system components

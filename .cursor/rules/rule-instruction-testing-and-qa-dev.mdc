@@ -1,0 +1,367 @@
+---
+description: For implementing testing and quality assuarance
+globs: 
+alwaysApply: false
+---
+1. Testing and QA Developer Guidelines
+Key Principles
+
+Practice test-driven development (TDD) when appropriate for critical components
+Maintain a comprehensive test pyramid (unit, integration, system, e2e tests)
+Automate tests at all levels to enable continuous integration/deployment
+Isolate test dependencies through effective mocking and stubbing
+Prioritize test coverage based on business criticality and technical risk
+Design tests for maintainability and clarity, not just coverage metrics
+
+Testing Standards
+
+Write descriptive test names that explain the scenario and expected outcome
+Structure tests using the Arrange-Act-Assert (AAA) or Given-When-Then pattern
+Avoid test interdependencies; each test should be runnable in isolation
+Implement proper test data management (setup/teardown, test factories)
+Test both happy paths and edge cases/error conditions
+Create separate test suites for functional, performance, and security testing
+QA Automation
+
+Automate regression test suites for critical user journeys
+Implement visual regression testing for UI components
+Create data-driven tests for scenarios requiring multiple inputs
+Use contract testing for service boundaries and API interactions
+Implement continuous monitoring of test metrics (coverage, pass rates, duration)
+Establish clear definitions of "done" including testability requirements
+
+Test Environment Management
+
+Maintain parity between development, testing, and production environments
+Implement ephemeral test environments for pull requests/feature branches
+Use containerization to ensure consistent test execution across environments
+Implement data anonymization for non-production test data
+Automate environment provisioning and configuration management
+Include chaos engineering tests for critical production systems
+
+## Firestore and Database Testing Patterns
+
+### **Mock Factory Pattern for Complex Chains**
+- Create reusable factory functions for complex mock setups like Firestore query chains
+- Example: `create_firestore_query_chain_mock(stream_return_value, count_return_value)`
+- Factory functions should return all mock objects in the chain for individual test configuration
+- Use wrapper classes like `MockAggregateFieldValue(value=N)` for count query results
+
+### **Firestore Query Chain Mocking**
+```python
+# ✅ DO: Complete query chain mock
+collection_mock, where_mock, order_by_mock, limit_mock, offset_mock, stream_mock, count_mock, count_get_mock = create_firestore_query_chain_mock(
+    stream_return_value=[mock_doc1, mock_doc2],
+    count_return_value=2
+)
+
+# ✅ DO: Count queries return nested structure
+count_snapshot = [[MockAggregateFieldValue(value=2)]]
+
+# ❌ DON'T: Incomplete mock chains
+mock_collection.where.return_value = mock_query  # Missing order_by, limit, etc.
+```
+
+### **Document Snapshot Mocking**
+```python
+# ✅ DO: Set document ID as string attribute
+mock_doc.id = "asset-123"  # Required for proper document handling
+mock_doc.to_dict.return_value = asset_data
+
+# ❌ DON'T: Only include ID in to_dict data
+mock_doc.to_dict.return_value = {"id": "asset-123", ...}  # Missing .id attribute
+```
+
+### **Collection Side Effects for Multi-Collection Tests**
+```python
+# ✅ DO: Use side_effect for different collections
+def mock_collection_side_effect(collection_name):
+    if collection_name == 'assets':
+        return assets_collection_mock
+    elif collection_name == 'assetRelationships':
+        return relationships_collection_mock
+    else:
+        return default_collection_mock
+
+mock_firestore_client.collection.side_effect = mock_collection_side_effect
+```
+
+### **Batch Operation Testing**
+```python
+# ✅ DO: Mock batch operations with conditional logic awareness
+mock_batch = MagicMock()
+mock_batch.commit = MagicMock()
+mock_firestore_client.batch.return_value = mock_batch
+
+# ✅ DO: Test conditional batch commits
+if relationships_exist:
+    mock_batch.commit.assert_called_once()
+else:
+    mock_batch.commit.assert_not_called()
+```
+
+### **Database Function Testing Best Practices**
+- **Function Signatures**: Match exact parameter types and order
+  ```python
+  # ✅ DO: Match actual function signature
+  create_asset_in_firestore(asset_data: dict, org_id: str, user_id: str)
+  
+  # ❌ DON'T: Assume request objects are passed directly
+  create_asset_in_firestore(request: AssetCreateRequest)
+  ```
+
+- **Return Types**: Verify actual return patterns
+  ```python
+  # ✅ DO: Handle tuple returns
+  assets_list, total_count = await get_assets_for_organization(...)
+  
+  # ❌ DON'T: Assume object with attributes
+  result = await get_assets_for_organization(...)
+  assets = result.assets  # This pattern doesn't exist
+  ```
+
+### **Assertion Strategies for Database Tests**
+```python
+# ✅ DO: Use assert_any_call for unordered multiple calls
+mock_firestore_client.collection.assert_any_call('assets')
+mock_firestore_client.collection.assert_any_call('assetRelationships')
+
+# ✅ DO: Count total calls when order matters
+assert mock_firestore_client.collection.call_count >= 2
+
+# ✅ DO: Test conditional business logic
+mock_batch.commit.assert_not_called()  # When no relationships to delete
+```
+
+### **Fixture Management**
+- **Avoid Duplicate Fixtures**: Remove conflicting fixtures with same names entirely
+- **Use autouse Sparingly**: Only for comprehensive fixtures or delegate to factory functions
+- **Test-Specific Overrides**: Use side_effect to override global fixture behavior per test
+
+## AI-Assisted Test Development & Debugging
+
+When working with AI to develop, debug, or fix tests, adhere to the following enhanced process to improve efficiency and reduce regressions:
+
+-   **Proactive Knowledge Consultation:**
+    -   Before implementing test fixes or new tests, the AI assistant should explicitly consult relevant testing rules (like this one), framework-specific conventions (e.g., FastAPI testing, Pydantic model mocking), and its internal knowledge base (MCP Memory) for established patterns, similar problems, and known solutions.
+    -   This step aims to preempt common pitfalls and leverage past learnings.
+
+-   **Strategic Mocking and Patching:**
+    -   Plan mocking strategies carefully, especially for asynchronous operations, complex call chains (e.g., ORM query builders, cloud SDKs), and external dependencies.
+    -   Double-check and verify correct patch targets (e.g., `module.Class.method` vs. `module.instance.method`) considering import locations and usage context *before* applying edits.
+
+-   **Systematic Debugging Approach:**
+    -   Perform deep traceback analysis, focusing on the exact line of failure, variable states, and object types.
+    -   If necessary, use targeted, temporary debug prints within the code under test to inspect the runtime state during test execution. Remove these prints once the issue is resolved.
+    -   Isolate complex test failures by simplifying the test case or the code under test before attempting broad fixes.
+
+-   **Regression Prevention and Careful Edits:**
+    -   Employ precise and targeted code edits. Critically evaluate diffs produced by editing tools; if changes are not exact or introduce unintended modifications, refine instructions and re-attempt.
+    -   **Crucially:** After applying a fix (especially to shared code like `conftest.py`, database layers, models, or utility functions), run a broader suite of relevant tests (e.g., all tests in the affected file, or all tests for the affected module/service) to proactively catch any regressions, not just the single test that was initially failing.
+
+-   **Continuous Learning and Knowledge Augmentation:**
+    -   After resolving complex testing issues or discovering new patterns/anti-patterns, proactively suggest updates to these testing rules or add detailed entries to the AI's internal knowledge base (MCP Memory). This includes effective mocking techniques, common error resolutions, and framework-specific testing advice.
+
+# Testing and QA Development Best Practices
+
+## **FastAPI Authentication Testing**
+
+- **Dedicated Test App Pattern (CRITICAL):**
+  ```python
+  # ✅ DO: Create separate FastAPI app for testing
+  @pytest.fixture(scope="session")
+  def app_with_applied_overrides():
+      test_app = FastAPI(title="Test API")
+      
+      # Apply overrides BEFORE adding routes
+      test_app.dependency_overrides[actual_oauth2_scheme] = mock_oauth2
+      test_app.dependency_overrides[actual_get_current_user] = mock_user
+      
+      # THEN add routes (copy from main app or redefine)
+      @test_app.post("/v1/assets")
+      async def create_asset_endpoint(data, user=Depends(mock_user)):
+          return await create_asset_service(data, user)
+      
+      return test_app
+  
+  # ❌ DON'T: Try to override dependencies on global app
+  # app.dependency_overrides[...] = ... # This often fails
+  ```
+
+- **Authentication Override Best Practices:**
+  - Always create fresh FastAPI instances for tests
+  - Apply dependency overrides before route definitions
+  - Use session-scoped fixtures for test apps
+  - Test with both mocked and real JWT tokens
+
+## **Database Testing with Firestore**
+
+- **Firestore Mocking Strategy:**
+  ```python
+  # ✅ DO: Mock at document snapshot level
+  @pytest.fixture
+  def mock_firestore_client():
+      mock_client = MagicMock()
+      
+      # Mock document snapshots with realistic data
+      mock_doc = MagicMock()
+      mock_doc.exists = True
+      mock_doc.to_dict.return_value = {
+          'id': 'test_id',
+          'organization_id': 'test_org',
+          'name': 'Test Asset'
+      }
+      
+      mock_client.collection().document().get.return_value = mock_doc
+      return mock_client
+  
+  # ❌ DON'T: Mock at API client level
+  # This loses the integration benefits of testing
+  ```
+
+- **Multi-Tenant Testing:**
+  - Test organization-scoped data isolation
+  - Verify cross-organization access prevention
+  - Use real organization IDs in JWT tokens
+  - Test with multiple organization contexts
+
+## **API Testing Methodology**
+
+- **Incremental Problem Solving:**
+  ```python
+  # ✅ PROVEN PATTERN: Fix issues systematically
+  testing_approach = {
+      "step_1": "Fix import errors - verify project structure",
+      "step_2": "Resolve authentication - create test app",
+      "step_3": "Mock database layer - patch service functions",
+      "step_4": "Validate data flow - test end-to-end",
+      "step_5": "Real API verification - curl testing"
+  }
+  ```
+
+- **Debug Strategy for API Tests:**
+  - Add strategic debug prints in dependencies.py
+  - Log mock object IDs and types
+  - Trace execution flow through auth dependencies
+  - Verify which functions are actually called
+
+## **Real-World API Validation**
+
+- **Combine Automated and Manual Testing:**
+  ```bash
+  # ✅ DO: Test real endpoints alongside automated tests
+  # Register user
+  curl -X POST http://localhost:8000/v1/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{"email":"test@example.com","password":"password123"}'
+  
+  # Login and get token
+  TOKEN=$(curl -X POST http://localhost:8000/v1/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"test@example.com","password":"password123"}' | jq -r .access_token)
+  
+  # Test authenticated endpoint
+  curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/v1/assets
+  ```
+
+## **Error Pattern Recognition**
+
+- **Common FastAPI Testing Issues:**
+  - **401 Unauthorized**: Dependency overrides not applied correctly
+  - **404 Not Found**: Routes not copied to test app
+  - **ImportError**: Project structure mismatch
+  - **Async Issues**: Missing await in test database functions
+
+- **Systematic Error Resolution:**
+  ```python
+  # ✅ DO: Document error patterns and solutions
+  error_resolution_map = {
+      "401_auth_errors": "Create dedicated test FastAPI app",
+      "dependency_override_fails": "Apply overrides before adding routes",
+      "import_path_errors": "Verify actual project structure",
+      "async_test_issues": "Use pytest-asyncio and proper await patterns"
+  }
+  ```
+
+## **Test Organization Best Practices**
+
+- **Test File Structure:**
+  ```
+  backend/tests/
+  ├── conftest.py              # Shared fixtures and test app
+  ├── test_auth_api.py         # Authentication endpoint tests
+  ├── test_asset_api.py        # Asset management endpoint tests
+  ├── test_discovery_api.py    # Discovery service endpoint tests
+  └── integration/
+      ├── test_full_workflow.py # End-to-end workflow tests
+      └── test_multi_tenant.py  # Multi-tenancy integration tests
+  ```
+
+- **Fixture Organization:**
+  - Session-scoped for test apps and database connections
+  - Function-scoped for test data and user contexts
+  - Module-scoped for organization and configuration data
+
+## **Performance and Load Testing**
+
+- **API Endpoint Performance:**
+  - Test response times under normal load
+  - Verify database query efficiency
+  - Monitor memory usage during bulk operations
+  - Test concurrent user scenarios
+
+- **Database Performance Testing:**
+  ```python
+  # ✅ DO: Test with realistic data volumes
+  @pytest.mark.performance
+  async def test_asset_listing_performance():
+      # Create 1000 test assets
+      assets = await create_bulk_test_assets(1000)
+      
+      start_time = time.time()
+      response = await client.get("/v1/assets")
+      duration = time.time() - start_time
+      
+      assert duration < 2.0  # Should complete in under 2 seconds
+      assert response.status_code == 200
+  ```
+
+## **Security Testing**
+
+- **Authentication Security:**
+  - Test with expired tokens
+  - Verify token validation
+  - Test cross-organization access attempts
+  - Validate input sanitization
+
+- **Authorization Testing:**
+  ```python
+  # ✅ DO: Test authorization edge cases
+  async def test_cross_organization_access_denied():
+      # User from org A tries to access org B's assets
+      user_a_token = await get_user_token("org_a_user")
+      org_b_asset_id = await create_asset_in_org_b()
+      
+      response = await client.get(
+          f"/v1/assets/{org_b_asset_id}",
+          headers={"Authorization": f"Bearer {user_a_token}"}
+      )
+      
+      assert response.status_code == 403
+  ```
+
+## **Continuous Integration Testing**
+
+- **CI/CD Pipeline Testing:**
+  - Run tests in isolated environments
+  - Use database containers for integration tests
+  - Validate with multiple Python versions
+  - Test deployment configurations
+
+- **Test Environment Management:**
+  - Separate test databases per CI job
+  - Clean up test data after test runs
+  - Use environment-specific configurations
+  - Mock external services consistently
+
+Follow these patterns for robust, maintainable API testing that catches real-world issues before production deployment.

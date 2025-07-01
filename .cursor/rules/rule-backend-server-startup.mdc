@@ -1,0 +1,106 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Backend Server Startup Requirements
+
+## **Critical Directory Rule**
+
+- **NEVER run uvicorn from project root directory**
+- **ALWAYS run backend server from backend/ subdirectory**
+- **main.py MUST be in current working directory when starting uvicorn**
+
+## **Correct Startup Workflow**
+
+```bash
+# ✅ DO: Correct directory and command sequence
+cd gridguard-asset-manager/backend
+source venv/bin/activate
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8001
+```
+
+```bash
+# ❌ DON'T: Running from wrong directory
+cd gridguard-asset-manager  # WRONG - this is project root
+python -m uvicorn main:app --reload --port 8001
+# ERROR: Could not import module "main"
+```
+
+## **Pre-Startup Verification**
+
+- **Directory Check**
+  ```bash
+  pwd  # Should end with /backend
+  ls main.py  # Should exist in current directory
+  ```
+
+- **Virtual Environment**
+  ```bash
+  source venv/bin/activate
+  which python  # Should point to venv/bin/python
+  ```
+
+- **Port Availability**
+  ```bash
+  lsof -i :8001  # Check for existing processes
+  pkill -f "uvicorn main:app"  # Kill if needed
+  ```
+
+## **Success Indicators**
+
+When backend starts correctly, you should see:
+```
+✅ Firebase Admin SDK initialized with credentials file
+✅ AssetStatusMonitorService initialized
+✅ INFO: Application startup complete
+✅ INFO: Uvicorn running on http://127.0.0.1:8001
+```
+
+## **Common Error Patterns**
+
+| Error Message | Root Cause | Solution |
+|--------------|------------|----------|
+| `Could not import module "main"` | Wrong working directory | `cd backend` first |
+| `Address already in use` | Port conflict | Use different port or kill process |
+| `No module named 'src'` | Virtual environment not activated | `source venv/bin/activate` |
+
+## **Testing Verification**
+
+After startup, test with:
+```bash
+curl http://127.0.0.1:8001/  # Should return HTTP 200
+curl http://127.0.0.1:8001/docs  # Should show FastAPI docs
+```
+
+## **Development Workflow Integration**
+
+- **Terminal Sessions**: Always start backend terminal with `cd backend`
+- **IDE Configuration**: Set backend/ as working directory for run configurations
+- **Scripts**: Any automation scripts must `cd backend` before uvicorn commands
+- **Documentation**: Always include directory context in setup instructions
+
+## **Project Architecture Context**
+
+```
+gridguard-asset-manager/          ← PROJECT ROOT (don't run server from here)
+├── frontend/                     ← Frontend Next.js app
+├── backend/                      ← BACKEND ROOT (run server from here)
+│   ├── main.py                  ← FastAPI entry point
+│   ├── venv/                    ← Python virtual environment
+│   └── src/                     ← Source code modules
+└── README.md
+```
+
+## **Error Prevention**
+
+- **Always verify working directory before starting server**
+- **Use absolute paths in documentation and scripts**
+- **Include directory checks in startup scripts**
+- **Document this requirement prominently in README and setup guides**
+
+## **Related Files**
+
+- [Backend Main Application](mdc:backend/main.py)
+- [README Server Setup](mdc:README.md)
+- [Development Workflow](mdc:.cursor/rules/dev_workflow.mdc)

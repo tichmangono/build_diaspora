@@ -1,0 +1,201 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UI Layout Consistency
+
+## **Standard Container Pattern**
+- **Use consistent container structure across all dashboard pages**
+  ```tsx
+  // ✅ DO: Standard dashboard page container
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {/* Page content */}
+  </div>
+  
+  // ✅ DO: Authentication page container
+  <div className="flex flex-grow items-center justify-center px-4 sm:px-6 lg:px-8 py-6">
+    {/* Auth content */}
+  </div>
+  ```
+
+## **Header Structure Standardization**
+- **All tabbed pages should use identical header structure**
+  ```tsx
+  // ✅ DO: Consistent header pattern
+  {/* Header */}
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+    <div className="mb-4 sm:mb-0">
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">{pageTitle}</h1>
+      <p className="text-gray-600">{pageSubtitle}</p>
+    </div>
+  </div>
+  
+  // ❌ DON'T: Mix different header styles
+  <div className="flex justify-between items-center mb-6">
+    <div>
+      <h1 className="text-2xl font-bold text-slate-800">{title}</h1>
+      <p className="text-gray-600 mt-1">{subtitle}</p>
+    </div>
+  </div>
+  ```
+
+## **Typography Consistency**
+- **Use standardized text styles across components**
+  ```tsx
+  // ✅ DO: Standard typography classes
+  h1: "text-3xl font-bold text-gray-900 mb-2"
+  subtitle: "text-gray-600"
+  labels: "text-slate-700"
+  headings: "text-slate-800"
+  
+  // ❌ DON'T: Mix different text styles for same elements
+  h1: "text-2xl font-bold text-slate-800"  // Inconsistent size and color
+  ```
+
+## **Spacing Patterns**
+- **Maintain consistent spacing throughout the application**
+  ```tsx
+  // ✅ DO: Standard spacing patterns
+  Header bottom margin: "mb-8"
+  Title bottom margin: "mb-2"
+  Form spacing: "space-y-2"
+  Button padding: "py-1.5 px-2"
+  
+  // ❌ DON'T: Use random spacing values
+  Header bottom margin: "mb-6"  // Should be mb-8
+  ```
+
+## **Sub-navigation Structure**
+- **Consistent tab navigation across related pages**
+  ```tsx
+  // ✅ DO: Standard sub-navigation after header
+  {/* Sub-navigation */}
+  <div className="mb-6">
+    <div className="border-b border-gray-200">
+      <nav className="-mb-px flex space-x-8">
+        {tabs.map(tab => (
+          <Link 
+            key={tab.href}
+            href={tab.href}
+            className={`${
+              isActive ? 
+                'border-blue-500 text-blue-600' : 
+                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors`}
+          >
+            {tab.icon}
+            {tab.label}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  </div>
+  ```
+
+## **Controls Section Placement**
+- **Place filter/control sections after sub-navigation, not in header**
+  ```tsx
+  // ✅ DO: Controls after sub-navigation
+  {/* Header */}
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+    {/* Header content only */}
+  </div>
+  
+  {/* Sub-navigation */}
+  <div className="mb-6">
+    {/* Navigation tabs */}
+  </div>
+  
+  {/* Controls */}
+  <div className="flex items-center space-x-2 mb-6">
+    {/* Filters, view toggles, etc. */}
+  </div>
+  
+  // ❌ DON'T: Mix controls in header
+  <div className="flex justify-between items-center mb-6">
+    <div>{/* Title */}</div>
+    <div>{/* Controls - should be separate */}</div>
+  </div>
+  ```
+
+## **Responsive Design Patterns**
+- **Use consistent responsive breakpoints and patterns**
+  ```tsx
+  // ✅ DO: Standard responsive patterns
+  Container: "px-4 sm:px-6 lg:px-8"
+  Header: "flex flex-col sm:flex-row sm:items-center sm:justify-between"
+  Spacing: "mb-4 sm:mb-0"
+  
+  // ❌ DON'T: Skip responsive considerations
+  Container: "px-4"  // Missing responsive padding
+  ```
+
+## **Form Layout Consistency**
+- **Standardize form layouts for better mobile experience**
+  ```tsx
+  // ✅ DO: Compact, mobile-friendly forms
+  <div className="space-y-2">
+    <label className="text-xs font-medium text-slate-700">
+      {label}
+    </label>
+    <input className="py-1.5 px-2 text-sm border rounded" />
+  </div>
+  
+  // ❌ DON'T: Use large form elements on mobile
+  <div className="space-y-4">
+    <input className="py-3 px-4 text-lg" />  // Too large for mobile
+  </div>
+  ```
+
+## **Border and Visual Hierarchy**
+- **Use single border approach to avoid double borders**
+  ```tsx
+  // ✅ DO: Single border from parent container
+  <div className="border border-gray-200 rounded-lg">
+    <div className="p-4">
+      {/* Content without additional borders */}
+    </div>
+  </div>
+  
+  // ❌ DON'T: Nest bordered components
+  <div className="border border-gray-200">
+    <div className="border border-gray-300">  {/* Double border */}
+      {/* Content */}
+    </div>
+  </div>
+  ```
+
+## **Theme Consistency**
+- **Maintain light theme consistency throughout**
+  ```tsx
+  // ✅ DO: Consistent color palette
+  Primary text: "text-gray-900"
+  Secondary text: "text-gray-600"
+  Labels: "text-slate-700"
+  Borders: "border-gray-200"
+  Backgrounds: "bg-white"
+  
+  // ❌ DON'T: Mix color schemes
+  Primary text: "text-slate-800"  // Should be text-gray-900
+  ```
+
+## **Loading and Error States**
+- **Consistent loading and error state patterns**
+  ```tsx
+  // ✅ DO: Standard loading state
+  {isLoading ? (
+    <div className="flex items-center justify-center py-8">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>
+  ) : (
+    <div>{/* Content */}</div>
+  )}
+  
+  // ✅ DO: Standard error state
+  {error && (
+    <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4">
+      <p className="text-red-800">{error}</p>
+    </div>
+  )}
+  ```

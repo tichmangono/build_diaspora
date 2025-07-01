@@ -1,0 +1,102 @@
+---
+description: High level description of expert front end developer skills, tools and principles
+globs: 
+alwaysApply: true
+---
+You are an expert developer in TypeScript, Next.js (with App Router), Shad CN Tailwind CSS , React Three Fiber, D3.js, and Google Cloud Platform (GCP) services (Pub/Sub, Firestore, Cloud Run, Cloud Functions). 
+ 
+Key Principles 
+- Write concise, technical responses with accurate TypeScript examples. 
+- Use functional, declarative programming. Avoid classes. 
+- Prefer iteration and modularization over duplication. 
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError, shouldRender). 
+- Use lowercase with dashes for directories (e.g., components/asset-viewer). 
+- Favor named exports for components. 
+- Use the Receive an Object, Return an Object (RORO) pattern.
+
+## **UI/UX Layout & Styling**
+
+- **Spacing Consistency**
+  - Use standard container pattern: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8` for dashboard pages
+  - Use centered layout for authentication: `flex flex-grow items-center justify-center px-4 sm:px-6 lg:px-8 py-6`
+  - Follow spacing patterns from [rule-ui-layout-debugging.mdc](mdc:.cursor/rules/rule-ui-layout-debugging.mdc)
+
+- **Tailwind CSS Usage**
+  - Use Tailwind CSS for utility classes
+  - Keep Tailwind usage minimal and purposeful to avoid clutter
+  - Organize repeated styling with reusable class sets or helper classes
+  - Avoid global CSS classes that conflict with Tailwind utilities
+
+- **Component Styling**
+  - Use single border approach - avoid double borders from nested components
+  - Maintain light theme consistency: `text-slate-800` for headings, `text-slate-700` for labels
+  - Use compact form patterns: `space-y-2`, `text-xs`, `py-1.5 px-2` for mobile-friendly forms
+
+## **Complex Feature Implementation**
+
+- **Multi-Interface Features**
+  - Follow patterns from [rule-frontend-complex-features.mdc](mdc:.cursor/rules/rule-frontend-complex-features.mdc)
+  - Use tab-based architecture for features with multiple sub-interfaces
+  - Implement centralized notification systems for unified user feedback
+  - Create custom UI components when library components are insufficient
+
+- **Bulk Operations**
+  - Use `Set<string>` for efficient selection state management
+  - Implement progressive disclosure (basic → advanced features)
+  - Add visual feedback for bulk actions with AnimatePresence
+  - Provide clear success/error messaging for operation results
+
+- **Real-time Monitoring**
+  - Implement user-controlled auto-refresh with cleanup
+  - Use silent error handling during polling to avoid UI disruption
+  - Only poll when relevant interfaces are active
+  - Provide visual indicators for auto-refresh status
+
+## **Error Handling & Safety**
+
+- **Null Safety for Dynamic Content**
+  ```tsx
+  // ✅ DO: Add null checks for dynamic content
+  {userData?.status ? userData.status.charAt(0).toUpperCase() + userData.status.slice(1) : 'Unknown'}
+  
+  // ❌ DON'T: Call methods on potentially undefined values
+  {userData.status.charAt(0).toUpperCase()}  // Can cause TypeError
+  ```
+
+- **Import Statement Verification**
+  - Check export type before importing (named vs default exports)
+  - Create fallback components for problematic imports
+  - Verify component exports match import statements
+
+## **Layout Debugging**
+
+- **When Layout Issues Occur**
+  - Use colored debug borders to visualize container dimensions
+  - Check for CSS specificity conflicts between global and utility classes
+  - Clear Next.js cache (`rm -rf .next`) if changes don't apply
+  - Refer to [rule-ui-layout-debugging.mdc](mdc:.cursor/rules/rule-ui-layout-debugging.mdc) for detailed debugging techniques
+
+## **Responsive Design**
+
+- **Mobile-First Approach**
+  - Use responsive spacing: `px-4 sm:px-6 lg:px-8`
+  - Test form layouts on mobile devices
+  - Use appropriate container max-widths: `max-w-sm` for compact forms, `max-w-7xl` for dashboards
+
+## **Component Architecture**
+
+- **Form Components**
+  - Use consistent error message styling with proper color coding
+  - Implement proper loading states and disabled states
+  - Follow compact form patterns for better mobile experience
+
+- **Layout Components**
+  - Maintain consistent spacing across all pages
+  - Use proper container nesting without double constraints
+  - Ensure theme consistency throughout the application
+
+- **Complex Features**
+  - Separate concerns into focused sub-components
+  - Use barrel exports for clean imports: `import { FeatureManager } from '@/components/feature'`
+  - Implement unified notification systems across component hierarchies
+  - Large components (300-500+ lines) acceptable for cohesive functionality

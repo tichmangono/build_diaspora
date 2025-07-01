@@ -1,0 +1,266 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Firestore Testing Patterns
+
+## **Mock Factory Pattern for Query Chains**
+
+### **Factory Function Structure**
+```python
+def create_firestore_query_chain_mock(stream_return_value=None, count_return_value=0):
+    """Factory to create complete Firestore query chain mocks."""
+    # Create all mock objects in the chain
+    collection_mock = MagicMock()
+    where_mock = MagicMock()
+    order_by_mock = MagicMock()
+    limit_mock = MagicMock()
+    offset_mock = MagicMock()
+    stream_mock = MagicMock()
+    count_mock = MagicMock()
+    count_get_mock = MagicMock()
+    
+    # Set up the complete chain
+    collection_mock.where.return_value = where_mock
+    where_mock.order_by.return_value = order_by_mock
+    order_by_mock.limit.return_value = limit_mock
+    limit_mock.offset.return_value = offset_mock
+    offset_mock.stream.return_value = stream_return_value or []
+    
+    # Count query chain
+    where_mock.count.return_value = count_mock
+    count_mock.get.return_value = [[MockAggregateFieldValue(count_return_value)]]
+    
+    return collection_mock, where_mock, order_by_mock, limit_mock, offset_mock, stream_mock, count_mock, count_get_mock
+
+class MockAggregateFieldValue:
+    """Wrapper for Firestore count query results."""
+    def __init__(self, value):
+        self.value = value
+```
+
+### **Usage in Tests**
+```python
+# ✅ DO: Use factory for consistent mock setup
+collection_mock, where_mock, order_by_mock, limit_mock, offset_mock, stream_mock, count_mock, count_get_mock = create_firestore_query_chain_mock(
+    stream_return_value=[mock_doc1, mock_doc2],
+    count_return_value=2
+)
+```
+
+## **Document Snapshot Mocking**
+
+### **Complete Document Mock Setup**
+```python
+# ✅ DO: Set both .id attribute and to_dict() return value
+mock_doc = MagicMock()
+mock_doc.id = "document-id-123"  # Required as string attribute
+mock_doc.to_dict.return_value = {
+    "name": "Test Document",
+    "organization_id": "org-123",
+    "created_at": datetime.now(timezone.utc)
+}
+mock_doc.exists = True  # For get() operations
+
+# ❌ DON'T: Only include ID in to_dict data
+mock_doc.to_dict.return_value = {"id": "document-id-123", ...}  # Missing .id attribute
+```
+
+### **Document Reference Mocking**
+```python
+# ✅ DO: Mock document reference with get() method
+def mock_document_side_effect(doc_id):
+    mock_doc_ref = MagicMock()
+    mock_doc_ref.id = doc_id
+    mock_doc_ref.get.return_value = mock_doc_snapshot
+    mock_doc_ref.set = MagicMock()
+    mock_doc_ref.update = MagicMock()
+    mock_doc_ref.delete = MagicMock()
+    return mock_doc_ref
+
+mock_collection.document.side_effect = mock_document_side_effect
+```
+
+## **Multi-Collection Test Patterns**
+
+### **Collection Side Effect Pattern**
+```python
+# ✅ DO: Use side_effect for different collection behaviors
+def mock_collection_side_effect(collection_name):
+    if collection_name == 'assets':
+        return assets_collection_mock
+    elif collection_name == 'assetRelationships':
+        return relationships_collection_mock
+    elif collection_name == 'users':
+        return users_collection_mock
+    else:
+        return default_collection_mock
+
+mock_firestore_client.collection.side_effect = mock_collection_side_effect
+```
+
+### **Test-Specific Collection Overrides**
+```python
+# ✅ DO: Override specific collections per test
+def test_specific_behavior(mock_firestore_client):
+    # Create test-specific mock
+    test_collection_mock = create_firestore_query_chain_mock(
+        stream_return_value=test_documents,
+        count_return_value=len(test_documents)
+    )[0]
+    
+    # Override just this collection
+    def mock_collection_side_effect(collection_name):
+        if collection_name == 'assets':
+            return test_collection_mock
+        else:
+            return mock_firestore_client.collection.return_value
+    
+    mock_firestore_client.collection.side_effect = mock_collection_side_effect
+```
+
+## **Batch Operation Testing**
+
+### **Conditional Batch Commit Logic**
+```python
+# ✅ DO: Mock batch with conditional commit testing
+mock_batch = MagicMock()
+mock_batch.delete = MagicMock()
+mock_batch.commit = MagicMock()
+mock_firestore_client.batch.return_value = mock_batch
+
+# Test the conditional logic
+if has_relationships_to_delete:
+    mock_batch.commit.assert_called_once()
+else:
+    mock_batch.commit.assert_not_called()
+```
+
+### **Batch Operation Verification**
+```python
+# ✅ DO: Verify batch operations were set up correctly
+mock_firestore_client.batch.assert_called_once()
+mock_batch.delete.assert_called_with(relationship_doc_ref)
+```
+
+## **Count Query Patterns**
+
+### **Count Query Result Structure**
+```python
+# ✅ DO: Mock count queries with proper nested structure
+count_result = [[MockAggregateFieldValue(value=expected_count)]]
+count_mock.get.return_value = count_result
+
+# In the actual code, access like:
+# count_snapshot = count_query.get()
+# total_count = count_snapshot[0][0].value
+```
+
+### **Empty Count Results**
+```python
+# ✅ DO: Handle empty count results
+count_result = [[MockAggregateFieldValue(value=0)]]
+count_mock.get.return_value = count_result
+```
+
+## **Assertion Strategies**
+
+### **Multiple Collection Calls**
+```python
+# ✅ DO: Use assert_any_call for unordered multiple calls
+mock_firestore_client.collection.assert_any_call('assets')
+mock_firestore_client.collection.assert_any_call('assetRelationships')
+
+# ✅ DO: Verify total call count
+assert mock_firestore_client.collection.call_count >= 2
+```
+
+### **Conditional Logic Testing**
+```python
+# ✅ DO: Test both positive and negative conditions
+if condition_met:
+    mock_method.assert_called_once()
+else:
+    mock_method.assert_not_called()
+```
+
+### **Call Order Verification**
+```python
+# ✅ DO: Use call_args_list for ordered verification
+expected_calls = [call('assets'), call('assetRelationships')]
+assert mock_firestore_client.collection.call_args_list == expected_calls
+```
+
+## **Common Pitfalls and Solutions**
+
+### **Incomplete Query Chain Mocking**
+```python
+# ❌ DON'T: Incomplete chain
+mock_collection.where.return_value = mock_query
+
+# ✅ DO: Complete chain
+mock_collection.where.return_value.order_by.return_value.limit.return_value.offset.return_value.stream.return_value = documents
+```
+
+### **Missing Document ID Attributes**
+```python
+# ❌ DON'T: Only to_dict data
+mock_doc.to_dict.return_value = {"id": "123", "name": "Test"}
+
+# ✅ DO: Both attribute and to_dict
+mock_doc.id = "123"
+mock_doc.to_dict.return_value = {"name": "Test"}
+```
+
+### **Synchronous vs Asynchronous Confusion**
+```python
+# ❌ DON'T: Await synchronous Firestore operations
+result = await firestore_client.collection('assets').document('123').get()
+
+# ✅ DO: Firestore operations are synchronous
+result = firestore_client.collection('assets').document('123').get()
+```
+
+## **Integration with Pytest Fixtures**
+
+### **Fixture Override Pattern**
+```python
+# ✅ DO: Override fixtures with side_effect
+@pytest.fixture
+def mock_firestore_client():
+    client = MagicMock()
+    # Set up default behavior
+    client.collection.return_value = create_default_collection_mock()
+    return client
+
+# In tests, override specific behavior
+def test_specific_case(mock_firestore_client):
+    mock_firestore_client.collection.side_effect = custom_collection_behavior
+```
+
+### **Avoiding Fixture Conflicts**
+```python
+# ❌ DON'T: Multiple fixtures with same name
+@pytest.fixture
+def mock_firestore_client():  # First definition
+    pass
+
+@pytest.fixture  
+def mock_firestore_client():  # Conflicts with first
+    pass
+
+# ✅ DO: Single comprehensive fixture with factory support
+@pytest.fixture
+def mock_firestore_client():
+    return create_comprehensive_firestore_mock()
+```
+
+## **Performance Considerations**
+
+- **Reuse Mock Objects**: Create mock objects once and reuse across similar tests
+- **Factory Functions**: Use factory functions to avoid duplicating complex mock setup
+- **Lazy Evaluation**: Only create complex mocks when needed for specific test scenarios
+- **Clean Teardown**: Reset mock call counts and side effects between tests when using shared fixtures
+
+Refer to [rule-instruction-testing-and-qa-dev.mdc](mdc:.cursor/rules/rule-instruction-testing-and-qa-dev.mdc) for broader testing guidelines and patterns.

@@ -1,0 +1,448 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# **Complete GCP CI/CD Deployment Setup Guide**
+
+This document describes the complete, production-ready CI/CD pipeline setup for deploying Next.js applications to Google Cloud Platform using GitHub Actions, Docker, Cloud Run, and Artifact Registry.
+
+## **📋 Overview**
+
+This setup provides:
+- **Automated CI/CD** with GitHub Actions
+- **Secure authentication** via Workload Identity Federation
+- **Containerized deployment** with optimized Docker builds
+- **Cost-effective hosting** on Cloud Run (scale-to-zero)
+- **Production monitoring** with health checks
+- **Security best practices** throughout
+
+## **🏗️ Architecture Components**
+
+### **1. GitHub Actions Workflow (`.github/workflows/deploy.yml`)**
+
+```yaml
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.SERVICE_ACCOUNT }}'
+          
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+        
+      - name: 'Configure Docker'
+        run: gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
+        
+      - name: 'Build Docker Image'
+        run: docker build -t "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$SERVICE/$SERVICE:$GITHUB_SHA" .
+        
+      - name: 'Push to Artifact Registry'
+        run: docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$SERVICE/$SERVICE:$GITHUB_SHA"
+        
+      - name: 'Deploy to Cloud Run'
+        run: |
+          gcloud run deploy $SERVICE \
+            --image=$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$SERVICE/$SERVICE:$GITHUB_SHA \
+            --region=$GAR_LOCATION \
+            --allow-unauthenticated \
+            --memory=1Gi \
+            --cpu=1 \
+            --max-instances=10 \
+            --min-instances=0 \
+            --port=3004
+```
+
+### **2. Optimized Dockerfile**
+
+```dockerfile
+# Multi-stage build for production optimization
+FROM node:20-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3004
+ENV PORT=3004
+ENV HOSTNAME="0.0.0.0"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node --eval "const http = require('http'); http.get('http://localhost:3004/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => { process.exit(1) })"
+
+CMD ["server.js"]
+```
+
+### **3. Critical .dockerignore Configuration**
+
+```dockerfile
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Next.js build output
+.next
+out
+
+# Environment variables
+.env*
+
+# Service account keys (security) - but allow package.json
+service-account-*.json
+gcp-key.json
+*-key.json
+*-service-account.json
+
+# Development files
+.taskmaster/
+app_research/
+scripts/
+
+# Documentation
+README.md
+docs/
+
+# IDE files
+.vscode
+.idea
+```
+
+**⚠️ CRITICAL:** Do NOT use `*.json` in `.dockerignore` as it excludes `package.json`!
+
+### **4. Next.js Configuration (`next.config.ts`)**
+
+```typescript
+const nextConfig: NextConfig = {
+  // Essential for Docker deployment
+  output: 'standalone',
+  
+  // Performance optimizations
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['react-icons', '@stripe/stripe-js'],
+  },
+  
+  // Image optimization for production
+  images: {
+    domains: [
+      'storage.googleapis.com',
+      'firebasestorage.googleapis.com',
+    ],
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60,
+  },
+  
+  // Bundle optimization
+  webpack: (config, { buildId, dev, isServer }) => {
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      };
+    }
+    return config;
+  },
+};
+```
+
+## **🔐 Security Setup: Workload Identity Federation**
+
+### **Automated Setup Script (`scripts/setup-workload-identity.sh`)**
+
+```bash
+#!/bin/bash
+set -e
+
+# Variables
+PROJECT_ID="${PROJECT_ID:-your-project-id}"
+GITHUB_REPO="${GITHUB_REPO:-username/repo-name}"
+POOL_ID="github-actions-pool"
+PROVIDER_ID="github-actions-provider"
+SERVICE_ACCOUNT="github-actions-deploy"
+
+# Enable required APIs
+gcloud services enable \
+    cloudbuild.googleapis.com \
+    run.googleapis.com \
+    artifactregistry.googleapis.com \
+    iam.googleapis.com \
+    cloudresourcemanager.googleapis.com
+
+# Create Artifact Registry repository
+gcloud artifacts repositories create app-repo \
+    --repository-format=docker \
+    --location=us-central1 \
+    --description="Docker repository for app deployments"
+
+# Create service account
+gcloud iam service-accounts create $SERVICE_ACCOUNT \
+    --description="Service account for GitHub Actions deployment" \
+    --display-name="GitHub Actions Deploy"
+
+# Grant required permissions
+for role in \
+    "roles/run.admin" \
+    "roles/iam.serviceAccountUser" \
+    "roles/artifactregistry.admin" \
+    "roles/cloudbuild.builds.builder"
+do
+    gcloud projects add-iam-policy-binding $PROJECT_ID \
+        --member="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+        --role="$role"
+done
+
+# Create Workload Identity Pool
+gcloud iam workload-identity-pools create $POOL_ID \
+    --location="global" \
+    --description="Pool for GitHub Actions"
+
+# Create Provider
+gcloud iam workload-identity-pools providers create-oidc $PROVIDER_ID \
+    --workload-identity-pool=$POOL_ID \
+    --location="global" \
+    --issuer-uri="https://token.actions.githubusercontent.com" \
+    --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository"
+
+# Bind service account to repository
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
+gcloud iam service-accounts add-iam-policy-binding \
+    ${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com \
+    --role="roles/iam.workloadIdentityUser" \
+    --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${POOL_ID}/attribute.repository/${GITHUB_REPO}"
+
+echo "✅ Setup complete! Add these secrets to GitHub:"
+echo "WORKLOAD_IDENTITY_PROVIDER: projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${POOL_ID}/providers/${PROVIDER_ID}"
+echo "SERVICE_ACCOUNT: ${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com"
+```
+
+## **📊 Required GitHub Secrets**
+
+Add these to `https://github.com/username/repo/settings/secrets/actions`:
+
+### **GCP Infrastructure**
+- `GCP_PROJECT_ID`: Your GCP project ID
+- `WORKLOAD_IDENTITY_PROVIDER`: From setup script output
+- `SERVICE_ACCOUNT`: From setup script output
+
+### **Application Environment Variables**
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `ENCRYPTION_KEY` (32+ characters)
+- `JWT_SECRET`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_HOST`
+- `SMTP_PORT`
+
+### **Optional Services**
+- `SENTRY_ORG`
+- `SENTRY_PROJECT`
+- `SENTRY_AUTH_TOKEN`
+
+## **🎯 Deployment Features**
+
+### **Cost Optimization**
+- **Scale-to-zero**: No charges when idle
+- **Resource limits**: 1GB memory, 1 vCPU
+- **Image optimization**: Multi-stage Docker builds
+- **Expected cost**: $5-15/month for low traffic
+
+### **Performance**
+- **Standalone output**: Optimized Next.js builds
+- **Image optimization**: WebP/AVIF support
+- **Bundle splitting**: Vendor chunk separation
+- **Health checks**: Automatic container monitoring
+
+### **Security**
+- **Workload Identity**: No stored service account keys
+- **Least privilege**: Minimal IAM permissions
+- **Environment isolation**: Secrets in GitHub
+- **Security headers**: HSTS, CSP, etc.
+
+## **🚀 Deployment Process**
+
+1. **Trigger**: Push to `main` branch
+2. **Test**: Lint, type check, build validation
+3. **Build**: Multi-stage Docker image creation
+4. **Push**: Image to Artifact Registry
+5. **Deploy**: Rolling deployment to Cloud Run
+6. **Health Check**: Automatic readiness verification
+
+## **📝 Setup Checklist for New Projects**
+
+### **1. Initial GCP Setup**
+- [ ] Create GCP project
+- [ ] Enable billing
+- [ ] Run `scripts/setup-workload-identity.sh`
+- [ ] Note the output values for GitHub secrets
+
+### **2. Project Configuration**
+- [ ] Copy `.github/workflows/deploy.yml`
+- [ ] Copy `Dockerfile` (update port if needed)
+- [ ] Copy `.dockerignore` (verify no `*.json` exclusion)
+- [ ] Update `next.config.ts` with `output: 'standalone'`
+- [ ] Add health check endpoint at `/api/health`
+
+### **3. Environment Setup**
+- [ ] Add all required GitHub secrets
+- [ ] Configure Firebase/Stripe/other services
+- [ ] Test build locally: `npm run build`
+- [ ] Verify Docker build: `docker build -t test .`
+
+### **4. Deployment**
+- [ ] Push to main branch
+- [ ] Monitor GitHub Actions
+- [ ] Verify deployment at Cloud Run URL
+- [ ] Test application functionality
+
+## **🔧 Manual Deployment Script (`scripts/deploy.sh`)**
+
+For manual deployments or troubleshooting:
+
+```bash
+#!/bin/bash
+set -e
+
+# Configuration
+PROJECT_ID="${PROJECT_ID:-your-project-id}"
+SERVICE="${SERVICE:-your-app}"
+REGION="${REGION:-us-central1}"
+ENVIRONMENT="${1:-staging}"
+
+echo "🚀 Deploying $SERVICE to $ENVIRONMENT..."
+
+# Build and deploy
+gcloud builds submit --config cloudbuild.yaml \
+    --substitutions=_SERVICE=$SERVICE,_ENVIRONMENT=$ENVIRONMENT
+
+echo "✅ Deployment complete!"
+gcloud run services describe $SERVICE --region=$REGION --format="value(status.url)"
+```
+
+## **🛠️ Troubleshooting Guide**
+
+### **Common Build Failures**
+
+1. **Package.json not found**
+   - Check `.dockerignore` doesn't exclude `*.json`
+   - Verify `package.json` exists in project root
+
+2. **Environment validation errors**
+   - Make validation conditional for build time
+   - Use lazy initialization for external services
+
+3. **Next.js build failures**
+   - Ensure `output: 'standalone'` in `next.config.ts`
+   - Check TypeScript errors don't block build
+
+### **Deployment Issues**
+
+1. **Authentication failures**
+   - Verify Workload Identity Federation setup
+   - Check GitHub secrets are correctly set
+   - Ensure service account has required permissions
+
+2. **Resource limits**
+   - Increase memory/CPU in deploy command
+   - Monitor Cloud Run metrics
+   - Optimize Docker image size
+
+3. **Health check failures**
+   - Implement `/api/health` endpoint
+   - Check container startup time
+   - Verify port configuration
+
+## **📈 Monitoring & Optimization**
+
+### **Performance Monitoring**
+- Cloud Run metrics dashboard
+- Sentry error tracking
+- Custom performance endpoints
+
+### **Cost Optimization**
+- Monitor Artifact Registry storage
+- Clean up old images automatically
+- Review scaling configuration
+
+### **Security Auditing**
+- Regular dependency updates
+- Security scanning in CI/CD
+- IAM permission reviews
+
+---
+
+**🎯 This setup provides enterprise-grade CI/CD with minimal costs and maximum security. It's designed to be reusable across multiple Next.js projects with minor configuration changes.**

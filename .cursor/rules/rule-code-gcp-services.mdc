@@ -1,0 +1,21 @@
+---
+description: Important notes and rules for using Googe Cloud Platform (GCP)  Sevices  and Resources
+globs: 
+alwaysApply: false
+---
+GCP Services 
+- Use Pub/Sub for real-time data streaming and event handling. 
+- Use Firestore for low-latency asset/config data storage. 
+- Deployt to Cloud Run, leveraging serverless auto-scaling. 
+- Use Cloud Functions for lightweight serverless triggers or utility endpoints. 
+- Integrate Cloud IAM for security and role-based access to services. 
+- Implement comprehensive logging with Google Cloud Logging; use Google Cloud Monitoring for application insights. 
+- Use Cloud Run with Docker Deployed through cloudyaml and github automations and secrets
+
+Cloud Pub/Sub, Firestore, Cloud Run, Cloud Functions 
+- Use small, focused Cloud Functions to handle Pub/Sub messages when real-time data is ingested. 
+- Ensure Firestore security rules are strict, using IAM or Firebase Auth if needed. 
+- In Next.js route handlers, connect to Firestore for reading/writing data. Employ caching or Pub/Sub triggers to keep data fresh. 
+- Deploy Next.js to Cloud Run with minimal runtime overhead; use Docker or a recommended builder approach. 
+- Use environment variables for keys and project IDs (e.g., process.env.GCP_PROJECT_ID). 
+

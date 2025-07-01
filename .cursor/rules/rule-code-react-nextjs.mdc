@@ -1,0 +1,47 @@
+---
+description: 
+globs: *.tsx, *.js, *.jsx
+alwaysApply: false
+---
+React/Next.js 
+- Use functional components in TypeScript. 
+- Prefer declarative JSX. 
+- Use function keyword, not const, for components. 
+- Employ Tailwind CSS for styling and utility classes. 
+- Use a mobile-first approach for responsive design. 
+- Minimize 'use client'; favor server components wherever possible for data fetching. 
+- Leverage dynamic imports for non-critical or large components (e.g., heavy 3D scenes). 
+- Employ error boundaries (error.tsx, global-error.tsx) to catch unexpected runtime errors in client components. 
+- Use Next.js route handlers for server actions that interact with Firestore or Pub/Sub. 
+- Return typed objects from server actions for clearer boundaries and maintainability. 
+
+- **Client-Side Authentication & Logout (e.g., with Firebase):**
+  - Use a React Context (e.g., `AuthContext`) to manage user state and provide auth functions like `signIn`, `signOut`.
+  - The `signOut` function in the context should handle the core sign-out mechanism (e.g., `firebaseSignOut(auth)`).
+  - In the component triggering logout (e.g., a button in `NavBar.tsx`):
+    - Call the `signOut` function from the context.
+    - **Crucially, after `signOut` completes, explicitly clear any client-side authentication tokens (e.g., `localStorage.removeItem('accessToken')`).**
+    - **Immediately redirect the user to a public route (e.g., `/login`) using the Next.js router (`router.push('/login')`).**
+  - Example (`NavBar.tsx` logout button):
+    ```typescript
+    import { useAuth } from '@/lib/contexts/AuthContext';
+    import { useRouter } from 'next/navigation';
+
+    // ...
+    const { signOut } = useAuth();
+    const router = useRouter();
+    // ...
+    <button
+      onClick={async () => {
+        try {
+          await signOut();
+          localStorage.removeItem('accessToken'); // Or other token key
+          router.push('/login');
+        } catch (error) {
+          console.error("Error during sign out:", error);
+        }
+      }}
+    >
+      Sign Out
+    </button>
+    ```

@@ -1,0 +1,51 @@
+---
+description: Common Conventions when working across tools and languages
+globs: 
+alwaysApply: true
+---
+Key Conventions 
+1. Rely on Next.js App Router for routing and server actions. 
+2. Optimize for Core Web Vitals (LCP, CLS, FID), especially with 3D and data visualizations. 
+3. Limit 'use client' usage:  
+   - Prefer Next.js server-rendered pages for SEO and performance where possible. 
+   - Use 'use client' in small, interactive components (e.g., real-time dashboards, 3D viewers). 
+4. Organize shared code in a “lib” or “utils” directory; keep specialized code (3D assets, D3, etc.) in domain-specific folders. 
+5. Use Makefiles or Taskfiles for local dev tasks and GCP deployments when needed. 
+6. Follow naming conventions:   
+   - For booleans, use is/has/should/do etc.   
+   - For filenames, use dash-case and .tsx or .ts. 
+ 
+Component Structure 
+- Each component should be as small and focused as possible. 
+- Use composition to combine smaller components into larger ones (e.g., Dashboard might compose a 3D viewer, metrics panel, etc.). 
+- Maintain the order: component declaration, styled subcomponents (if not purely Tailwind), TypeScript types, and constants. 
+ 
+Data Fetching and State Management 
+- Use Next.js server components (or route handlers) for Firestore data retrieval. 
+- For real-time updates, subscribe to Pub/Sub via Cloud Functions or use Firestore onSnapshot where appropriate. 
+- Use React Query or SWR if client-side caching is required for read-heavy operations, but keep it minimal in server components. 
+- Manage WebSocket-like real-time feeds from Cloud Functions/Pub/Sub if low latency is critical. 
+ 
+Styling 
+- Use Tailwind CSS for utility classes. 
+- Keep Tailwind usage minimal and purposeful to avoid clutter. 
+- Organize repeated styling with reusable class sets or helper classes. 
+ 
+Testing 
+- Write unit tests for utility functions, especially any that parse or transform data from Pub/Sub. 
+- Implement integration tests for Next.js routes, ensuring Firestore reads/writes behave correctly. 
+- Use E2E tests for critical user paths (e.g., real-time updates in a 3D view). 
+- Mock GCP services where possible (e.g., local Firestore emulator, Pub/Sub emulator). 
+ 
+Accessibility 
+- Ensure 3D visuals are supplemented with textual or alternative summaries for essential info. 
+- For D3.js charts, provide ARIA labels or text-based equivalents if feasible. 
+- Maintain appropriate color contrast in Tailwind classes for text, lines, and shapes. 
+ 
+Documentation 
+- Use concise comments for complex 3D transformations or D3 logic. 
+- Provide code examples for hooking up Firestore or Pub/Sub within Next.js route handlers or server actions. 
+- Keep README.md files updated with instructions for local dev environment setup (Cloud emulator usage, GCP project configuration). 
+- Document any Cloud Functions entry points thoroughly (expected triggers, data shape, error handling). 
+ 
+Refer to the Next.js documentation for SSR/ISR best practices and GCP official documentation for secure and scalable Cloud Run, Cloud Functions, Firestore, and Pub/Sub integrations. 

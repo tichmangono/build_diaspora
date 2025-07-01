@@ -1,0 +1,176 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# UI/UX Layout Debugging & Consistency Rules
+
+## **Layout Debugging Techniques**
+
+- **Use Colored Debug Borders for Layout Issues**
+  - Apply temporary colored borders to visualize container dimensions
+  - Example: `className="border-4 border-red-500 bg-blue-100"` for containers
+  - Remove debug styles once layout is fixed
+  - Debug borders often reveal the actual CSS properties needed for fixes
+
+- **CSS Specificity Conflicts**
+  - Global CSS classes can conflict with Tailwind utility classes
+  - Remove conflicting global styles (`.card`, `.btn`, `.input`) when using Tailwind
+  - Use inline styles for highest specificity when needed: `style={{ minWidth: '400px' }}`
+  - Check for nested layout constraints that create double restrictions
+
+- **Next.js Cache Issues**
+  - Clear `.next` directory when layout changes don't apply: `rm -rf .next`
+  - Restart dev server after clearing cache
+  - Watch for ENOENT errors indicating cache corruption
+
+## **Spacing Consistency Patterns**
+
+- **Standard Page Container Pattern**
+  ```tsx
+  // ✅ DO: Use this standard pattern for all dashboard pages
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {/* Page content */}
+  </div>
+  
+  // ❌ DON'T: Use inconsistent spacing patterns
+  <div className="px-4 py-6 sm:px-0">
+    {/* This creates edge-to-edge content */}
+  </div>
+  ```
+
+- **Authentication Page Spacing**
+  ```tsx
+  // ✅ DO: Use centered layout with proper spacing
+  <div className="flex flex-grow items-center justify-center px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-sm w-full py-3 bg-white shadow-md rounded-lg">
+      {/* Auth form content */}
+    </div>
+  </div>
+  ```
+
+- **Form Container Sizing**
+  - Use `max-w-sm` (384px) for compact forms like login
+  - Use `max-w-md` (448px) for standard forms
+  - Use `max-w-lg` (512px) for complex forms like registration
+  - Always include `minWidth` enforcement for critical layouts
+
+## **Component Border Management**
+
+- **Single Border Approach**
+  ```tsx
+  // ✅ DO: Use Card with single border
+  <Card variant="default">  {/* Outer border only */}
+    <CardHeader className="px-6 pt-6 pb-4">  {/* No border-b */}
+      <CardTitle>Title</CardTitle>
+    </CardHeader>
+    <CardContent className="px-6 pb-6">  {/* No border-t */}
+      Content
+    </CardContent>
+  </Card>
+  
+  // ❌ DON'T: Create double borders
+  <Card variant="default">  {/* Outer border */}
+    <CardHeader className="border-b">  {/* Inner border - creates double */}
+  ```
+
+- **Remove Conflicting Borders**
+  - Remove `border-b border-gray-200` from CardHeader
+  - Remove `border-t border-gray-200` from CardFooter
+  - Use `variant="ghost"` for borderless cards when needed
+
+## **Form Styling Consistency**
+
+- **Compact Form Pattern**
+  ```tsx
+  // ✅ DO: Use compact spacing for mobile-friendly forms
+  <form className="space-y-2">  {/* Reduced from space-y-6 */}
+    <label className="block text-xs font-medium text-gray-900 mb-1">  {/* Smaller text */}
+    <input className="px-2 py-1.5 text-sm">  {/* Reduced padding */}
+    <button className="py-1.5 px-3 text-sm">  {/* Compact button */}
+  </form>
+  ```
+
+- **Error Message Styling**
+  ```tsx
+  // ✅ DO: Use consistent error styling
+  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+    <strong className="font-bold">Error: </strong>
+    <span className="block sm:inline">{error}</span>
+  </div>
+  ```
+
+## **Import and Component Issues**
+
+- **Handle Import Mismatches**
+  ```tsx
+  // ✅ DO: Check export type before importing
+  import { NumberTicker } from '@/components/magicui/number-ticker';  // Named export
+  
+  // ❌ DON'T: Assume default export
+  import NumberTicker from '@/components/magicui/number-ticker';  // Wrong for named export
+  
+  // ✅ DO: Create fallback for problematic imports
+  const NumberTicker = ({ value }: { value: number }) => <span>{value}</span>;
+  ```
+
+- **Null Safety for Dynamic Content**
+  ```tsx
+  // ✅ DO: Add null checks for dynamic content
+  {userData.status ? userData.status.charAt(0).toUpperCase() + userData.status.slice(1) : 'Unknown'}
+  
+  // ❌ DON'T: Call methods on potentially undefined values
+  {userData.status.charAt(0).toUpperCase()}  // Can cause TypeError
+  ```
+
+## **Theme Consistency**
+
+- **Maintain Light Theme Throughout**
+  - Use `text-slate-800` for headings
+  - Use `text-slate-700` for labels
+  - Use `border-slate-300` for form inputs
+  - Use `bg-white` for cards and forms
+  - Avoid mixing dark theme (`bg-gray-900`, `text-white`) with light theme
+
+- **Color Palette Consistency**
+  ```tsx
+  // ✅ DO: Use consistent color scheme
+  className="bg-blue-600 hover:bg-blue-700 text-white"  // Primary buttons
+  className="bg-slate-300 hover:bg-slate-400 text-slate-800"  // Secondary buttons
+  className="border-slate-300 focus:ring-slate-500"  // Form inputs
+  ```
+
+## **Responsive Design Patterns**
+
+- **Mobile-First Spacing**
+  ```tsx
+  // ✅ DO: Use responsive spacing classes
+  className="px-4 sm:px-6 lg:px-8"  // Responsive horizontal padding
+  className="py-4 sm:py-6 lg:py-8"   // Responsive vertical padding
+  className="text-sm sm:text-base lg:text-lg"  // Responsive text sizing
+  ```
+
+- **Container Max Widths**
+  - `max-w-7xl` for main dashboard containers
+  - `max-w-6xl` for marketing/landing pages
+  - `max-w-xl` for forms and modals
+  - `max-w-sm` for compact components
+
+## **Development Workflow**
+
+- **Layout Issue Resolution Process**
+  1. Add colored debug borders to identify problem containers
+  2. Check for CSS specificity conflicts between global and utility classes
+  3. Verify container nesting and layout constraints
+  4. Test responsive behavior across screen sizes
+  5. Clear Next.js cache if changes don't apply
+  6. Remove debug styles once layout is fixed
+
+- **Consistency Auditing**
+  - Review all pages for consistent container patterns
+  - Check for edge-to-edge content that needs proper spacing
+  - Verify theme consistency across all components
+  - Test form layouts on mobile devices
+  - Validate import statements and component exports
+
+This rule should be applied when working on UI/UX layouts, debugging layout issues, or ensuring design consistency across the application.

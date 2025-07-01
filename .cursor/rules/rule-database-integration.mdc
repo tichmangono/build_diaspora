@@ -1,0 +1,160 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Database Integration & Production Data Architecture
+
+## **Firestore Integration Patterns**
+
+- **Database Function Organization**
+  - Keep all database operations in `backend/db.py` with clear function naming
+  - Use async/await for all Firestore operations with proper error handling
+  - Group related functions (dashboard analytics, asset management, etc.)
+  - Include comprehensive docstrings with Args and Returns
+
+- **Query Optimization**
+  ```python
+  # ✅ DO: Use efficient Firestore queries with proper filtering
+  assets_query = assets_ref.where(filter=FieldFilter('organization_id', '==', org_id))\
+                           .where(filter=FieldFilter('status', '==', 'active'))\
+                           .limit(1000)
+  
+  # ✅ DO: Aggregate data in single query when possible
+  total_count = len(assets_docs)
+  active_count = sum(1 for doc in assets_docs if doc.get('status') == 'active')
+  
+  # ❌ DON'T: Make multiple separate queries for aggregation
+  total_query = assets_ref.where(filter=FieldFilter('organization_id', '==', org_id))
+  active_query = assets_ref.where(filter=FieldFilter('status', '==', 'active'))
+  ```
+
+## **Firestore Index Management**
+
+- **Index Planning**
+  - Add indexes to [`firestore.indexes.json`](mdc:firestore.indexes.json) before deploying queries
+  - Use composite indexes for multi-field queries: `organization_id + timestamp + __name__`
+  - Include both ascending and descending orders for different query patterns
+  - Test index requirements in development before production deployment
+
+- **Index Creation Process**
+  ```bash
+  # ✅ DO: Deploy indexes before releasing features
+  firebase deploy --only firestore:indexes
+  
+  # ✅ DO: Handle missing index errors gracefully
+  try:
+      activities = await get_recent_activities(org_id)
+  except Exception as e:
+      if "requires an index" in str(e):
+          return {"error": "Index building", "message": "Data available shortly"}
+  ```
+
+- **Required Index Patterns**
+  ```json
+  // ✅ DO: Standard organization + timestamp pattern
+  {
+    "collectionGroup": "activities",
+    "fields": [
+      {"fieldPath": "organization_id", "order": "ASCENDING"},
+      {"fieldPath": "timestamp", "order": "DESCENDING"},
+      {"fieldPath": "__name__", "order": "DESCENDING"}
+    ]
+  }
+  ```
+
+## **Production Data Architecture**
+
+- **Realistic Test Data Generation**
+  - Use industry-standard asset types: `PLC, HMI, RTU, SCADA, DCS, Historian`
+  - Include major industrial vendors: `Siemens, Allen-Bradley, Schneider Electric, ABB`
+  - Generate realistic network configurations: `192.168.1.0/24, 10.0.0.0/24`
+  - Use proper naming conventions: `Floor-Area-Type-Number` (F1-PLC-001)
+
+- **Data Distribution Patterns**
+  ```python
+  # ✅ DO: Realistic status distribution for industrial assets
+  STATUS_DISTRIBUTION = {
+      'active': 0.60,    # Most assets operational
+      'idle': 0.25,      # Some on standby
+      'maintenance': 0.10, # Regular maintenance
+      'offline': 0.05    # Few offline/failed
+  }
+  
+  # ✅ DO: Realistic response time ranges
+  response_times = {
+      'local_plc': (50, 150),      # Fast local devices
+      'remote_rtu': (200, 500),    # Slower remote devices
+      'legacy_system': (400, 800)  # Older equipment
+  }
+  ```
+
+## **Dashboard Analytics Architecture**
+
+- **Stats Endpoint Design**
+  - Combine multiple collection queries into single function
+  - Return structured data matching frontend expectations
+  - Include performance metrics (response times, scan counts)
+  - Cache expensive calculations when possible
+
+- **Activities Endpoint Design**
+  ```python
+  # ✅ DO: Efficient recent activities query
+  async def get_recent_activities(organization_id: str, limit: int = 10):
+      activities_ref = DB.collection('activities')
+      query = activities_ref.where(filter=FieldFilter('organization_id', '==', organization_id))\
+                           .order_by('timestamp', direction=firestore.Query.DESCENDING)\
+                           .limit(limit)
+      
+      docs = query.stream()
+      return [format_activity(doc) for doc in docs]
+  ```
+
+## **Error Handling Patterns**
+
+- **Database Error Management**
+  ```python
+  # ✅ DO: Comprehensive error handling with specific messages
+  try:
+      stats = await get_dashboard_stats(organization_id)
+      return stats
+  except Exception as e:
+      if "requires an index" in str(e):
+          # Extract index creation URL from error
+          return {"error": "INDEX_BUILDING", "indexUrl": extract_url(e)}
+      elif "permission denied" in str(e):
+          return {"error": "PERMISSION_DENIED", "message": "Check organization access"}
+      else:
+          return {"error": "DATABASE_ERROR", "message": "Failed to retrieve data"}
+  ```
+
+## **Seeding Script Patterns**
+
+- **Comprehensive Data Generation**
+  - Reference [`scripts/seed_dashboard_data.py`](mdc:scripts/seed_dashboard_data.py) for industrial data patterns
+  - Generate interconnected data (assets → vulnerabilities → scans → activities)
+  - Use realistic timestamps distributed across recent weeks
+  - Include proper organization association for all records
+
+- **Seeding Best Practices**
+  ```python
+  # ✅ DO: Confirm organization before seeding
+  TEST_ORG_ID = "WuEVHlzfsulJWlflCjWf"  # Use real org ID
+  
+  # ✅ DO: Generate interconnected realistic data
+  async def create_asset_with_vulnerabilities(asset_data):
+      asset_doc = await create_asset(asset_data)
+      if asset_data.get('has_vulnerabilities'):
+          await create_vulnerabilities_for_asset(asset_doc.id)
+      await log_activity("asset_discovered", asset_doc.id)
+  ```
+
+## **Frontend Integration**
+
+- **API Client Patterns**
+  - Handle database errors gracefully with user feedback
+  - Implement loading states for index building scenarios
+  - Cache dashboard data appropriately to reduce database load
+  - Use WebSocket connections for real-time updates when available
+
+Follow [`rule-instruction-backend-database-dev.mdc`](mdc:.cursor/rules/rule-instruction-backend-database-dev.mdc) for general database development guidelines.

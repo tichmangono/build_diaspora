@@ -1,0 +1,49 @@
+---
+description: when optimizing a website and pages for SEO (search engine optimization)
+globs: 
+alwaysApply: false
+---
+# Concise Website SEO Optimization Guidelines
+
+## Core Fundamentals
+- Prioritize user experience while optimizing for search engines
+- Focus on mobile-first optimization and page speed
+- Structure content with proper heading hierarchy (H1-H6)
+- Create unique, descriptive title tags and meta descriptions for each page
+- Use canonical tags to prevent duplicate content issues
+
+## Content Strategy
+- Create high-quality, original content that satisfies search intent
+- Incorporate primary keywords naturally in first 100 words
+- Use semantic and LSI keywords throughout content
+- Maintain optimal content length based on SERP analysis (typically 1,500+ words for competitive topics)
+- Update content regularly with fresh information
+
+## Technical SEO
+- Implement schema markup for enhanced SERP features
+- Ensure proper XML sitemap and robots.txt configuration
+- Fix broken links, redirect errors, and crawl issues promptly
+- Optimize internal linking structure with descriptive anchor text
+- Ensure HTTPS implementation and security best practices
+## Performance Optimization
+- Achieve Core Web Vitals compliance (LCP, FID, CLS)
+- Compress and optimize all images and media
+- Implement lazy loading for below-fold content
+- Minify CSS, JavaScript, and HTML
+- Use browser caching and CDN for faster delivery
+
+## Measurement & Iteration
+- Track rankings, organic traffic, and conversions
+- Monitor and analyze user behavior metrics
+- Perform regular technical SEO audits
+- Adjust strategy based on algorithm updates
+- Test page elements for improved engagement and conversion
+
+## Off-Page Factors
+- Build high-quality, relevant backlinks from authoritative sites
+- Maintain consistent NAP information across local citations
+- Leverage social signals to amplify content reach
+- Monitor and manage brand mentions and reputation
+- Disavow toxic backlinks that may harm rankings
+
+This condensed version provides comprehensive SEO guidance while remaining actionable and focused on the most critical elements for search performance.

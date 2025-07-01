@@ -1,0 +1,176 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Backend Debugging Patterns for FastAPI Applications
+
+## **Import Error Resolution**
+
+- **Critical Pattern: Module Import Crisis**
+  ```python
+  # ❌ DON'T: Use absolute imports with package prefix when running from package directory
+  from backend.models import UserInDB  # Fails when running from backend/
+  from backend.db import get_user_by_id
+  
+  # ✅ DO: Use relative imports when running from within the package
+  from models import UserInDB  # Works when running from backend/
+  from db import get_user_by_id
+  ```
+
+- **Import Crisis Symptoms:**
+  - `ModuleNotFoundError: No module named 'backend'` during uvicorn startup
+  - Imports work in IDE but fail when running the application
+  - Error occurs specifically when running from within the package directory
+
+- **Resolution Steps:**
+  1. Change absolute imports to relative imports in entry point files
+  2. Clear Python cache: `find . -name "__pycache__" -exec rm -rf {} +`
+  3. Clear `.pyc` files: `find . -name "*.pyc" -delete`
+  4. Restart the application server
+
+## **Firestore Query Optimization**
+
+- **Complex Query Index Requirements:**
+  ```python
+  # ❌ PROBLEMATIC: Complex ordering requiring composite indexes
+  query = collection.where("organization_id", "==", org_id) \
+                   .order_by("name") \
+                   .order_by("__name__")  # Requires specific index
+  
+  # ✅ BETTER: Simplify query, sort in memory
+  query = collection.where("organization_id", "==", org_id) \
+                   .limit(limit).offset(offset)
+  docs = list(query.stream())
+  # Sort in memory
+  docs.sort(key=lambda x: x.to_dict().get('name', ''))
+  ```
+
+- **Index Conflict Resolution:**
+  - Firestore field naming consistency: `organization_id` vs `organizationId`
+  - Temporary fixes: Remove complex ordering, implement in-memory sorting
+  - Long-term: Align field naming conventions across collections
+
+## **Authentication & Authorization Debugging**
+
+- **Organization Setup Workflow Patterns:**
+  ```python
+  # ✅ CRITICAL: Ensure user creation properly sets organization association
+  async def create_user_in_firestore(user_data: dict) -> UserInDB:
+      user_record_for_firestore = {
+          "email": user_data.get("email"),
+          "displayName": user_data.get("displayName"),
+          "organization_id": user_data.get("organization_id"),  # CRITICAL
+          "role": role_to_save,
+          "status": "active",
+          "created_at": datetime.now(timezone.utc),
+      }
+      # ... rest of implementation
+  ```
+
+- **Error Pattern Recognition:**
+  - `403 Forbidden` on asset APIs = Organization association issues
+  - `500 Internal Server Error` = Backend implementation bugs
+  - `401 Unauthorized` = Authentication token issues
+
+## **Testing Integration Patterns**
+
+- **Web-Eval + TaskMaster Documentation:**
+  ```python
+  # ✅ PROVEN PATTERN: Real-time issue documentation
+  testing_workflow = {
+      "test_accounts": ["final-test@example.com", "backend-test@example.com"],
+      "verification_points": [
+          "POST /v1/auth/login - Status: 200",
+          "GET /v1/users/me - Status: 200", 
+          "GET /v1/assets - Status: 200 (not 403)",
+          "GET /v1/asset-classifications/hierarchy - Status: 200 (not 500)"
+      ],
+      "documentation": "Update TaskMaster subtasks with findings in real-time"
+  }
+  ```
+
+- **Systematic Error Identification:**
+  1. Frontend UI validation (visual components working)
+  2. Backend API testing (status codes, responses)
+  3. WebSocket connection verification
+  4. Console error analysis
+  5. Network request/response inspection
+
+## **Server Startup & Configuration**
+
+- **FastAPI Application Startup:**
+  ```bash
+  # ✅ DO: Run from project root or with proper Python path
+  cd backend && source venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  
+  # ❌ DON'T: Run with incorrect module path
+  uvicorn backend.main:app  # Causes import issues
+  ```
+
+- **Environment & Configuration Checks:**
+  - Verify `.env` file location and content
+  - Check Firebase service account key path
+  - Validate API endpoints respond to health checks
+  - Confirm database connection and permissions
+
+## **Firestore Database Patterns**
+
+- **Collection Reference Consistency:**
+  ```python
+  # ✅ DO: Use consistent collection names and field naming
+  assets_ref = DB.collection('assets')  # Top-level collection
+  query = assets_ref.where("organization_id", "==", org_id)  # Consistent field name
+  
+  # ❌ AVOID: Mixed naming conventions
+  query = assets_ref.where("organizationId", "==", org_id)  # Different convention
+  ```
+
+- **Error Handling in Database Operations:**
+  ```python
+  # ✅ DO: Proper error handling with specific exceptions
+  try:
+      result = await database_operation()
+      return result
+  except ResourceNotFoundException:
+      raise  # Re-raise specific exceptions
+  except Exception as e:
+      print(f"Database error: {e}")
+      raise DatabaseException(message="Operation failed", details=str(e))
+  ```
+
+## **Performance & Optimization**
+
+- **Memory vs Database Sorting Trade-offs:**
+  - Small datasets (< 1000 items): In-memory sorting acceptable
+  - Large datasets: Invest in proper Firestore composite indexes
+  - Monitor query performance and adjust strategy accordingly
+
+- **Batch Operations:**
+  ```python
+  # ✅ DO: Use batch operations for multiple updates
+  batch = DB.batch()
+  for item in items_to_update:
+      doc_ref = DB.collection('collection').document(item.id)
+      batch.update(doc_ref, item.data)
+  batch.commit()
+  ```
+
+## **Debugging Tools & Techniques**
+
+- **Systematic Web-Eval Testing:**
+  - Use real user accounts for end-to-end testing
+  - Document findings in TaskMaster subtasks real-time
+  - Separate frontend validation from backend API testing
+  - Collect network evidence: status codes, error messages, timing
+
+- **FastAPI Debug Patterns:**
+  ```python
+  # ✅ DO: Add debug logging for critical operations
+  print(f"DEBUG: User {user_id} attempting operation on org {org_id}")
+  
+  # ✅ DO: Use FastAPI's automatic API documentation
+  # Access /docs for interactive API testing
+  ```
+
+Follow these patterns to prevent and quickly resolve common backend integration issues.

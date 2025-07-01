@@ -1,0 +1,64 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Backend Import Structure Rules
+
+## **CRITICAL: Import Structure Must Be Preserved**
+
+- **NEVER change backend imports** from `backend.module` to relative imports
+- **ALWAYS maintain** the `from backend.models import ...` and `from backend.db import ...` structure
+- **Backend server MUST be run from project root**, not from `backend/` directory
+
+## **Correct Startup Process**
+
+```bash
+# ✅ DO: Run from project root
+cd /path/to/gridguard-asset-manager
+python -m uvicorn backend.main:app --reload --port 8000
+
+# ❌ DON'T: Run from backend directory
+cd backend
+python -m uvicorn main:app --reload  # This causes ModuleNotFoundError
+```
+
+## **Import Examples**
+
+```python
+# ✅ DO: Keep these import structures
+from backend.models import (
+    User, UserCreate, OrganizationResponse, 
+    UserPreferences, UserPreferencesResponse
+)
+
+from backend.db import (
+    get_user_by_email, create_user_in_firestore,
+    get_user_preferences, update_user_preferences
+)
+
+# ❌ DON'T: Change to relative imports
+from models import User  # This breaks when run from root
+from .db import get_user_by_email  # This breaks the module structure
+```
+
+## **Why This Matters**
+
+- The project structure expects `backend` to be a Python package
+- FastAPI/uvicorn needs to import `backend.main:app` from the root
+- Changing imports breaks the module resolution when run from project root
+- This is a **critical project constraint** that must be respected
+
+## **Error Symptoms**
+
+If you see `ModuleNotFoundError: No module named 'backend'`, it means:
+1. You're running from the wrong directory (should be project root)
+2. Or imports were incorrectly changed to relative imports
+
+## **Testing Import Structure**
+
+```bash
+# Test from project root
+python -c "from backend.models import User; print('✅ Imports work')"
+python -c "from backend.db import get_user_by_email; print('✅ DB imports work')"
+```

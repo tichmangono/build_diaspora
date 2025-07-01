@@ -1,0 +1,274 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Complex Frontend Feature Implementation
+
+## **Multi-Tab Management Interface Pattern**
+
+- **Main Container Component**
+  - Orchestrate multiple sub-interfaces through tabbed navigation
+  - Manage unified notification system across all tabs
+  - Handle shared state coordination and error propagation
+  - Example: `ScanLifecycleManager.tsx`
+
+- **Sub-Component Architecture**
+  ```typescript
+  // ✅ DO: Separate concerns into focused components
+  interface ComplexFeatureStructure {
+    mainContainer: "FeatureManager.tsx - orchestrates tabs and notifications";
+    subComponents: [
+      "BulkOperations.tsx - selection and bulk actions",
+      "SearchAndFilter.tsx - advanced search interfaces", 
+      "MonitoringDashboard.tsx - real-time status displays"
+    ];
+    sharedUI: "Custom components for common patterns";
+  }
+  
+  // ❌ DON'T: Put everything in one massive component
+  const MonolithicComponent = () => {
+    // 2000+ lines of mixed concerns
+  };
+  ```
+
+## **Bulk Operations UI Pattern**
+
+- **Selection State Management**
+  ```typescript
+  // ✅ DO: Use Set for efficient selection tracking
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  
+  // Handle individual selection
+  const toggleSelection = (itemId: string) => {
+    setSelectedItems(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(itemId)) {
+        newSet.delete(itemId);
+      } else {
+        newSet.add(itemId);
+      }
+      return newSet;
+    });
+  };
+  ```
+
+- **Bulk Action UI Controls**
+  - Select all/none with respect to current filters
+  - Bulk action buttons appear with AnimatePresence
+  - Selection count display for user awareness
+  - Individual item checkboxes with disabled states
+
+- **Visual Feedback Requirements**
+  - Selected items highlighted with border color changes
+  - Loading states for bulk operations
+  - Progress feedback for long-running operations
+  - Success/error messaging for operation results
+
+## **Advanced Search and Filter Pattern**
+
+- **Progressive Disclosure Design**
+  ```typescript
+  // ✅ DO: Basic search + collapsible advanced filters
+  const SearchInterface = () => {
+    const [showAdvanced, setShowAdvanced] = useState(false);
+    
+    return (
+      <div>
+        <BasicSearchInput />
+        <AdvancedToggleButton onClick={() => setShowAdvanced(!showAdvanced)} />
+        <AnimatePresence>
+          {showAdvanced && (
+            <motion.div>
+              <AdvancedFilterControls />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+  ```
+
+- **Filter State Management**
+  - Single criteria object with optional fields
+  - URLSearchParams for clean API queries
+  - Reset functionality for clearing filters
+  - Preserve filter state during tab switches
+
+- **Filter Control Types**
+  - Date ranges (start/end date inputs)
+  - Status dropdowns with 'All' option
+  - Numeric inputs (min/max values)
+  - Boolean selects (has/doesn't have features)
+  - Tag inputs (comma-separated values)
+
+## **Real-time Updates and Monitoring**
+
+- **Auto-refresh Implementation**
+  ```typescript
+  // ✅ DO: User-controlled polling with cleanup
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  
+  useEffect(() => {
+    if (!autoRefresh) return;
+    
+    const interval = setInterval(() => {
+      fetchUpdates();
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [autoRefresh]);
+  ```
+
+- **Polling Best Practices**
+  - User toggle for auto-refresh control
+  - Only poll when relevant tab is active
+  - Silent error handling during polling
+  - Visual indicator when auto-refresh is active
+  - Efficient re-render patterns
+
+## **Custom UI Component Creation**
+
+- **When to Create Custom Components**
+  - Missing UI library component needed
+  - Specific interaction patterns required
+  - Complex state management within component
+  - Reusable across multiple features
+
+- **Implementation Principles**
+  ```typescript
+  // ✅ DO: Minimal, focused implementation
+  const CustomTabs = ({ children, value, onValueChange }) => {
+    return (
+      <TabsContext.Provider value={{ value, onValueChange }}>
+        <div className="tabs-container">
+          {children}
+        </div>
+      </TabsContext.Provider>
+    );
+  };
+  ```
+
+- **Required Features**
+  - React Context for component communication
+  - Framer Motion for smooth transitions
+  - Accessibility patterns (ARIA, focus management)
+  - TypeScript interfaces for all props
+
+## **Notification System Pattern**
+
+- **Centralized Notification Management**
+  ```typescript
+  // ✅ DO: Single notification state in main container
+  interface NotificationState {
+    type: 'success' | 'error' | 'info';
+    message: string;
+    timestamp: number;
+  }
+  
+  const [notification, setNotification] = useState<NotificationState | null>(null);
+  
+  // Auto-hide after 5 seconds
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+  ```
+
+- **Prop Drilling Pattern**
+  - Pass `onError` and `onSuccess` callbacks to child components
+  - Child components call callbacks with message strings
+  - Parent handles notification display and timing
+  - Consistent messaging across all sub-interfaces
+
+## **Loading State Management**
+
+- **Multiple Loading States**
+  ```typescript
+  // ✅ DO: Different loading states for different operations
+  const [isLoading, setIsLoading] = useState(false);           // Page-level
+  const [isSubmitting, setIsSubmitting] = useState(false);     // Form submission
+  const [processingItems, setProcessingItems] = useState<Set<string>>(new Set()); // Individual items
+  ```
+
+- **User Feedback Types**
+  - Overlay loading for full page operations
+  - Button disable states for form submissions
+  - Spinner icons for individual item operations
+  - Progress bars for task monitoring
+  - Loading states reset on error or success
+
+## **Component Organization**
+
+- **File Structure for Complex Features**
+  ```
+  frontend/src/components/feature/
+  ├── FeatureManager.tsx (main container)
+  ├── BulkOperations.tsx (bulk actions)
+  ├── SearchInterface.tsx (search/filter)
+  ├── MonitoringDashboard.tsx (real-time)
+  └── index.ts (barrel exports)
+  ```
+
+- **Size Guidelines**
+  - Large components (300-500+ lines) acceptable for cohesive functionality
+  - Single responsibility per component even if large
+  - Barrel exports for clean imports: `import { FeatureManager } from '@/components/feature'`
+  - Shared types defined at component level when not globally reused
+
+## **Page Integration Pattern**
+
+- **Adding Complex Features to Existing Pages**
+  ```typescript
+  // ✅ DO: Extend existing tab structure
+  type TabType = 'existing1' | 'existing2' | 'new_feature';
+  
+  const tabs = [
+    { id: 'existing1', name: 'Original Tab', icon: OriginalIcon },
+    { id: 'existing2', name: 'Second Tab', icon: SecondIcon },
+    { id: 'new_feature', name: 'New Feature', icon: NewIcon }, // Add new tab
+  ];
+  ```
+
+- **Integration Requirements**
+  - Update activeTab type union
+  - Add appropriate Lucide icon for consistency
+  - Isolate tab content in separate components
+  - Minimize shared state between tabs
+  - Maintain existing functionality
+
+## **Production Readiness Checklist**
+
+- **Error Handling**
+  - [ ] API errors caught and displayed to users
+  - [ ] Graceful degradation when services unavailable
+  - [ ] Loading states prevent duplicate operations
+  - [ ] Form validation with clear error messages
+
+- **Responsive Design**
+  - [ ] Mobile-friendly bulk selection interface
+  - [ ] Responsive grid layouts for different screen sizes
+  - [ ] Touch-friendly button sizing
+  - [ ] Proper text scaling and spacing
+
+- **Performance**
+  - [ ] Pagination for large datasets
+  - [ ] Efficient re-renders with proper React keys
+  - [ ] Auto-refresh only when needed
+  - [ ] Debounced search inputs
+
+- **User Experience**
+  - [ ] Smooth animations provide visual feedback
+  - [ ] Progressive disclosure (simple → advanced features)
+  - [ ] Clear success/error messaging
+  - [ ] Confirmation for destructive operations
+
+- **Accessibility**
+  - [ ] Proper form labels and ARIA attributes
+  - [ ] Keyboard navigation support
+  - [ ] Screen reader friendly status messages
+  - [ ] Focus management in modals and tabs
+
+This pattern serves as a template for implementing other complex, multi-faceted features requiring bulk operations, real-time monitoring, and advanced user interfaces.

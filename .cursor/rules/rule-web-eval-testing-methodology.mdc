@@ -1,0 +1,238 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Web-Eval MCP Testing Methodology
+
+*Systematic UI testing approach using web-eval MCP for comprehensive validation and precise issue diagnosis.*
+
+## **Core Testing Philosophy**
+
+### ✅ **Frontend vs Backend Issue Separation**
+**Key Discovery:** Frontend UI can be 100% complete while all issues are backend API problems.
+
+```typescript
+// ✅ PROVEN PATTERN: Comprehensive UI Testing Strategy
+web_eval_testing_approach = {
+  "validation_scope": "Complete UI component functionality and user workflows",
+  "issue_identification": "Precise separation of frontend vs backend problems",
+  "documentation": "Real-time TaskMaster subtask updates during testing",
+  "success_metrics": "Clear categorization of implementation vs integration issues"
+}
+```
+
+## **Web-Eval MCP Integration Process**
+
+### 🌐 **Systematic Testing Execution**
+```bash
+# 1. Start local development environment
+./scripts/dev.sh start
+
+# 2. Execute web-eval MCP testing
+# Use Cursor MCP integration or direct MCP calls:
+# - URL: http://localhost:3000 (or appropriate frontend URL)
+# - Task: "Test complete user workflow for [specific feature]"
+# - Include detailed user stories and expected behaviors
+```
+
+### 📝 **Real-Time Documentation Pattern**
+```bash
+# ✅ DO: Document findings during testing in TaskMaster subtasks
+task-master update-subtask --id='X.Y' --prompt='
+Web-Eval Testing Results - [Component/Feature Name]:
+
+✅ Frontend UI Status:
+- Component rendering: PASS
+- User interactions: PASS  
+- Form validations: PASS
+- Navigation flows: PASS
+- Responsive design: PASS
+
+❌ Backend Integration Issues:
+- API endpoint /v1/feature/action: 500 Internal Server Error
+- Authentication: 403 Forbidden (organization association missing)
+- Data loading: Network timeout on specific queries
+
+📋 Next Steps:
+- Frontend implementation: 100% complete
+- Focus area: Backend API debugging
+- Priority: Fix authentication flow first
+'
+```
+
+## **Testing Categorization Framework**
+
+### 🎯 **Issue Classification System**
+```python
+# ✅ PROVEN PATTERN: Systematic Issue Categorization
+testing_classification = {
+  "frontend_issues": [
+    "Component rendering problems",
+    "CSS/styling inconsistencies", 
+    "JavaScript/TypeScript errors",
+    "User interaction failures",
+    "State management problems"
+  ],
+  "backend_issues": [
+    "API endpoint errors (4xx, 5xx)",
+    "Authentication/authorization failures",
+    "Database query problems",
+    "Server startup/configuration issues",
+    "Service integration failures"
+  ],
+  "integration_issues": [
+    "CORS configuration problems",
+    "Data format mismatches",
+    "API contract violations",
+    "Real-time connection failures",
+    "Multi-tenant data access issues"
+  ]
+}
+```
+
+### 🔍 **Diagnostic Indicators**
+```typescript
+// ✅ DO: Use these patterns to identify issue categories
+diagnostic_patterns = {
+  "frontend_complete": [
+    "All UI components render correctly",
+    "User interactions trigger expected behaviors", 
+    "Forms validate and submit properly",
+    "Navigation works seamlessly",
+    "No console errors in browser"
+  ],
+  "backend_problems": [
+    "Network requests return error status codes",
+    "API responses contain error messages",
+    "Console shows 'fetch failed' or similar",
+    "Authentication redirects or 401/403 errors",
+    "Database operation failures"
+  ]
+}
+```
+
+## **TaskMaster Integration Patterns**
+
+### 📋 **Subtask Documentation Strategy**
+```bash
+# ✅ PROVEN PATTERN: Incremental testing documentation
+# Test each major component/feature as separate subtask
+
+# Subtask X.1: Authentication Flow Testing
+task-master update-subtask --id='X.1' --prompt='
+Web-Eval Results - Authentication:
+- Login form: ✅ Functional
+- Token handling: ✅ Frontend complete  
+- Backend auth API: ❌ 401 errors persistent
+- Organization association: ❌ Missing in JWT context
+'
+
+# Subtask X.2: Asset Management Testing  
+task-master update-subtask --id='X.2' --prompt='
+Web-Eval Results - Asset Management:
+- Asset list view: ✅ Perfect rendering
+- Create asset form: ✅ All validations working
+- Asset API endpoints: ❌ 500 errors on POST /v1/assets
+- Database integration: ❌ Firestore write permissions
+'
+```
+
+### 🔄 **Iterative Testing Process**
+1. **Component-Level Testing:** Test individual UI components in isolation
+2. **Workflow Testing:** Test complete user journeys end-to-end
+3. **Integration Testing:** Verify frontend-backend data flow
+4. **Real-Data Testing:** Test with production-realistic data sets
+5. **Error Scenario Testing:** Test error handling and edge cases
+
+## **Success Metrics & Validation**
+
+### ✅ **Frontend Completion Indicators**
+```typescript
+// ✅ DO: Consider frontend complete when these criteria are met
+frontend_completion_criteria = {
+  "ui_components": "All components render without errors",
+  "user_interactions": "Buttons, forms, and navigation function properly",
+  "responsive_design": "Works correctly on mobile, tablet, and desktop",
+  "state_management": "Component state updates correctly", 
+  "routing": "Navigation between pages functions seamlessly",
+  "error_handling": "UI shows appropriate error states and messages"
+}
+```
+
+### 🎯 **Testing Success Patterns**
+```python
+# ✅ EXAMPLE: Successful web-eval testing outcome
+successful_testing_result = {
+  "frontend_status": "100% complete - all UI components functional",
+  "backend_issues_identified": [
+    "Organization registration API creates user but not org association",
+    "Asset classification hierarchy returns 500 errors",
+    "Security dashboard endpoints return 404 not found"
+  ],
+  "actionable_priorities": [
+    "Fix backend organization setup workflow",
+    "Debug asset classification API implementation", 
+    "Correct security router path configuration"
+  ],
+  "development_confidence": "High - clear separation of working UI from API bugs"
+}
+```
+
+## **Integration with Development Workflow**
+
+### 🔧 **Web-Eval in CI/CD Pipeline**
+```typescript
+// ✅ DO: Integrate web-eval testing into development process
+development_integration = {
+  "feature_development": "Use web-eval to validate UI components as built",
+  "bug_investigation": "Separate frontend vs backend issues immediately",
+  "testing_strategy": "Combine web-eval with automated tests for coverage",
+  "documentation": "Maintain testing findings in TaskMaster for team visibility"
+}
+```
+
+### 📈 **Continuous Improvement**
+- **Pattern Recognition:** Store successful testing approaches in MCP memory
+- **Issue Prevention:** Use findings to improve development practices
+- **Team Learning:** Share web-eval insights across development team
+- **Process Refinement:** Evolve testing methodology based on discovered patterns
+
+## **Common Testing Scenarios**
+
+### 🧪 **Systematic Testing Templates**
+```bash
+# ✅ Template: Feature completeness testing
+"Test the complete [feature name] user workflow including:
+1. User authentication and access control
+2. Navigation to [feature] section
+3. Data loading and display functionality  
+4. User interaction with forms/buttons/controls
+5. Data submission and feedback mechanisms
+6. Error handling for various failure scenarios
+7. Responsive design across device sizes
+
+Provide detailed feedback on:
+- What works perfectly in the UI
+- Any frontend issues encountered
+- Backend API errors with specific endpoints
+- Recommendations for issue resolution priorities"
+```
+
+### 📊 **Results Analysis Framework**
+```python
+# ✅ DO: Analyze web-eval results systematically
+results_analysis = {
+  "ui_functionality": "Rate component completeness 0-100%",
+  "user_experience": "Identify UX issues and improvements",
+  "backend_integration": "Catalog API errors by endpoint and type",
+  "priority_ranking": "Order issues by impact on user workflows",
+  "development_focus": "Determine whether to focus on frontend or backend"
+}
+```
+
+---
+
+**Key Success Pattern:** Use web-eval MCP testing to achieve frontend implementation confidence while creating precise backend issue identification for efficient debugging focus.
+
+*Reference: [LESSONS_LEARNED.md](mdc:LESSONS_LEARNED.md) for complete web-eval testing breakthrough documentation.*
