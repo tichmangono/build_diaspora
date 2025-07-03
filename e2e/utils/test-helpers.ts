@@ -136,12 +136,6 @@ export class AuthHelpers {
     await expect(this.page.locator('[data-testid="logout-button"]')).not.toBeVisible()
   }
 
-  async navigateToForgotPassword() {
-    await this.page.goto('/forgot-password')
-    await this.page.waitForLoadState('networkidle')
-    await expect(this.page).toHaveTitle(/Forgot Password|Reset Password/)
-  }
-
   async resetPassword(email: string) {
     await this.page.goto('/forgot-password')
     await this.page.waitForLoadState('networkidle')

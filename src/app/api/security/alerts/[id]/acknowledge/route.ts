@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -33,7 +33,8 @@ export async function POST(
       );
     }
     
-    const alertId = params.id;
+    const resolvedParams = await params;
+    const alertId = resolvedParams.id;
     
     if (!alertId) {
       return NextResponse.json(

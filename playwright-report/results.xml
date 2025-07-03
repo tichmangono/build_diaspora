@@ -1,0 +1,2494 @@
+<testsuites id="" name="" tests="602" failures="0" skipped="602" errors="0" time="0.12958100000000003">
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="chromium" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="firefox" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="webkit" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Chrome" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Mobile Safari" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Microsoft Edge" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin/admin-workflow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="Admin Verification Workflow › should display admin dashboard correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification queue correctly" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should filter verification requests by status" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should search verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and approve verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should review and reject verification request" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification request details in modal" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle bulk actions on verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should perform bulk approval of verification requests" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display verification statistics" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle document viewing in verification review" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should work on mobile viewport" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle admin role verification" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification request assignment" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should display audit trail for verification actions" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should handle verification queue pagination" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Verification Workflow › should redirect non-admin users away from admin pages" classname="admin/admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/complete-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Complete Authentication Flow › should complete full user journey: register → login → profile → verification → logout" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle session persistence across page refreshes" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle logout and clear session properly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle authentication state changes correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle profile management flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle password change flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle account deletion flow" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle multiple browser tabs and sessions" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle network errors gracefully during authentication" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete Authentication Flow › should handle browser back/forward navigation correctly" classname="auth/complete-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/login.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Login Authentication Flow › should display login form correctly" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should successfully login with valid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show error for invalid credentials" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate email format" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should validate required fields" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle &quot;Remember me&quot; functionality" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to forgot password page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should navigate to register page" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should show loading state during login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should work on mobile viewport" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should handle keyboard navigation" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Authentication Flow › should redirect authenticated users away from login" classname="auth/login.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/password-reset.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Password Reset Authentication Flow › should display forgot password form correctly" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should successfully send reset email for valid email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate email format" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate required email field" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle non-existent email gracefully" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should navigate back to login page" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should show loading state during submission" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should work on mobile viewport" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle keyboard navigation" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should display rate limiting message if too many requests" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle reset password with token flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate new password requirements in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should validate password confirmation match in reset flow" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should handle invalid or expired reset token" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should redirect authenticated users away from forgot password" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Password Reset Authentication Flow › should allow resending reset email" classname="auth/password-reset.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="auth/register.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="Registration Authentication Flow › should display registration form correctly" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should successfully register with valid information" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password requirements" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate password confirmation match" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate email format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate required fields" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle duplicate email registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should validate full name format" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle terms and conditions acceptance" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should navigate to login page" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show password strength indicator" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should work on mobile viewport" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle keyboard navigation" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should show loading state during registration" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should redirect authenticated users away from register" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Registration Authentication Flow › should handle registration with special characters in name" classname="auth/register.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="verification/verification-flow.spec.ts" timestamp="2025-07-03T01:27:42.515Z" hostname="Google Chrome" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Verification Submission Flow › should display verification landing page correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should start verification wizard successfully" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete education verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should complete employment verification flow" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should validate required fields in verification forms" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle document upload validation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification progress correctly" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification wizard navigation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification history" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should display verification badges" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should work on mobile viewport" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification cancellation" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should save verification draft" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should handle verification resubmission" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Verification Submission Flow › should show verification status updates" classname="verification/verification-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

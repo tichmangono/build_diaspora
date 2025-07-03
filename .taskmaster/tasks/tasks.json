@@ -403,7 +403,7 @@
         "description": "Create the complete database schema for journey stages including the journey_stages table with parent-child relationships, cost ranges, duration estimates, premium content flags, and the stage_dependencies table for managing prerequisites between stages",
         "details": "Implement Supabase migration files:\n- journey_stages table with UUID primary key, parent_stage_id for hierarchy, stage_number, name, description, detailed_description (premium), cost fields (min/avg/max USD), duration fields (weeks), seasonal_notes (premium), risk_factors array (premium), required_permits array, city_variations JSONB, is_premium_content boolean, display_order, timestamps\n- stage_dependencies table with prerequisite_stage_id, dependent_stage_id, dependency_type (blocking/parallel/optional)\n- Create indexes on parent_stage_id, display_order, and prerequisite_stage_id\n- Add proper foreign key constraints and check constraints",
         "testStrategy": "Create test migration, insert sample data for 12 major stages and some sub-stages, verify foreign key constraints, test queries for stage hierarchy and dependencies, validate data types and constraints",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "dependencies": [],
         "subtasks": []
@@ -414,9 +414,11 @@
         "description": "Create RESTful API endpoints for journey stage data retrieval, user progress tracking, and dependency management with proper role-based filtering for free vs premium content",
         "details": "Implement Next.js API routes:\n- GET /api/journey/stages - Fetch all stages with role-based filtering (free users see 12 major stages, premium see all 45)\n- GET /api/journey/stages/[id] - Detailed stage information with premium content gating\n- POST /api/journey/progress - Track and update user progress through stages\n- GET /api/journey/dependencies - Stage dependency graph for timeline visualization\n- Add proper authentication middleware\n- Implement caching strategies for static stage data\n- Add input validation and error handling",
         "testStrategy": "Unit tests for each endpoint, integration tests with database, test role-based content filtering, validate API response schemas, test error scenarios and edge cases",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
-        "dependencies": [1],
+        "dependencies": [
+          1
+        ],
         "subtasks": []
       },
       {
@@ -425,9 +427,11 @@
         "description": "Build the main React component architecture for the journey timeline including the container component, stage cards, and stage details modal with responsive design",
         "details": "Create React components:\n- JourneyTimeline.tsx - Main container with 3D/2D toggle, filtering, and state management\n- StageCard.tsx - Individual stage representation with hover states, progress indicators, and click handlers\n- StageDetails.tsx - Detailed modal/sidebar view with cost ranges, duration, permits, and premium content\n- CostRangeDisplay.tsx - Visual cost range indicators with min/avg/max display\n- ProgressTracker.tsx - User's journey progress visualization\n- Implement responsive design with Tailwind CSS\n- Add proper TypeScript interfaces for all props",
         "testStrategy": "Component unit tests with Jest and React Testing Library, visual regression tests, responsive design testing on multiple screen sizes, accessibility testing",
-        "status": "pending",
+        "status": "in-progress",
         "priority": "high",
-        "dependencies": [2],
+        "dependencies": [
+          2
+        ],
         "subtasks": []
       },
       {
@@ -438,7 +442,9 @@
         "testStrategy": "Test 3D scene initialization, verify stage node positioning, test camera controls and animations, performance testing with many stages, WebGL fallback testing",
         "status": "pending",
         "priority": "medium",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "subtasks": []
       },
       {
@@ -449,7 +455,9 @@
         "testStrategy": "Mobile device testing, touch interaction testing, performance testing on low-end devices, cross-browser compatibility testing, accessibility testing for screen readers",
         "status": "pending",
         "priority": "medium",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "subtasks": []
       },
       {
@@ -460,7 +468,10 @@
         "testStrategy": "Test content visibility for different user tiers, verify paywall functionality, test upgrade flow, validate subscription status checks, test edge cases with expired subscriptions",
         "status": "pending",
         "priority": "medium",
-        "dependencies": [3, 2],
+        "dependencies": [
+          3,
+          2
+        ],
         "subtasks": []
       },
       {
@@ -471,7 +482,10 @@
         "testStrategy": "Test data caching behavior, verify real-time updates, test offline functionality, validate error handling, performance testing with large datasets",
         "status": "pending",
         "priority": "medium",
-        "dependencies": [2, 3],
+        "dependencies": [
+          2,
+          3
+        ],
         "subtasks": []
       },
       {
@@ -482,7 +496,10 @@
         "testStrategy": "Test dependency calculations, verify critical path accuracy, test various dependency scenarios, validate visual indicators, test performance with complex dependencies",
         "status": "pending",
         "priority": "low",
-        "dependencies": [4, 5],
+        "dependencies": [
+          4,
+          5
+        ],
         "subtasks": []
       },
       {
@@ -493,7 +510,10 @@
         "testStrategy": "Verify event tracking accuracy, test analytics in different user scenarios, validate data privacy compliance, test performance impact of tracking",
         "status": "pending",
         "priority": "low",
-        "dependencies": [6, 7],
+        "dependencies": [
+          6,
+          7
+        ],
         "subtasks": []
       },
       {
@@ -504,7 +524,11 @@
         "testStrategy": "Performance testing with Lighthouse, bundle size analysis, memory usage testing, loading time optimization, testing on slow networks and low-end devices",
         "status": "pending",
         "priority": "low",
-        "dependencies": [4, 5, 7],
+        "dependencies": [
+          4,
+          5,
+          7
+        ],
         "subtasks": []
       },
       {
@@ -515,7 +539,11 @@
         "testStrategy": "Test cross-feature navigation, verify data consistency, test integrated workflows, validate user experience across features",
         "status": "pending",
         "priority": "low",
-        "dependencies": [6, 7, 9],
+        "dependencies": [
+          6,
+          7,
+          9
+        ],
         "subtasks": []
       },
       {
@@ -526,13 +554,16 @@
         "testStrategy": "Achieve 90%+ test coverage, verify all user scenarios work correctly, validate documentation accuracy, test deployment and rollback procedures",
         "status": "pending",
         "priority": "medium",
-        "dependencies": [10, 11],
+        "dependencies": [
+          10,
+          11
+        ],
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-03T01:54:01.362Z",
-      "updated": "2025-01-03T19:30:00.000Z",
+      "updated": "2025-07-03T05:04:02.160Z",
       "description": "Interactive Build Journey Timeline - Feature 2 implementation tasks"
     }
   }

@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const startTime = Date.now();
     
     // Basic system checks
-    const checks = {
+    const checks: any = {
       timestamp: new Date().toISOString(),
       status: 'healthy',
       version: process.env.npm_package_version || '1.0.0',
@@ -26,9 +26,8 @@ export async function GET(request: NextRequest) {
       // Simple query to check database connectivity
       const { error } = await supabase
         .from('profiles')
-        .select('count')
-        .limit(1)
-        .single();
+        .select('id')
+        .range(0, 0);
       
       const dbResponseTime = Date.now() - dbStartTime;
       

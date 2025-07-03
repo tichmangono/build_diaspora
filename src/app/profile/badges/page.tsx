@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card'
 import { Plus, Award, TrendingUp, Calendar } from 'lucide-react'
 import { verificationClient } from '@/lib/verification/client'
-import { useAuth } from '@/lib/auth/hooks'
+import { useAuth } from '@/lib/hooks'
 import { toast } from '@/lib/toast'
 import type { VerificationBadgeData } from '@/components/verification/VerificationBadge'
 

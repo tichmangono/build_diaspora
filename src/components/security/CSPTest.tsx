@@ -229,4 +229,6 @@ function CSPTest() {
       </CardContent>
     </Card>
   )
-} 
+}
+
+export default CSPTest 

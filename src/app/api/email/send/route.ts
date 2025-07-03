@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Rate limiting
-      const clientIP = request.ip || request.headers.get('x-forwarded-for') || 'unknown'
+      const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
       if (!checkRateLimit(`email:${user.id}:${clientIP}`, 5, 60000)) {
         return NextResponse.json(
           { error: 'Rate limit exceeded. Too many email requests.' },

@@ -1,21 +1,39 @@
-// Simple toast utility for development
+// Enhanced toast system with proper UI components
 export const toast = {
-  success: (message: string) => {
-    console.log('✅ Success:', message)
+  success: (title: string, description?: string) => {
+    console.log('✅ Success:', title, description)
     if (typeof window !== 'undefined') {
-      alert(`Success: ${message}`)
+      const event = new CustomEvent('toast', {
+        detail: { type: 'success', title, description }
+      })
+      window.dispatchEvent(event)
     }
   },
-  error: (message: string) => {
-    console.log('❌ Error:', message)
+  error: (title: string, description?: string) => {
+    console.log('❌ Error:', title, description)
     if (typeof window !== 'undefined') {
-      alert(`Error: ${message}`)
+      const event = new CustomEvent('toast', {
+        detail: { type: 'error', title, description }
+      })
+      window.dispatchEvent(event)
     }
   },
-  info: (message: string) => {
-    console.log('ℹ️ Info:', message)
+  warning: (title: string, description?: string) => {
+    console.log('⚠️ Warning:', title, description)
     if (typeof window !== 'undefined') {
-      alert(`Info: ${message}`)
+      const event = new CustomEvent('toast', {
+        detail: { type: 'warning', title, description }
+      })
+      window.dispatchEvent(event)
+    }
+  },
+  info: (title: string, description?: string) => {
+    console.log('ℹ️ Info:', title, description)
+    if (typeof window !== 'undefined') {
+      const event = new CustomEvent('toast', {
+        detail: { type: 'info', title, description }
+      })
+      window.dispatchEvent(event)
     }
   }
 } 

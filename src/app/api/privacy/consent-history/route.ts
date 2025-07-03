@@ -15,8 +15,7 @@ export async function GET() {
       .from('consent_records')
       .select('*')
       .eq('user_id', user.id)
-      .order('granted_at', { ascending: false })
-      .limit(50)
+      .range(0, 49)
 
     if (consentError) {
       console.error('Consent history fetch error:', consentError)
