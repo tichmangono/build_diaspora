@@ -1,0 +1,18 @@
+# Task ID: 2
+# Title: Journey API Endpoints Implementation
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create RESTful API endpoints for journey stage data retrieval, user progress tracking, and dependency management with proper role-based filtering for free vs premium content
+# Details:
+Implement Next.js API routes:
+- GET /api/journey/stages - Fetch all stages with role-based filtering (free users see 12 major stages, premium see all 45)
+- GET /api/journey/stages/[id] - Detailed stage information with premium content gating
+- POST /api/journey/progress - Track and update user progress through stages
+- GET /api/journey/dependencies - Stage dependency graph for timeline visualization
+- Add proper authentication middleware
+- Implement caching strategies for static stage data
+- Add input validation and error handling
+
+# Test Strategy:
+Unit tests for each endpoint, integration tests with database, test role-based content filtering, validate API response schemas, test error scenarios and edge cases

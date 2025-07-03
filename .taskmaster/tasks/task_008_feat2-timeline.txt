@@ -1,0 +1,20 @@
+# Task ID: 8
+# Title: Stage Dependencies and Critical Path
+# Status: pending
+# Dependencies: 4, 5
+# Priority: low
+# Description: Implement visual representation of stage dependencies and critical path highlighting to show users the optimal sequence and identify potential bottlenecks in their building journey
+# Details:
+Create dependency visualization:
+- Implement dependency graph calculation algorithm
+- Add visual connecting lines between dependent stages
+- Create critical path highlighting with different colors
+- Add dependency type indicators (blocking, parallel, optional)
+- Implement warnings for prerequisite stages not completed
+- Create dependency legend and explanations
+- Add interactive dependency exploration
+- Implement smart stage ordering recommendations
+- Create bottleneck identification and warnings
+
+# Test Strategy:
+Test dependency calculations, verify critical path accuracy, test various dependency scenarios, validate visual indicators, test performance with complex dependencies

@@ -142,10 +142,10 @@ const passwordSchema = z
     
     return score >= 3
   }, 'Password is too weak. Use a mix of uppercase, lowercase, numbers, and special characters')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/\d/, 'Password must contain at least one number')
-  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character')
+  .refine((password) => /[A-Z]/.test(password), 'Password must contain at least one uppercase letter')
+  .refine((password) => /[a-z]/.test(password), 'Password must contain at least one lowercase letter')
+  .refine((password) => /\d/.test(password), 'Password must contain at least one number')
+  .refine((password) => /[^A-Za-z0-9]/.test(password), 'Password must contain at least one special character')
 
 // Enhanced phone number validation with security checks
 const phoneSchema = z
@@ -181,7 +181,7 @@ const phoneSchema = z
 
 // Enhanced name validation with security checks
 const nameSchema = secureStringSchema('Name', 2, 100)
-  .regex(/^[a-zA-Z\s'-]+$/, 'Name can only contain letters, spaces, hyphens, and apostrophes')
+  .refine((name) => /^[a-zA-Z\s'-]+$/.test(name), 'Name can only contain letters, spaces, hyphens, and apostrophes')
   .refine((name) => {
     // Additional name security checks
     const words = name.trim().split(/\s+/)

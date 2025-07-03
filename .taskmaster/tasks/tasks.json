@@ -391,8 +391,149 @@
     ],
     "metadata": {
       "created": "2025-07-01T07:55:28.102Z",
-      "updated": "2025-07-02T20:47:39.651Z",
+      "updated": "2025-07-03T01:37:10.517Z",
       "description": "Tasks for master context"
+    }
+  },
+  "feat2-timeline": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Database Schema Setup for Journey Stages",
+        "description": "Create the complete database schema for journey stages including the journey_stages table with parent-child relationships, cost ranges, duration estimates, premium content flags, and the stage_dependencies table for managing prerequisites between stages",
+        "details": "Implement Supabase migration files:\n- journey_stages table with UUID primary key, parent_stage_id for hierarchy, stage_number, name, description, detailed_description (premium), cost fields (min/avg/max USD), duration fields (weeks), seasonal_notes (premium), risk_factors array (premium), required_permits array, city_variations JSONB, is_premium_content boolean, display_order, timestamps\n- stage_dependencies table with prerequisite_stage_id, dependent_stage_id, dependency_type (blocking/parallel/optional)\n- Create indexes on parent_stage_id, display_order, and prerequisite_stage_id\n- Add proper foreign key constraints and check constraints",
+        "testStrategy": "Create test migration, insert sample data for 12 major stages and some sub-stages, verify foreign key constraints, test queries for stage hierarchy and dependencies, validate data types and constraints",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Journey API Endpoints Implementation",
+        "description": "Create RESTful API endpoints for journey stage data retrieval, user progress tracking, and dependency management with proper role-based filtering for free vs premium content",
+        "details": "Implement Next.js API routes:\n- GET /api/journey/stages - Fetch all stages with role-based filtering (free users see 12 major stages, premium see all 45)\n- GET /api/journey/stages/[id] - Detailed stage information with premium content gating\n- POST /api/journey/progress - Track and update user progress through stages\n- GET /api/journey/dependencies - Stage dependency graph for timeline visualization\n- Add proper authentication middleware\n- Implement caching strategies for static stage data\n- Add input validation and error handling",
+        "testStrategy": "Unit tests for each endpoint, integration tests with database, test role-based content filtering, validate API response schemas, test error scenarios and edge cases",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [1],
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Core Journey Timeline Components Structure",
+        "description": "Build the main React component architecture for the journey timeline including the container component, stage cards, and stage details modal with responsive design",
+        "details": "Create React components:\n- JourneyTimeline.tsx - Main container with 3D/2D toggle, filtering, and state management\n- StageCard.tsx - Individual stage representation with hover states, progress indicators, and click handlers\n- StageDetails.tsx - Detailed modal/sidebar view with cost ranges, duration, permits, and premium content\n- CostRangeDisplay.tsx - Visual cost range indicators with min/avg/max display\n- ProgressTracker.tsx - User's journey progress visualization\n- Implement responsive design with Tailwind CSS\n- Add proper TypeScript interfaces for all props",
+        "testStrategy": "Component unit tests with Jest and React Testing Library, visual regression tests, responsive design testing on multiple screen sizes, accessibility testing",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [2],
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Three.js 3D Timeline Visualization",
+        "description": "Implement the interactive 3D timeline using Three.js with stage nodes positioned along a timeline curve, camera controls, zoom capabilities, and smooth animations between stages",
+        "details": "Create Timeline3D.tsx component:\n- Set up Three.js scene, camera, and renderer with proper lighting\n- Create timeline curve using spline geometry\n- Position stage nodes along the curve with proper spacing\n- Implement OrbitControls for camera manipulation\n- Add interactive hover and click states for stage nodes\n- Create smooth camera animations when navigating between stages\n- Implement zoom functionality with constraints\n- Add stage dependency visualization with connecting lines\n- Handle responsive canvas sizing\n- Implement WebGL capability detection with graceful fallback",
+        "testStrategy": "Test 3D scene initialization, verify stage node positioning, test camera controls and animations, performance testing with many stages, WebGL fallback testing",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [3],
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Mobile 2D Timeline Fallback",
+        "description": "Create a mobile-responsive 2D timeline interface that provides the same functionality as the 3D version but optimized for touch devices and smaller screens",
+        "details": "Implement responsive 2D timeline:\n- Create horizontal scrollable timeline for mobile devices\n- Implement touch-friendly stage cards with proper spacing\n- Add smooth scroll animations between stages\n- Create collapsible stage groups for better navigation\n- Implement virtualization for performance with many stages\n- Add pull-to-refresh functionality\n- Ensure consistent functionality with 3D version\n- Implement proper touch gestures (tap, swipe, pinch)\n- Add loading states and skeleton screens",
+        "testStrategy": "Mobile device testing, touch interaction testing, performance testing on low-end devices, cross-browser compatibility testing, accessibility testing for screen readers",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [3],
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Progressive Disclosure System",
+        "description": "Implement the tiered content system that shows different levels of detail based on user subscription status - free users see 12 major stages while premium users access all 45 detailed sub-stages",
+        "details": "Create subscription-based content gating:\n- Implement useSubscription hook for checking user tier\n- Create PaywallGate component for premium content protection\n- Add visual indicators for premium vs free content\n- Implement smooth upgrade flow integration\n- Create preview/teaser views for premium content\n- Add proper loading states during subscription checks\n- Implement client-side and server-side subscription validation\n- Create upgrade prompts with clear value proposition\n- Add analytics tracking for upgrade conversion points",
+        "testStrategy": "Test content visibility for different user tiers, verify paywall functionality, test upgrade flow, validate subscription status checks, test edge cases with expired subscriptions",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [3, 2],
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "State Management with React Query",
+        "description": "Implement comprehensive state management for journey data caching, selected stage state, user progress persistence, and real-time synchronization across components",
+        "details": "Set up React Query integration:\n- Configure query client with proper caching strategies\n- Create custom hooks: useJourneyStages, useStageDetails, useUserProgress\n- Implement optimistic updates for user progress\n- Add background refetching for real-time data\n- Create mutation handlers for progress updates\n- Implement proper error handling and retry logic\n- Add loading and error states management\n- Create prefetching strategies for stage details\n- Implement offline support with cache persistence",
+        "testStrategy": "Test data caching behavior, verify real-time updates, test offline functionality, validate error handling, performance testing with large datasets",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [2, 3],
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Stage Dependencies and Critical Path",
+        "description": "Implement visual representation of stage dependencies and critical path highlighting to show users the optimal sequence and identify potential bottlenecks in their building journey",
+        "details": "Create dependency visualization:\n- Implement dependency graph calculation algorithm\n- Add visual connecting lines between dependent stages\n- Create critical path highlighting with different colors\n- Add dependency type indicators (blocking, parallel, optional)\n- Implement warnings for prerequisite stages not completed\n- Create dependency legend and explanations\n- Add interactive dependency exploration\n- Implement smart stage ordering recommendations\n- Create bottleneck identification and warnings",
+        "testStrategy": "Test dependency calculations, verify critical path accuracy, test various dependency scenarios, validate visual indicators, test performance with complex dependencies",
+        "status": "pending",
+        "priority": "low",
+        "dependencies": [4, 5],
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Analytics Integration",
+        "description": "Implement comprehensive analytics tracking for stage engagement, user journey progress, and interaction patterns to provide insights for platform optimization",
+        "details": "Set up analytics tracking:\n- Implement trackEvent utility function\n- Add stage_view events with duration tracking\n- Track journey_progress events with completion metrics\n- Add 3D vs 2D usage analytics\n- Track premium content engagement\n- Implement user flow analysis\n- Add performance metrics collection\n- Create conversion funnel tracking\n- Implement A/B testing infrastructure for timeline features\n- Add proper privacy compliance and user consent",
+        "testStrategy": "Verify event tracking accuracy, test analytics in different user scenarios, validate data privacy compliance, test performance impact of tracking",
+        "status": "pending",
+        "priority": "low",
+        "dependencies": [6, 7],
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Performance Optimization",
+        "description": "Implement comprehensive performance optimizations including lazy loading, image optimization, Three.js asset loading with progress indicators, and CDN caching strategies",
+        "details": "Optimize timeline performance:\n- Implement lazy loading for stage details and images\n- Add Three.js asset loading with progress indicators\n- Optimize image assets with next/image and proper sizing\n- Implement virtualization for large stage lists\n- Add CDN caching for static stage data\n- Optimize bundle size with code splitting\n- Implement service worker for offline caching\n- Add preloading strategies for critical resources\n- Optimize Three.js rendering performance\n- Add performance monitoring and metrics",
+        "testStrategy": "Performance testing with Lighthouse, bundle size analysis, memory usage testing, loading time optimization, testing on slow networks and low-end devices",
+        "status": "pending",
+        "priority": "low",
+        "dependencies": [4, 5, 7],
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Integration with Other Features",
+        "description": "Integrate the journey timeline with compliance tracker, cost calculator, and professional directory features to create a cohesive user experience with cross-feature navigation",
+        "details": "Implement feature integration:\n- Add links from stages to relevant compliance requirements\n- Integrate cost calculator for stage-specific estimates\n- Connect to professional directory for stage-specific services\n- Create unified navigation between features\n- Add cross-feature data sharing\n- Implement consistent state management across features\n- Create unified search functionality\n- Add contextual recommendations\n- Implement feature usage analytics",
+        "testStrategy": "Test cross-feature navigation, verify data consistency, test integrated workflows, validate user experience across features",
+        "status": "pending",
+        "priority": "low",
+        "dependencies": [6, 7, 9],
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Testing and Documentation",
+        "description": "Comprehensive testing suite including unit tests, integration tests, end-to-end tests, and complete documentation for the journey timeline feature",
+        "details": "Create comprehensive testing and documentation:\n- Write unit tests for all components and utilities\n- Create integration tests for API endpoints\n- Implement end-to-end tests for user journeys\n- Add visual regression tests for timeline\n- Create performance benchmarks\n- Write API documentation\n- Create component documentation with Storybook\n- Add user guide and feature documentation\n- Create troubleshooting guides\n- Add accessibility compliance documentation",
+        "testStrategy": "Achieve 90%+ test coverage, verify all user scenarios work correctly, validate documentation accuracy, test deployment and rollback procedures",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [10, 11],
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-03T01:54:01.362Z",
+      "updated": "2025-01-03T19:30:00.000Z",
+      "description": "Interactive Build Journey Timeline - Feature 2 implementation tasks"
     }
   }
 }

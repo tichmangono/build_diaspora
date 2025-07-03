@@ -1,0 +1,20 @@
+# Task ID: 6
+# Title: Progressive Disclosure System
+# Status: pending
+# Dependencies: 3, 2
+# Priority: medium
+# Description: Implement the tiered content system that shows different levels of detail based on user subscription status - free users see 12 major stages while premium users access all 45 detailed sub-stages
+# Details:
+Create subscription-based content gating:
+- Implement useSubscription hook for checking user tier
+- Create PaywallGate component for premium content protection
+- Add visual indicators for premium vs free content
+- Implement smooth upgrade flow integration
+- Create preview/teaser views for premium content
+- Add proper loading states during subscription checks
+- Implement client-side and server-side subscription validation
+- Create upgrade prompts with clear value proposition
+- Add analytics tracking for upgrade conversion points
+
+# Test Strategy:
+Test content visibility for different user tiers, verify paywall functionality, test upgrade flow, validate subscription status checks, test edge cases with expired subscriptions

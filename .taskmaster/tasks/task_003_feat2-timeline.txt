@@ -1,0 +1,18 @@
+# Task ID: 3
+# Title: Core Journey Timeline Components Structure
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Build the main React component architecture for the journey timeline including the container component, stage cards, and stage details modal with responsive design
+# Details:
+Create React components:
+- JourneyTimeline.tsx - Main container with 3D/2D toggle, filtering, and state management
+- StageCard.tsx - Individual stage representation with hover states, progress indicators, and click handlers
+- StageDetails.tsx - Detailed modal/sidebar view with cost ranges, duration, permits, and premium content
+- CostRangeDisplay.tsx - Visual cost range indicators with min/avg/max display
+- ProgressTracker.tsx - User's journey progress visualization
+- Implement responsive design with Tailwind CSS
+- Add proper TypeScript interfaces for all props
+
+# Test Strategy:
+Component unit tests with Jest and React Testing Library, visual regression tests, responsive design testing on multiple screen sizes, accessibility testing

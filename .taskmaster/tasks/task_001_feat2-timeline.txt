@@ -1,0 +1,15 @@
+# Task ID: 1
+# Title: Database Schema Setup for Journey Stages
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Create the complete database schema for journey stages including the journey_stages table with parent-child relationships, cost ranges, duration estimates, premium content flags, and the stage_dependencies table for managing prerequisites between stages
+# Details:
+Implement Supabase migration files:
+- journey_stages table with UUID primary key, parent_stage_id for hierarchy, stage_number, name, description, detailed_description (premium), cost fields (min/avg/max USD), duration fields (weeks), seasonal_notes (premium), risk_factors array (premium), required_permits array, city_variations JSONB, is_premium_content boolean, display_order, timestamps
+- stage_dependencies table with prerequisite_stage_id, dependent_stage_id, dependency_type (blocking/parallel/optional)
+- Create indexes on parent_stage_id, display_order, and prerequisite_stage_id
+- Add proper foreign key constraints and check constraints
+
+# Test Strategy:
+Create test migration, insert sample data for 12 major stages and some sub-stages, verify foreign key constraints, test queries for stage hierarchy and dependencies, validate data types and constraints

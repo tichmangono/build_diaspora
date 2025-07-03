@@ -1,0 +1,102 @@
+Feature 2: Interactive Build Journey Timeline - Product Requirements Document
+
+OVERVIEW:
+Build an interactive 3D timeline visualization that displays Zimbabwe's complete 45-stage building process, enabling diaspora users to understand the construction journey from land preparation to occupancy certificate.
+
+CORE OBJECTIVES:
+- Provide visual representation of all building stages with interactive 3D timeline
+- Display cost ranges, duration estimates, and permit requirements per stage
+- Implement progressive disclosure (12 major stages for free, 45 detailed for premium)
+- Support city-specific variations (Harare, Bulawayo, rural)
+- Integrate with cost calculator and compliance systems
+
+TECHNICAL REQUIREMENTS:
+
+Database Schema:
+- Journey stages table with parent-child relationships for stage hierarchy
+- Stage dependencies table for prerequisite tracking
+- Support for premium vs free content filtering
+- City-specific data variations in JSONB format
+- Cost ranges (min/avg/max USD) and duration estimates per stage
+
+Frontend Components:
+- JourneyTimeline: Main container with 3D/2D view toggle
+- Timeline3D: Three.js-based interactive 3D visualization
+- StageCard: Individual stage representation components
+- StageDetails: Detailed modal/sidebar for stage information
+- CostRangeDisplay: Visual cost range indicators
+- ProgressTracker: User journey progress tracking
+
+3D Visualization Features:
+- Interactive Three.js scene with camera controls
+- Stage nodes positioned along timeline curve
+- Hover and click interactions for stage details
+- Smooth camera animations between stages
+- Mobile-responsive 2D fallback for unsupported devices
+- Performance optimized with lazy loading
+
+API Integration:
+- GET /api/journey/stages - Fetch stages with role-based filtering
+- GET /api/journey/stages/[id] - Detailed stage information
+- POST /api/journey/progress - Track user progress
+- GET /api/journey/dependencies - Stage dependency graph
+
+Content Structure:
+FREE TIER (12 Major Stages):
+1. Land Preparation & Site Clearance
+2. Foundation Work
+3. Structural Framework
+4. Roofing Installation
+5. Electrical Systems
+6. Plumbing Installation
+7. Interior Finishing
+8. Exterior Work
+9. Final Inspections
+10. Landscaping
+11. Final Documentation
+12. Occupancy Certificate
+
+PREMIUM TIER (45 Detailed Sub-stages):
+- Each major stage broken into 3-4 detailed sub-stages
+- Stage-specific permit requirements and deadlines
+- Risk factors and mitigation strategies
+- Seasonal optimization recommendations
+- City-specific cost variations and requirements
+
+User Experience Features:
+- Progressive disclosure based on subscription tier
+- Interactive cost calculators per stage
+- Stage dependency visualization with critical path
+- Weather and seasonal timing recommendations
+- Integration with professional directory for stage-specific contractors
+
+Performance Requirements:
+- 3D scene loads within 3 seconds on average connection
+- Smooth 60fps animations and interactions
+- Responsive design for mobile and desktop
+- Lazy loading of detailed content to optimize performance
+- WebGL fallback detection and graceful degradation
+
+Analytics Integration:
+- Track stage viewing patterns and engagement
+- Monitor user journey progression
+- Identify common user pain points and interests
+- A/B test 3D vs 2D visualization preferences
+
+Success Metrics:
+- User engagement time with timeline (target: 5+ minutes average)
+- Stage completion rate for premium users
+- Conversion rate from free to premium tier
+- Professional directory click-through rates from stages
+
+INTEGRATION POINTS:
+- Cost Calculator: Show estimated costs for each stage
+- Compliance Tracker: Display required permits per stage
+- Professional Directory: Recommend professionals per stage type
+- Community Platform: Link to stage-specific Q&A and case studies
+
+IMPLEMENTATION PRIORITY:
+Phase 1: Basic timeline structure and free tier content
+Phase 2: 3D visualization and interactive features
+Phase 3: Premium content and advanced features
+Phase 4: Mobile optimization and performance enhancements 
