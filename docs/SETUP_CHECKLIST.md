@@ -117,6 +117,14 @@ The system has been built with the following components:
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    NEXTAUTH_SECRET=your-nextauth-secret-here
    
+   # Security Configuration (NEW - Required for enhanced security)
+   CSP_NONCE_SECRET=your-csp-nonce-secret-here
+   
+   # Rate Limiting (Optional - for production)
+   REDIS_URL=redis://localhost:6379
+   RATE_LIMIT_MAX_REQUESTS=100
+   RATE_LIMIT_WINDOW_MS=900000
+   
    # Email Configuration (Optional - for custom emails)
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=587
@@ -124,12 +132,23 @@ The system has been built with the following components:
    SMTP_PASS=your-app-password
    ```
 
-#### 4.2 Generate NextAuth Secret
-1. Generate a random secret:
+#### 4.2 Generate Security Secrets
+1. **Generate NextAuth Secret**:
    ```bash
    openssl rand -base64 32
    ```
-2. Copy the output and use it for `NEXTAUTH_SECRET`
+   Copy the output and use it for `NEXTAUTH_SECRET`
+
+2. **Generate CSP Nonce Secret** (NEW - Required for security):
+   ```bash
+   openssl rand -base64 32
+   ```
+   Copy the output and use it for `CSP_NONCE_SECRET`
+
+#### 4.3 Security Configuration Notes
+- **CSP_NONCE_SECRET**: Required for Content Security Policy nonce generation
+- **Rate Limiting Variables**: Optional for production, helps prevent abuse
+- **Redis**: Only needed if implementing distributed rate limiting in production
 
 ### **STEP 5: Development Environment Setup**
 
@@ -149,6 +168,12 @@ npm run dev
 3. Try creating a test account
 4. Check Supabase dashboard > Authentication > Users to see if user was created
 5. Check `profiles` table to see if profile was created
+
+#### 5.4 Test Security Features (NEW)
+1. **Content Security Policy**: Open browser developer tools and check for CSP violations
+2. **Security Testing**: Look for the security status widget in the bottom-right corner (development only)
+3. **Input Validation**: Try submitting forms with malicious content to test sanitization
+4. **File Upload Security**: Test uploading various file types to verify restrictions
 
 ### **STEP 6: Production Deployment Setup**
 
@@ -242,6 +267,13 @@ After setup, test these workflows:
 1. Try accessing `/dashboard` without login (should redirect)
 2. Login and access `/dashboard` (should work)
 3. Logout and verify redirect to login page
+
+### ✅ **Security Features (NEW)**
+1. **Content Security Policy**: Check browser console for CSP violations
+2. **Input Sanitization**: Try entering `<script>alert('test')</script>` in forms
+3. **File Upload Security**: Try uploading non-image files (should be rejected)
+4. **Rate Limiting**: Try multiple failed login attempts (should be blocked)
+5. **Security Widget**: Look for security status widget in development mode
 
 ---
 

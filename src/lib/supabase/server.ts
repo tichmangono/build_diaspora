@@ -1,25 +1,96 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import type { Database } from './client'
 
-export const createClient = async () => {
-  const cookieStore = await cookies()
+export function createClient() {
+  const cookieStore = cookies()
 
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  // Check if we're in development mode and missing environment variables
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('Supabase environment variables not found, using mock client for development')
+    
+    // Return a mock client for development
+    return {
+      auth: {
+        getUser: async () => ({
+          data: { 
+            user: {
+              id: 'mock-user-id',
+              email: 'dev@builddiaspora.com',
+              user_metadata: {
+                full_name: 'Development User',
+                avatar_url: null
+              }
+            }
+          },
+          error: null
+        }),
+        signOut: async () => ({ error: null }),
+        onAuthStateChange: () => ({ data: { subscription: null } })
+      },
+      from: (table: string) => ({
+        select: () => ({
+          eq: () => ({
+            single: async () => ({ data: null, error: null }),
+            range: async () => ({ data: [], error: null })
+          }),
+          order: () => ({
+            range: async () => ({ data: [], error: null })
+          }),
+          range: async () => ({ data: [], error: null })
+        }),
+        insert: () => ({
+          select: () => ({
+            single: async () => ({ data: { id: 'mock-id' }, error: null })
+          })
+        }),
+        update: () => ({
+          eq: () => ({
+            select: () => ({
+              single: async () => ({ data: { id: 'mock-id' }, error: null })
+            })
+          })
+        }),
+        delete: () => ({
+          eq: async () => ({ error: null })
+        })
+      }),
+      storage: {
+        from: () => ({
+          upload: async () => ({ data: { path: 'mock-path' }, error: null }),
+          remove: async () => ({ error: null }),
+          getPublicUrl: () => ({ data: { publicUrl: 'mock-url' } })
+        })
+      }
+    }
+  }
+
+  return createServerClient(
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
-        getAll() {
-          return cookieStore.getAll()
+        get(name: string) {
+          return cookieStore.get(name)?.value
         },
-        setAll(cookiesToSet) {
+        set(name: string, value: string, options: CookieOptions) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
-            // The `setAll` method was called from a Server Component.
+            cookieStore.set({ name, value, ...options })
+          } catch (error) {
+            // The `set` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+          }
+        },
+        remove(name: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value: '', ...options })
+          } catch (error) {
+            // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
@@ -29,26 +100,86 @@ export const createClient = async () => {
   )
 }
 
-// Service role client for admin operations
-export const createServiceClient = () => {
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+export function createClientForRequest(request: NextRequest) {
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
 
-  if (!serviceRoleKey) {
-    throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable')
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('Supabase environment variables not found, using mock client for development')
+    
+    // Return mock client and response for development
+    return {
+      supabase: {
+        auth: {
+          getUser: async () => ({
+            data: { 
+              user: {
+                id: 'mock-user-id',
+                email: 'dev@builddiaspora.com',
+                user_metadata: {
+                  full_name: 'Development User',
+                  avatar_url: null
+                }
+              }
+            },
+            error: null
+          })
+        }
+      },
+      response
+    }
   }
 
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    serviceRoleKey,
+  const supabase = createServerClient(
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
-        getAll() {
-          return []
+        get(name: string) {
+          return request.cookies.get(name)?.value
         },
-        setAll() {
-          // No-op for service role client
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
         },
       },
     }
   )
+
 } 

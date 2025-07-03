@@ -4,6 +4,8 @@ import React from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import VerificationBadgeCollection from '@/components/verification/VerificationBadgeCollection'
+import { type VerificationBadgeData } from '@/components/verification/VerificationBadge'
 import { 
   MapPin, 
   Briefcase, 
@@ -26,6 +28,7 @@ interface ProfileData extends ProfileUpdateFormData {
   isVerified?: boolean
   createdAt: string
   lastActive?: string
+  verificationBadges?: VerificationBadgeData[]
 }
 
 interface ProfileViewProps {
@@ -34,6 +37,7 @@ interface ProfileViewProps {
   onEdit?: () => void
   onMessage?: () => void
   onConnect?: () => void
+  onViewAllBadges?: () => void
 }
 
 export function ProfileView({ 
@@ -41,7 +45,8 @@ export function ProfileView({
   isOwnProfile = false, 
   onEdit, 
   onMessage, 
-  onConnect 
+  onConnect, 
+  onViewAllBadges
 }: ProfileViewProps) {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -164,6 +169,22 @@ export function ProfileView({
                 <p className="text-neutral-700 leading-relaxed">
                   {profile.bio}
                 </p>
+              </div>
+            )}
+
+            {/* Verification Badges */}
+            {profile.verificationBadges && profile.verificationBadges.length > 0 && (
+              <div className="mb-6">
+                <VerificationBadgeCollection
+                  badges={profile.verificationBadges}
+                  title="Verification Badges"
+                  layout="compact"
+                  maxDisplay={6}
+                  showFilters={false}
+                  showStats={false}
+                  onViewAll={onViewAllBadges}
+                  className="bg-neutral-50 rounded-lg p-4"
+                />
               </div>
             )}
 

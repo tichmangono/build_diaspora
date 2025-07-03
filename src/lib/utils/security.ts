@@ -1,16 +1,20 @@
-import { headers } from 'next/headers'
-
 /**
  * Get the CSP nonce from middleware headers
  * Used for inline scripts that need to bypass CSP
+ * Server-side only function
  */
 export async function getNonce(): Promise<string | null> {
   try {
-    const headersList = await headers()
-    return headersList.get('X-Nonce')
+    // Only run on server-side
+    if (typeof window === 'undefined') {
+      const { headers } = await import('next/headers');
+      const headersList = await headers();
+      return headersList.get('X-Nonce');
+    }
+    return null;
   } catch (error) {
-    console.warn('Failed to get nonce from headers:', error)
-    return null
+    console.warn('Failed to get nonce from headers:', error);
+    return null;
   }
 }
 
@@ -261,6 +265,20 @@ export const InputValidator = {
       feedback
     }
   },
+}
 
-
+/**
+ * Sanitize input to prevent XSS and injection attacks
+ */
+export function sanitizeInput(input: string | null | undefined): string {
+  if (!input) return '';
+  
+  return input
+    .toString()
+    .trim()
+    .replace(/[<>]/g, '') // Remove angle brackets
+    .replace(/javascript:/gi, '') // Remove javascript: protocol
+    .replace(/vbscript:/gi, '') // Remove vbscript: protocol
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .slice(0, 1000); // Limit length
 } 

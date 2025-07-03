@@ -135,6 +135,7 @@ npm run dev
 
 - [`docs/SETUP_CHECKLIST.md`](docs/SETUP_CHECKLIST.md) - Complete setup instructions
 - [`docs/QUICK_SETUP.md`](docs/QUICK_SETUP.md) - Quick reference guide
+- [`docs/security-features.md`](docs/security-features.md) - Enhanced security implementation guide
 - [`docs/database/README.md`](docs/database/README.md) - Database setup details
 - [`docs/environment-setup.md`](docs/environment-setup.md) - Environment variables guide
 

@@ -1,0 +1,33 @@
+# Coverage configuration for Jest
+# This file defines what should be included/excluded from coverage reports
+
+[run]
+source = src/
+omit = 
+    src/**/*.d.ts
+    src/**/*.test.ts
+    src/**/*.test.tsx
+    src/**/*.spec.ts
+    src/**/*.spec.tsx
+    src/**/__tests__/**
+    src/**/__mocks__/**
+    src/**/stories/**
+    src/**/node_modules/**
+    src/app/**/layout.tsx
+    src/app/**/loading.tsx
+    src/app/**/error.tsx
+    src/app/**/not-found.tsx
+    src/app/**/global-error.tsx
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod 

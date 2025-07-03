@@ -61,4 +61,20 @@ export function CardFooter({ children, className = '' }: CardFooterProps) {
   );
 }
 
+export function CardTitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <h3 className={`text-lg font-semibold ${className}`.trim()}>
+      {children}
+    </h3>
+  );
+}
+
+export function CardDescription({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`text-sm text-slate-600 ${className}`.trim()}>
+      {children}
+    </p>
+  );
+}
+
 export default Card; 

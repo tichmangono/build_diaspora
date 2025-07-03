@@ -2,8 +2,7 @@
 const nextConfig = {
   // Enable experimental features for better security
   experimental: {
-    // Enable server actions for better form handling
-    serverActions: true,
+    // Server actions are now stable in Next.js 15
   },
 
   // Security headers (additional to middleware)
@@ -75,10 +74,8 @@ const nextConfig = {
     return config
   },
 
-  // Environment variables validation
-  env: {
-    NODE_ENV: process.env.NODE_ENV,
-  },
+  // Environment variables are automatically available
+  // No need to explicitly define NODE_ENV
 
   // Compression and optimization
   compress: true,

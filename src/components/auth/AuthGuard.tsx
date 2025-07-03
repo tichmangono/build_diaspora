@@ -150,8 +150,6 @@ function AuthGuardProfileIncomplete() {
 
 // Specific guard for admin content
 export function AdminGuard({ children, fallback }: { children: ReactNode; fallback?: ReactNode }) {
-  const { user, profile } = useUser()
-
   // Add admin check logic here based on your user roles system
   const isAdmin = false // Placeholder - implement your admin check logic
 
@@ -181,6 +179,39 @@ export function VerifiedProfessionalGuard({ children, fallback }: { children: Re
   return (
     <AuthGuard 
       requireVerification={true}
+      requireCompleteProfile={true}
+      fallback={fallback}
+    >
+      {children}
+    </AuthGuard>
+  )
+}
+
+// Simple auth requirement guard
+export function RequireAuth({ children, fallback }: { children: ReactNode; fallback?: ReactNode }) {
+  return (
+    <AuthGuard fallback={fallback}>
+      {children}
+    </AuthGuard>
+  )
+}
+
+// Verification requirement guard
+export function RequireVerification({ children, fallback }: { children: ReactNode; fallback?: ReactNode }) {
+  return (
+    <AuthGuard 
+      requireVerification={true}
+      fallback={fallback}
+    >
+      {children}
+    </AuthGuard>
+  )
+}
+
+// Complete profile requirement guard
+export function RequireCompleteProfile({ children, fallback }: { children: ReactNode; fallback?: ReactNode }) {
+  return (
+    <AuthGuard 
       requireCompleteProfile={true}
       fallback={fallback}
     >
