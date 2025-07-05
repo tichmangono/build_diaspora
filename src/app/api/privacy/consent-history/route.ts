@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 export async function GET() {
   try {
-    const supabase = await createClient()
+    const supabase = await createClient() as SupabaseClient
     const { data: { user }, error: userError } = await supabase.auth.getUser()
 
     if (userError || !user) {
@@ -22,24 +23,9 @@ export async function GET() {
       return NextResponse.json({ error: 'Failed to fetch consent history' }, { status: 500 })
     }
 
-    // Transform data to match frontend interface
-    const transformedHistory = consentHistory?.map(record => ({
-      consentType: record.consent_type,
-      granted: record.granted,
-      grantedAt: record.granted_at,
-      revokedAt: record.revoked_at,
-      version: record.version || '1.0'
-    })) || []
-
-    return NextResponse.json({
-      success: true,
-      history: transformedHistory
-    })
+    return NextResponse.json({ consentHistory })
   } catch (error) {
     console.error('Consent history error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 } 

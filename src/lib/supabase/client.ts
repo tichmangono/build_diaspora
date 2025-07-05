@@ -59,35 +59,121 @@ const createMockClient = () => ({
       }
     },
     signIn: () => Promise.resolve({ data: {}, error: null }),
+    signInWithPassword: () => Promise.resolve({ data: { user: { id: 'mock-user-id', email: 'test@example.com' }, session: {} }, error: null }),
     signOut: () => Promise.resolve({ error: null }),
-    signUp: () => Promise.resolve({ data: {}, error: null })
+    signUp: () => Promise.resolve({ data: { user: { id: 'mock-user-id', email: 'test@example.com' } }, error: null }),
+    resetPasswordForEmail: () => Promise.resolve({ error: null }),
+    updateUser: () => Promise.resolve({ data: { user: {} }, error: null })
   },
   from: (table: string) => ({
-    select: () => ({
-      eq: () => ({
-        single: () => Promise.resolve({ 
-          data: { 
-            id: 'mock-id', 
-            role: 'admin' 
-          }, 
-          error: null 
-        })
+    select: (columns = '*') => ({
+      eq: (column: string, value: any) => ({
+        eq: (column: string, value: any) => ({
+          in: (column: string, values: any[]) => ({
+            order: (column: string, { ascending = true } = {}) => ({
+              range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+              limit: (count: number) => Promise.resolve({ data: [], error: null })
+            }),
+            limit: (count: number) => Promise.resolve({ data: [], error: null })
+          }),
+          order: (column: string, { ascending = true } = {}) => ({
+            range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+            limit: (count: number) => Promise.resolve({ data: [], error: null })
+          }),
+          single: () => Promise.resolve({ data: {}, error: null }),
+          limit: (count: number) => Promise.resolve({ data: [], error: null })
+        }),
+        in: (column: string, values: any[]) => ({
+          order: (column: string, { ascending = true } = {}) => ({
+            range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+            limit: (count: number) => Promise.resolve({ data: [], error: null })
+          }),
+          limit: (count: number) => Promise.resolve({ data: [], error: null })
+        }),
+        order: (column: string, { ascending = true } = {}) => ({
+          range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+          limit: (count: number) => Promise.resolve({ data: [], error: null })
+        }),
+        single: () => Promise.resolve({ data: {}, error: null }),
+        range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+        limit: (count: number) => Promise.resolve({ data: [], error: null })
+      }),
+      in: (column: string, values: any[]) => ({
+        order: (column: string, { ascending = true } = {}) => ({
+          range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+          limit: (count: number) => Promise.resolve({ data: [], error: null })
+        }),
+        limit: (count: number) => Promise.resolve({ data: [], error: null })
+      }),
+      order: (column: string, { ascending = true } = {}) => ({
+        range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+        limit: (count: number) => Promise.resolve({ data: [], error: null })
+      }),
+      single: () => Promise.resolve({ data: {}, error: null }),
+      range: (from: number, to: number) => Promise.resolve({ data: [], error: null }),
+      limit: (count: number) => Promise.resolve({ data: [], error: null })
+    }),
+    insert: (values: any) => ({
+      select: (columns = '*') => ({
+        single: () => Promise.resolve({ data: {}, error: null })
       })
     }),
-    insert: () => Promise.resolve({ data: null, error: null }),
-    update: () => ({
-      eq: () => ({
-        select: () => ({
+    upsert: (values: any) => ({
+      select: (columns = '*') => ({
+        single: () => Promise.resolve({ data: {}, error: null })
+      })
+    }),
+    update: (values: any) => ({
+      eq: (column: string, value: any) => ({
+        eq: (column: string, value: any) => ({
+          select: (columns = '*') => ({
+            single: () => Promise.resolve({ data: {}, error: null })
+          })
+        }),
+        select: (columns = '*') => ({
           single: () => Promise.resolve({ data: {}, error: null })
         })
+      }),
+      select: (columns = '*') => ({
+        single: () => Promise.resolve({ data: {}, error: null })
       })
     }),
+    delete: () => ({
+      eq: (column: string, value: any) => ({
+        eq: (column: string, value: any) => Promise.resolve({ data: {}, error: null })
+      })
+    })
   }),
   storage: {
-    from: () => ({
-      upload: () => Promise.resolve({ data: { path: 'mock-path' }, error: null }),
-      createSignedUrl: () => Promise.resolve({ data: { signedUrl: 'mock-url' }, error: null }),
-      remove: () => Promise.resolve({ error: null })
+    from: (bucket: string) => ({
+      upload: (path: string, file: any, options?: any) => Promise.resolve({
+        data: { path: path },
+        error: null
+      }),
+      remove: (paths: string | string[]) => Promise.resolve({
+        data: { path: Array.isArray(paths) ? paths[0] : paths },
+        error: null
+      }),
+      getPublicUrl: (path: string) => ({
+        data: { publicUrl: `https://example.com/${path}` },
+        error: null
+      }),
+      createSignedUrl: (path: string, expiresIn: number) => Promise.resolve({
+        data: { signedUrl: `https://example.com/${path}?token=signed&expiresIn=${expiresIn}` },
+        error: null
+      }),
+      download: (path: string) => Promise.resolve({
+        data: new Uint8Array(),
+        error: null
+      }),
+      list: (prefix?: string) => Promise.resolve({
+        data: [{ name: prefix || 'mock-file.txt', id: 'mock-id', updated_at: new Date().toISOString() }],
+        error: null
+      }),
+      move: (from: string, to: string) => Promise.resolve({
+        data: { path: to },
+        error: null
+      })
     })
   },
   channel: () => ({
@@ -123,6 +209,7 @@ export type Database = {
           is_verified: boolean
           verification_type: string | null
           verification_documents: string[] | null
+          role: string | null
           created_at: string
           updated_at: string
         }
@@ -141,6 +228,7 @@ export type Database = {
           is_verified?: boolean
           verification_type?: string | null
           verification_documents?: string[] | null
+          role?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -159,6 +247,7 @@ export type Database = {
           is_verified?: boolean
           verification_type?: string | null
           verification_documents?: string[] | null
+          role?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -167,30 +256,109 @@ export type Database = {
         Row: {
           id: string
           user_id: string
-          verification_type: string
+          verification_type: 'professional' | 'identity' | 'business'
           documents: string[]
-          status: string
-          admin_notes: string | null
+          additional_info: string | null
+          status: 'pending' | 'approved' | 'rejected'
+          reviewer_id: string | null
+          reviewer_notes: string | null
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
           user_id: string
-          verification_type: string
+          verification_type: 'professional' | 'identity' | 'business'
           documents: string[]
-          status?: string
-          admin_notes?: string | null
+          additional_info?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+          reviewer_id?: string | null
+          reviewer_notes?: string | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
           user_id?: string
-          verification_type?: string
+          verification_type?: 'professional' | 'identity' | 'business'
           documents?: string[]
-          status?: string
-          admin_notes?: string | null
+          additional_info?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+          reviewer_id?: string | null
+          reviewer_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      compliance_notifications: {
+        Row: {
+          id: string
+          user_id: string
+          type: string
+          title: string
+          message: string
+          data: Record<string, any> | null
+          read: boolean
+          read_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          type: string
+          title: string
+          message: string
+          data?: Record<string, any> | null
+          read?: boolean
+          read_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          type?: string
+          title?: string
+          message?: string
+          data?: Record<string, any> | null
+          read?: boolean
+          read_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      consent_records: {
+        Row: {
+          id: string
+          user_id: string
+          consent_type: string
+          granted: boolean
+          granted_at: string
+          revoked_at: string | null
+          version: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          consent_type: string
+          granted: boolean
+          granted_at?: string
+          revoked_at?: string | null
+          version?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          consent_type?: string
+          granted?: boolean
+          granted_at?: string
+          revoked_at?: string | null
+          version?: string | null
           created_at?: string
           updated_at?: string
         }

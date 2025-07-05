@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requestDataDeletion } from '@/lib/privacy/gdpr-compliance'
 
+interface Profile {
+  email_verified_at?: string | null
+  // Add other profile fields as needed
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient()
@@ -34,18 +39,19 @@ export async function POST(request: NextRequest) {
         .from('profiles')
         .select('email_verified_at')
         .eq('id', user.id)
-        .single()
+        .single() as { data: Profile | null }
+
+      if (!profile) {
+        return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
+      }
 
       const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
-      const emailVerifiedAt = profile?.email_verified_at ? new Date(profile.email_verified_at) : null
+      const emailVerifiedAt = profile.email_verified_at ? new Date(profile.email_verified_at) : null
 
       if (!emailVerifiedAt || emailVerifiedAt < dayAgo) {
         return NextResponse.json(
-          { 
-            error: 'Hard deletion requires recent email verification. Please verify your email first.',
-            requiresEmailVerification: true
-          },
-          { status: 403 }
+          { error: 'Email must be verified for at least 24 hours before data deletion' },
+          { status: 400 }
         )
       }
     }
